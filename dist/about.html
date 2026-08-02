@@ -24,7 +24,6 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
       background-size: 200px 200px;
     }
-    /* 鼠标跟随微光 */
     body::after {
       content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
       background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(120,140,200,.07), transparent 70%);
@@ -63,7 +62,7 @@
     .label { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: #8a8a96; margin-bottom: 16px; }
     h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; line-height: 1.25; margin-bottom: 14px; }
     h1 em { font-family: "Georgia", "Songti SC", serif; font-style: italic; font-weight: 400; }
-    .lede { color: #9aa0ac; font-size: .98rem; max-width: 560px; line-height: 1.85; margin-bottom: 60px; }
+    .lede { color: #9aa0ac; font-size: .98rem; max-width: 580px; line-height: 1.85; margin-bottom: 60px; }
 
     /* ══ 十字对位标记 ══ */
     .frame { position: relative; }
@@ -95,26 +94,32 @@
     .stat .n small { font-size: .85rem; font-weight: 400; color: #7c818d; letter-spacing: .08em; }
     .stat .s { font-size: .8rem; color: #9aa0ac; line-height: 1.65; }
 
-    /* ══ 三个现场（手风琴三栏） ══ */
-    .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; align-items: start; }
-    .col { padding: 30px 28px 26px; border-left: 1px solid rgba(255,255,255,.09); }
-    .col:first-child { border-left: none; }
-    .col h4 { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: #8a8a96; font-weight: 500; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
-    .col h4::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
-    .acc { border-top: 1px solid rgba(255,255,255,.06); }
-    .acc-h { width: 100%; display: flex; align-items: center; gap: 12px; padding: 15px 2px; background: none; border: none; cursor: pointer; text-align: left; color: inherit; font-family: inherit; }
-    .acc-h b { font-size: .98rem; font-weight: 500; color: #eceef2; letter-spacing: .02em; transition: color .3s; }
-    .acc-h:hover b { color: #fff; }
-    .acc-h .pm { margin-left: auto; flex: none; width: 18px; height: 18px; position: relative; transition: transform .35s cubic-bezier(.4,0,.2,1); }
-    .acc-h .pm::before, .acc-h .pm::after { content: ""; position: absolute; background: #8a8a96; transition: background .3s; }
-    .acc-h .pm::before { left: 8px; top: 2px; width: 1.5px; height: 14px; }
-    .acc-h .pm::after { top: 8px; left: 2px; width: 14px; height: 1.5px; }
-    .acc.open .acc-h .pm { transform: rotate(135deg); }
-    .acc.open .acc-h .pm::before, .acc.open .acc-h .pm::after { background: #fff; }
-    .acc-b { max-height: 0; overflow: hidden; transition: max-height .5s cubic-bezier(.4,0,.2,1); }
-    .acc-b .in { padding: 0 2px 18px; }
-    .acc-b .tag { display: inline-block; font-size: .68rem; letter-spacing: .14em; color: #a8acb8; border: 1px solid rgba(255,255,255,.14); padding: 3px 10px; border-radius: 999px; margin-bottom: 9px; }
-    .acc-b p { font-size: .83rem; color: #9aa0ac; line-height: 1.85; }
+    /* ══ 选项卡 ══ */
+    .tabs { border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; }
+    .tab-btns { display: flex; border-bottom: 1px solid rgba(255,255,255,.09); }
+    .tab-btn { flex: 1; background: none; border: none; border-left: 1px solid rgba(255,255,255,.09); padding: 19px 10px 17px; font-family: inherit; font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; color: #6f7480; cursor: pointer; position: relative; transition: color .3s, background .3s; }
+    .tab-btn:first-child { border-left: none; }
+    .tab-btn:hover { color: #c9cdd6; background: rgba(255,255,255,.02); }
+    .tab-btn.on { color: #fff; }
+    .tab-btn::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 1px; background: #e8eaef; transform: scaleX(0); transition: transform .4s cubic-bezier(.4,0,.2,1); }
+    .tab-btn.on::after { transform: scaleX(1); }
+    .tab-panel { display: none; padding: 12px 30px 10px; }
+    .tab-panel.on { display: block; animation: tabIn .5s cubic-bezier(.2,.6,.2,1); }
+    @keyframes tabIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    .pi { display: flex; gap: 22px; padding: 17px 2px; border-top: 1px solid rgba(255,255,255,.06); align-items: baseline; transition: background .3s, padding-left .3s; }
+    .pi:first-child { border-top: none; }
+    .pi:hover { background: rgba(255,255,255,.02); padding-left: 12px; }
+    .pi .pk { flex: none; min-width: 118px; font-size: .98rem; font-weight: 500; color: #eceef2; letter-spacing: .02em; }
+    .pi .pk i { display: block; font-family: "Georgia", serif; font-style: italic; font-weight: 400; font-size: .72rem; color: #6f7480; letter-spacing: .08em; margin-top: 3px; }
+    .pi .pd { font-size: .86rem; color: #9aa0ac; line-height: 1.8; }
+    .pi .pd b { color: #d8dae2; font-weight: 500; }
+
+    /* ══ 工具跑马灯 ══ */
+    .mq { overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); padding: 15px 0; margin-bottom: 76px; display: flex; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .mq-in { flex: none; min-width: 100%; white-space: nowrap; font-size: .78rem; letter-spacing: .24em; text-transform: uppercase; color: #6f7480; animation: mq 30s linear infinite; }
+    .mq-in b { color: #c9cdd6; font-weight: 400; }
+    .mq:hover .mq-in { animation-play-state: paused; }
+    @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 
     /* ══ AI 思考笔记 ══ */
     .notes { border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; padding: 6px 26px; }
@@ -149,12 +154,11 @@
       .stats { grid-template-columns: 1fr 1fr; }
       .stat:nth-child(3) { border-left: none; }
       .stat:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.09); }
-      .cols { grid-template-columns: 1fr; }
-      .col { border-left: none; border-top: 1px solid rgba(255,255,255,.09); }
-      .col:first-child { border-top: none; }
+      .tab-panel { padding: 8px 20px 6px; }
+      .pi { flex-direction: column; gap: 6px; }
       .note .ns { display: none; }
     }
-    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation: none !important; } .rv { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation-duration: .01s !important; } .rv { opacity: 1; transform: none; } .mq-in { animation: none; } }
   </style>
 </head>
 <body>
@@ -171,58 +175,49 @@
   </nav>
 
   <main class="page">
-    <div class="label rv">About</div>
-    <h1 class="rv">教育产品的底气，<br>来自<em>教育现场</em></h1>
-    <p class="lede rv">研究学习科学、站过讲台、做过内容——产品设计里的每一个判断，都有一手经验兜底；关于 AI 的思考，则持续写在小红书。</p>
+    <div class="label rv">About · 背景与思考</div>
+    <h1 class="rv">研究过、教过、写过，<br>现在做<em>产品</em></h1>
+    <p class="lede rv">学习科学 × AI 教育的研究训练，加上一线教学与内容经验——这是我做产品判断时的底稿。关于 AI 的零散思考，持续写在小红书。</p>
 
     <!-- 数字带 -->
     <div class="stats frame rv"><span class="cr"></span>
-      <div class="stat"><div class="n"><span data-n="7">0</span><small>篇</small></div><div class="s">实证研究论文，1 作 / 通讯，含 Learning and Instruction 等刊</div></div>
-      <div class="stat"><div class="n"><span data-n="23">0</span><small>节</small></div><div class="s">独立设计交付的 AI 与编程课程，95%+ 课堂参与率</div></div>
-      <div class="stat"><div class="n"><span data-n="200">0</span><small>+ 人</small></div><div class="s">复旦 NowIdea 产品社群，从 0 运营到 200+ 成员</div></div>
+      <div class="stat"><div class="n"><span data-n="7">0</span><small>篇</small></div><div class="s">中英文实证研究，1 作 / 通讯多篇，1 篇已录用</div></div>
+      <div class="stat"><div class="n"><span data-n="23">0</span><small>节</small></div><div class="s">独立设计交付的 AI 与编程课程，95%+ 参与率</div></div>
+      <div class="stat"><div class="n"><span data-n="200">0</span><small>+ 人</small></div><div class="s">复旦 NowIdea 产品社群，2026.7 从 0 创立</div></div>
       <div class="stat"><div class="n"><span data-n="5000">0</span><small>+</small></div><div class="s">小红书账号零预算冷启动粉丝量</div></div>
     </div>
 
-    <!-- 三个现场 -->
-    <div class="label rv">三个现场 · 点击展开</div>
-    <div class="cols frame rv"><span class="cr"></span>
-      <div class="col">
-        <h4>Research · 研究</h4>
-        <div class="acc">
-          <button class="acc-h"><b>7 篇论文</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">1 作 / 通讯</span><p>中英文实证研究在投与录用，含 Learning and Instruction 等期刊。研究问题全部来自真实学习场景，而非文献缝隙。</p></div></div>
-        </div>
-        <div class="acc">
-          <button class="acc-h"><b>学习科学底座</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">方法论</span><p>研究方向覆盖教育测量、教师教育、AI 教育应用。用 ZPD、脚手架等学习科学框架指导交互设计，而不是凭感觉做教育产品。</p></div></div>
-        </div>
+    <!-- 三个现场：选项卡 -->
+    <div class="label rv">三个现场 · 点击切换</div>
+    <div class="tabs frame rv"><span class="cr"></span>
+      <div class="tab-btns" role="tablist">
+        <button class="tab-btn on" data-tab="t1" role="tab" aria-selected="true">Research · 研究</button>
+        <button class="tab-btn" data-tab="t2" role="tab" aria-selected="false">Experience · 现场</button>
+        <button class="tab-btn" data-tab="t3" role="tab" aria-selected="false">Content · 内容</button>
       </div>
-      <div class="col">
-        <h4>Experience · 现场</h4>
-        <div class="acc">
-          <button class="acc-h"><b>23 节课程</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">95%+ 参与率</span><p>面向 40+ 青少年独立设计并交付 AI 应用与 Python 创意编程课程，从大纲、教具到课堂互动全流程负责。</p></div></div>
-        </div>
-        <div class="acc">
-          <button class="acc-h"><b>工作坊量化负责人</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">数据体系</span><p>为教育工作坊搭建量化分析与数据体系，用数据而不是印象评估教学效果。</p></div></div>
-        </div>
-        <div class="acc">
-          <button class="acc-h"><b>NowIdea 创始人</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">200+ 成员</span><p>复旦产品社群，定位孵化产品、对接投资，从 0 到 200+ 成员的完整冷启动。</p></div></div>
-        </div>
+      <div class="tab-panel on" id="t1" role="tabpanel">
+        <div class="pi"><span class="pk">7 篇论文<i>1 作 / 通讯多篇</i></span><span class="pd">中英文实证研究在投与录用，1 篇已被<b>华东师范大学学报</b>录用。选题覆盖 STEM 教育、职前教师职业焦虑、灵活就业力与认知负荷——都来自真实学习场景。</span></div>
+        <div class="pi"><span class="pk">2 项课题<i>核心成员</i></span><span class="pd">「认知负荷视域下的 AI+错题本机制研究」（<b>眼动实验</b> + 行为实验）；「生成式人工智能赋能教育的国际进展研究」（国际比较 + 系统性文献综述）。</span></div>
+        <div class="pi"><span class="pk">完整实证流程<i>方法论</i></span><span class="pd">文献综述 → 实验设计 → 眼动数据采集 → 统计建模 → 论文撰写。研究方向：学习科学 × AI 教育——自我调节学习、认知负荷、智能辅导系统。</span></div>
       </div>
-      <div class="col">
-        <h4>Content · 内容</h4>
-        <div class="acc">
-          <button class="acc-h"><b>小红书 0→5000+</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">冷启动</span><p>零预算个人账号，靠内容定位与选题迭代完成增长——一套可以直接复用到产品增长上的打法。</p></div></div>
-        </div>
-        <div class="acc">
-          <button class="acc-h"><b>多公众号矩阵</b><span class="pm"></span></button>
-          <div class="acc-b"><div class="in"><span class="tag">持续输出</span><p>教育内容矩阵运营，持续输出产品与学习科学内容，训练把复杂问题讲清楚的能力。</p></div></div>
-        </div>
+      <div class="tab-panel" id="t2" role="tabpanel">
+        <div class="pi"><span class="pk">23 节课程<i>95%+ 参与率</i></span><span class="pd">好好搭搭科技 · AI 课程讲师：面向 <b>40+ 青少年</b>独立设计交付 AI 应用与 Python 创意编程课程，在 2 个班级完成课程方案验证。</span></div>
+        <div class="pi"><span class="pk">量化分析负责人<i>SPSS / AMOS</i></span><span class="pd">支持工作坊内 <b>6 项研究</b>的量化分析；识别成员高频问题，组织 <b>26 次</b>方法辅导，累计支持 40 余位成员推进研究。</span></div>
+        <div class="pi"><span class="pk">NowIdea 创始人<i>200+ 成员</i></span><span class="pd">复旦产品社群（2026.7 创立）：定位<b>孵化产品、对接投资</b>，成员跨界——学生、创业者与从业者。</span></div>
+        <div class="pi"><span class="pk">国际事务助理<i>ECNU 教育学部</i></span><span class="pd">参与国际学术活动筹备执行，对接<b>联合国教科文组织</b>代表与海外高校学者，负责中英文沟通与多部门协同。</span></div>
       </div>
+      <div class="tab-panel" id="t3" role="tabpanel">
+        <div class="pi"><span class="pk">小红书 0→5000+<i>零预算冷启动</i></span><span class="pd">莳光之礼 · 新媒体运营实习：靠内容定位与选题迭代完成增长——一套可以直接复用到产品增长上的打法。</span></div>
+        <div class="pi"><span class="pk">多公众号矩阵<i>机构传播</i></span><span class="pd">运营过杭师大国旗队公众号、华师大国际事务部新闻等多个账号：内容策划、新闻稿产出、数据复盘。</span></div>
+        <div class="pi"><span class="pk">AI 思考笔记<i>持续输出</i></span><span class="pd">FDE、Vibe Coding、AI 产品叙事……把读到的、做到的整理成公开笔记，写在<b>小红书</b>（见下方 Notes）。</span></div>
+      </div>
+    </div>
+
+    <!-- 工具跑马灯 -->
+    <div class="label rv">Stack · 常用工具</div>
+    <div class="mq rv">
+      <span class="mq-in"><b>Claude Code</b> · <b>Codex</b> · n8n · <b>Coze</b> · Gemini 2.5 · v0 · <b>Django + Vue</b> · Python · SPSS · AMOS · <b>Netlify</b> · Vercel · <b>Supabase</b> · Chrome 插件 · 阿里云 ACA&nbsp;·&nbsp;</span>
+      <span class="mq-in" aria-hidden="true"><b>Claude Code</b> · <b>Codex</b> · n8n · <b>Coze</b> · Gemini 2.5 · v0 · <b>Django + Vue</b> · Python · SPSS · AMOS · <b>Netlify</b> · Vercel · <b>Supabase</b> · Chrome 插件 · 阿里云 ACA&nbsp;·&nbsp;</span>
     </div>
 
     <!-- AI 思考笔记 -->
@@ -241,12 +236,17 @@
       <div class="tl-item">
         <div class="yr">2025 – 2028</div>
         <div class="tt">华东师范大学 · 课程与教学论 硕士（推免）</div>
-        <div class="dd">2028 届 · 上海</div>
+        <div class="dd">2028 届 · 上海 · 研究关注：教育测量、学习科学与 AI 教育应用</div>
       </div>
       <div class="tl-item">
         <div class="yr">2020 – 2025</div>
         <div class="tt">杭州师范大学 · 小学教育（数学）本科</div>
-        <div class="dd">综合排名 2 / 287</div>
+        <div class="dd">综合排名 2 / 287 · 省优秀毕业生</div>
+      </div>
+      <div class="tl-item">
+        <div class="yr">2023</div>
+        <div class="tt">杭州亚运会开幕式演出舞蹈演员</div>
+        <div class="dd">及亚运会 MV 拍摄 · 央视宣传片《天水之门》</div>
       </div>
       <div class="tl-item">
         <div class="yr">竞赛</div>
@@ -255,7 +255,7 @@
       </div>
       <div class="tl-item">
         <div class="yr">荣誉</div>
-        <div class="tt">国家奖学金 · 省政府奖学金 ×3 · 阿里云大模型工程师 ACA · 高中数学教师资格证</div>
+        <div class="tt">国家奖学金 · 省政府奖学金 ×3 · 一等奖学金 ×4 · 阿里云大模型工程师 ACA · 高中数学教师资格证</div>
         <div class="dd"></div>
       </div>
     </div>
@@ -281,19 +281,16 @@
       }, { passive: true });
     })();
 
-    /* ══ 手风琴 ══ */
+    /* ══ 选项卡 ══ */
     (function () {
-      document.querySelectorAll('.acc-h').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var acc = btn.parentElement, body = acc.querySelector('.acc-b'), open = acc.classList.contains('open');
-          acc.parentElement.querySelectorAll('.acc.open').forEach(function (o) {
-            o.classList.remove('open');
-            o.querySelector('.acc-b').style.maxHeight = '0px';
-          });
-          if (!open) {
-            acc.classList.add('open');
-            body.style.maxHeight = body.scrollHeight + 'px';
-          }
+      var btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          btns.forEach(function (x) { x.classList.remove('on'); x.setAttribute('aria-selected', 'false'); });
+          document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
+          b.classList.add('on');
+          b.setAttribute('aria-selected', 'true');
+          document.getElementById(b.getAttribute('data-tab')).classList.add('on');
         });
       });
     })();
