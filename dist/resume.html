@@ -3,174 +3,189 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>简历与联系 | 楼婧怡</title>
+  <title>Contact · 联系方式 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
     body {
       font-family: "Inter", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at center, rgba(28,38,65,0.18), transparent 45%),
-        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
-        #060606;
+        radial-gradient(circle at 50% 24%, rgba(40,46,64,0.20), transparent 55%),
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+        #060608;
       background-size: auto, 44px 44px, 44px 44px, auto;
-      color: #e8edf6;
-      min-height: 100vh;
+      color: #e8eaef;
+      overflow-x: hidden;
     }
-    .page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 32px 20px; }
-    .panel { width: min(860px, 100%); border-radius: 26px; border: 1px solid rgba(255,255,255,0.08); background: rgba(10, 14, 24, 0.72); box-shadow: 0 18px 80px rgba(0,0,0,0.38); backdrop-filter: blur(14px); padding: 32px 30px 28px; }
-    .topbar { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
-    .topbar img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.88); }
-    .topbar-text h1 { margin: 0 0 4px; font-size: 1.5rem; color: #fff; }
-    .topbar-text p { margin: 0; color: #c8cfda; font-size: 0.92rem; }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; color: #d8e0ee; margin-bottom: 18px; opacity: .88; text-decoration: none; }
-    .back-link:hover { opacity: 1; color: #fff; }
-    .section-title { margin: 0 0 16px; font-size: 1.6rem; color: #fff; }
-    .summary { color: #b0b8c8; line-height: 1.8; margin: 0 0 24px; font-size: 0.98rem; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-    .contact-item {
-      padding: 18px; border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
     }
-    .contact-item strong { display: block; color: #fff; font-size: 0.95rem; margin-bottom: 6px; }
-    .contact-item a { color: #a0aec0; font-size: 0.9rem; text-decoration: none; word-break: break-all; }
-    .contact-item a:hover { color: #fff; }
-    .contact-item span { color: #6b7280; font-size: 0.9rem; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: 12px;
-      background: rgba(255,255,255,0.1); color: #fff;
-      text-decoration: none; font-size: 0.95rem;
-      border: 1px solid rgba(255,255,255,0.12);
-      transition: background 0.2s;
+
+    /* ══ 顶栏与菜单 ══ */
+    .nt-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10001; display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 26px; pointer-events: none; }
+    .nt-name { pointer-events: auto; text-decoration: none; display: inline-block; padding: 10px 16px 11px; border-radius: 14px; background: rgba(8,8,12,.55); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color .3s; }
+    .nt-name:hover { border-color: rgba(255,255,255,.24); }
+    .nt-name .zh { display: block; font-size: .98rem; font-weight: 300; color: #f2f2f4; letter-spacing: .3em; }
+    .nt-name .en { display: block; font-size: .58rem; font-weight: 300; letter-spacing: .34em; text-transform: uppercase; color: #9a9aa4; margin-top: 4px; }
+    .nt-toggle { pointer-events: auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(8,8,12,.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); cursor: pointer; position: relative; transition: border-color .3s, transform .45s cubic-bezier(.4,0,.2,1); }
+    .nt-toggle:hover { border-color: rgba(255,255,255,.32); }
+    .nt-toggle span { position: absolute; top: 50%; left: 50%; width: 16px; height: 1.5px; background: #e8e8ec; transform: translate(-50%,-50%); transition: background .25s; }
+    .nt-toggle span::before, .nt-toggle span::after { content: ""; position: absolute; left: 0; width: 16px; height: 1.5px; background: #e8e8ec; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .nt-toggle span::before { top: -5px; }
+    .nt-toggle span::after { top: 5px; }
+    .nt-toggle.open { transform: rotate(90deg); border-color: rgba(255,255,255,.4); }
+    .nt-toggle.open span { background: transparent; }
+    .nt-toggle.open span::before { transform: translateY(5px) rotate(45deg); }
+    .nt-toggle.open span::after { transform: translateY(-5px) rotate(-45deg); }
+    .nt-menu { position: fixed; inset: 0; z-index: 10000; background: rgba(5,5,9,.96); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: flex; flex-direction: column; justify-content: center; padding: 0 8vw; opacity: 0; visibility: hidden; transition: opacity .45s, visibility .45s; }
+    .nt-menu.open { opacity: 1; visibility: visible; }
+    .nt-link { display: flex; align-items: baseline; gap: 16px; padding: 11px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.06); opacity: 0; transform: translateY(20px); transition: opacity .5s, transform .5s; }
+    .nt-menu.open .nt-link { opacity: 1; transform: none; }
+    .nt-menu.open .nt-link:nth-child(1) { transition-delay: .06s; } .nt-menu.open .nt-link:nth-child(2) { transition-delay: .11s; }
+    .nt-menu.open .nt-link:nth-child(3) { transition-delay: .16s; } .nt-menu.open .nt-link:nth-child(4) { transition-delay: .21s; }
+    .nt-link .no { font-size: .7rem; letter-spacing: .2em; color: #62626e; width: 2em; }
+    .nt-link .t { font-size: clamp(1.05rem, 2.4vw, 1.45rem); font-weight: 400; color: #cfcfd6; letter-spacing: .06em; transition: color .3s, letter-spacing .3s; }
+    .nt-link:hover .t { color: #fff; letter-spacing: .12em; }
+    .nt-foot { margin-top: 36px; font-size: .72rem; letter-spacing: .16em; color: #565662; text-transform: uppercase; }
+
+    /* ══ 页面骨架 ══ */
+    .page { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 132px 28px 70px; }
+    .label { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: #8a8a96; margin-bottom: 16px; }
+    h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; line-height: 1.25; margin-bottom: 14px; }
+    h1 em { font-family: "Georgia", "Songti SC", serif; font-style: italic; font-weight: 400; }
+    .lede { color: #9aa0ac; font-size: .98rem; max-width: 560px; line-height: 1.85; margin-bottom: 56px; }
+
+    .frame { position: relative; }
+    .frame .cr { position: absolute; inset: 0; pointer-events: none; }
+    .frame::before, .frame::after,
+    .frame .cr::before, .frame .cr::after {
+      content: ""; position: absolute; width: 11px; height: 11px; pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3)) center/1px 11px no-repeat,
+        linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3)) center/11px 1px no-repeat;
     }
-    .btn:hover { background: rgba(255,255,255,0.18); }
-    .availability {
-      margin-top: 24px; padding: 16px 20px; border-radius: 14px;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    .frame::before { top: -6px; left: -6px; }
+    .frame::after { top: -6px; right: -6px; }
+    .frame .cr::before { bottom: -6px; left: -6px; }
+    .frame .cr::after { bottom: -6px; right: -6px; }
+
+    /* ══ 名片卡 ══ */
+    .card { display: flex; gap: 32px; align-items: flex-start; border: 1px solid rgba(255,255,255,.09); background: rgba(12,12,18,.55); padding: 36px 38px; margin-bottom: 22px; flex-wrap: wrap; }
+    .card .avatar { width: 104px; height: 104px; border-radius: 22px; object-fit: cover; flex: none; }
+    .who { flex: 1; min-width: 260px; }
+    .who h2 { font-size: 1.5rem; font-weight: 500; color: #f2f2f5; margin-bottom: 6px; }
+    .who h2 span { font-size: .8rem; color: #7c818d; font-weight: 400; letter-spacing: .12em; margin-left: 10px; }
+    .status { display: flex; align-items: center; gap: 8px; font-size: .9rem; color: #a8e6a3; margin-bottom: 18px; }
+    .status i { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 10px rgba(74,222,128,.6); animation: pulse 2.2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips span { padding: 5px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: #a8acb8; font-size: .78rem; }
+    .wechat { text-align: center; flex: none; }
+    .wechat img { width: 112px; height: 112px; border-radius: 12px; object-fit: cover; display: block; border: 1px solid rgba(255,255,255,.12); }
+    .wechat span { font-size: .7rem; color: #6f7480; letter-spacing: .16em; display: block; margin-top: 9px; }
+
+    /* ══ 联系通道 ══ */
+    .links { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(255,255,255,.09); margin-bottom: 60px; }
+    .lk { display: flex; align-items: center; gap: 16px; padding: 22px 26px; text-decoration: none; color: #d8dae2; border-top: 1px solid rgba(255,255,255,.09); transition: background .3s, padding-left .3s; }
+    .lk:nth-child(-n+2) { border-top: none; }
+    .lk:nth-child(even) { border-left: 1px solid rgba(255,255,255,.09); }
+    .lk:hover { background: rgba(255,255,255,.03); padding-left: 34px; }
+    .lk .ic { width: 40px; height: 40px; flex: none; border: 1px solid rgba(255,255,255,.16); display: flex; align-items: center; justify-content: center; color: #d8dae2; transition: background .3s, color .3s, border-color .3s; }
+    .lk .ic svg { width: 17px; height: 17px; }
+    .lk:hover .ic { background: #e8eaef; color: #060608; border-color: #e8eaef; }
+    .lk .tx { display: flex; flex-direction: column; gap: 2px; }
+    .lk .k { font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: #6f7480; }
+    .lk .v { font-size: .92rem; color: #eceef2; }
+    .lk .ar { margin-left: auto; color: #565a66; transition: transform .3s, color .3s; }
+    .lk:hover .ar { transform: translateX(4px); color: #fff; }
+
+    .foot { text-align: center; font-size: .78rem; color: #565a66; letter-spacing: .06em; margin-top: 20px; }
+
+    @media (max-width: 860px) {
+      .page { padding: 112px 20px 50px; }
+      .card { padding: 26px 24px; }
+      .links { grid-template-columns: 1fr; }
+      .lk { border-top: 1px solid rgba(255,255,255,.09); }
+      .lk:first-child { border-top: none; }
+      .lk:nth-child(even) { border-left: none; }
     }
-    .availability h4 { margin: 0 0 10px; color: #fff; font-size: 1rem; }
-    .availability ul { margin: 0; padding-left: 18px; color: #a0aec0; font-size: 0.92rem; line-height: 1.8; }
-    .cursor-glow { position: fixed; left: 0; top: 0; width: 14px; height: 14px; margin-left: -7px; margin-top: -7px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(173,216,255,0.42) 45%, rgba(173,216,255,0) 75%); pointer-events: none; z-index: 9999; opacity: .82; transform: translate3d(-100px, -100px, 0); transition: transform .08s linear; mix-blend-mode: screen; }
-    @media (max-width: 600px) {
-      .contact-grid { grid-template-columns: 1fr; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation: none !important; } }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.matchMedia('(hover: hover)').matches) {
-        const glow = document.createElement('div');
-        glow.className = 'cursor-glow';
-        document.body.appendChild(glow);
-        window.addEventListener('mousemove', (event) => {
-          glow.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
-        });
-      }
-    });
-  </script>
 </head>
 <body>
-  <style>
-    body { padding-top: 64px; }
-    .nt-bar{position:fixed;top:0;left:0;right:0;z-index:10001;display:flex;align-items:flex-start;justify-content:space-between;padding:20px 26px;pointer-events:none}
-    .nt-name{pointer-events:auto;text-decoration:none;display:inline-block;padding:10px 16px 11px;border-radius:14px;background:rgba(8,8,12,.55);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .3s}
-    .nt-name:hover{border-color:rgba(255,255,255,.24)}
-    .nt-name .zh{display:block;font-size:.98rem;font-weight:300;color:#f2f2f4;letter-spacing:.3em}
-    .nt-name .en{display:block;font-size:.58rem;font-weight:300;letter-spacing:.34em;text-transform:uppercase;color:#9a9aa4;margin-top:4px}
-    .nt-toggle{pointer-events:auto;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(8,8,12,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer;position:relative;transition:border-color .3s,transform .45s cubic-bezier(.4,0,.2,1)}
-    .nt-toggle:hover{border-color:rgba(255,255,255,.32)}
-    .nt-toggle span{position:absolute;top:50%;left:50%;width:16px;height:1.5px;background:#e8e8ec;transform:translate(-50%,-50%);transition:background .25s}
-    .nt-toggle span::before,.nt-toggle span::after{content:"";position:absolute;left:0;width:16px;height:1.5px;background:#e8e8ec;transition:transform .35s cubic-bezier(.4,0,.2,1)}
-    .nt-toggle span::before{top:-5px}
-    .nt-toggle span::after{top:5px}
-    .nt-toggle.open{transform:rotate(90deg);border-color:rgba(255,255,255,.4)}
-    .nt-toggle.open span{background:transparent}
-    .nt-toggle.open span::before{transform:translateY(5px) rotate(45deg)}
-    .nt-toggle.open span::after{transform:translateY(-5px) rotate(-45deg)}
-    .nt-menu{position:fixed;inset:0;z-index:10000;background:rgba(5,5,9,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;justify-content:center;padding:0 8vw;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
-    .nt-menu.open{opacity:1;visibility:visible}
-    .nt-link{display:flex;align-items:baseline;gap:16px;padding:11px 0;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
-    .nt-menu.open .nt-link{opacity:1;transform:none}
-    .nt-menu.open .nt-link:nth-child(1){transition-delay:.06s}.nt-menu.open .nt-link:nth-child(2){transition-delay:.11s}
-    .nt-menu.open .nt-link:nth-child(3){transition-delay:.16s}.nt-menu.open .nt-link:nth-child(4){transition-delay:.21s}
-    .nt-menu.open .nt-link:nth-child(5){transition-delay:.26s}.nt-menu.open .nt-link:nth-child(6){transition-delay:.31s}
-    .nt-link .no{font-size:.7rem;letter-spacing:.2em;color:#62626e;width:2em}
-    .nt-link .t{font-size:clamp(1.05rem,2.4vw,1.45rem);font-weight:400;color:#cfcfd6;letter-spacing:.06em;transition:color .3s,letter-spacing .3s}
-    .nt-link:hover .t{color:#fff;letter-spacing:.12em}
-    .nt-foot{margin-top:36px;font-size:.72rem;letter-spacing:.16em;color:#565662;text-transform:uppercase}
-  </style>
   <header class="nt-bar">
     <a class="nt-name" href="index.html"><span class="zh">aaaloooooof</span><span class="en">Jingyi Lou · Portfolio</span></a>
     <button class="nt-toggle" aria-label="展开导航菜单" aria-expanded="false"><span></span></button>
   </header>
   <nav class="nt-menu" aria-label="全站导航">
-    <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">首页</span></a>
-    <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">项目案例</span></a>
-    <a class="nt-link" href="thoughts.html"><span class="no">03</span><span class="t">产品思考</span></a>
-    <a class="nt-link" href="weekly.html"><span class="no">04</span><span class="t">周报</span></a>
-    <a class="nt-link" href="about.html"><span class="no">05</span><span class="t">关于我</span></a>
-    <a class="nt-link" href="resume.html"><span class="no">06</span><span class="t">简历与联系</span></a>
+    <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">Hero · 首页</span></a>
+    <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">Projects · 产品墙</span></a>
+    <a class="nt-link" href="about.html"><span class="no">03</span><span class="t">Background · 为什么我懂教育</span></a>
+    <a class="nt-link" href="resume.html"><span class="no">04</span><span class="t">Contact · 联系方式</span></a>
     <div class="nt-foot">教育科技 × AI 产品 · github.com/aaaloooooof</div>
   </nav>
-  <script>
-    (function(){var t=document.querySelector('.nt-toggle'),m=document.querySelector('.nt-menu');function set(o){m.classList.toggle('open',o);t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}t.addEventListener('click',function(){set(!m.classList.contains('open'));});document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});m.addEventListener('click',function(e){if(e.target===m)set(false);});})();
-  </script>
-  <div class="page">
-    <div class="panel">
-      <a class="back-link" href="index.html">← 返回首页</a>
-      <div class="topbar">
-        <img src="assets/avatar.jpg" alt="avatar">
-        <div class="topbar-text">
-          <h1>楼婧怡</h1>
-          <p>华东师范大学 · 课程与教学论硕士 · 2028 届</p>
+
+  <main class="page">
+    <div class="label">Contact</div>
+    <h1>联系方式 <em>+ 求职状态</em></h1>
+    <p class="lede">如果你正在找一位懂教育、能独立把想法做成可运行产品的 AI 产品经理，欢迎直接联系。</p>
+
+    <div class="card frame"><span class="cr"></span>
+      <img class="avatar" src="assets/avatar.jpg" alt="楼婧怡">
+      <div class="who">
+        <h2>楼婧怡 <span>ECNU · 2028 届</span></h2>
+        <p class="status"><i></i>开放 AI 产品实习机会</p>
+        <div class="chips">
+          <span>Base 上海</span>
+          <span>每周 4–5 天</span>
+          <span>可到岗 6 个月以上</span>
+          <span>公司类型不限</span>
         </div>
       </div>
-
-      <h2 class="section-title">📄 简介</h2>
-      <p class="summary">
-        Focus on turning educational problems into runnable AI product prototypes.<br><br>
-        华东师范大学课程与教学论硕士在读（推免），本科杭州师范大学小学教育（数学）综合排名 2/287。<br>
-        关注 AI × 教育场景的产品化实践，8 个月独立完成 7+ 个可运行原型，覆盖学习路径规划、工作流自动化、数字展厅、Agent Skill 等方向。
-      </p>
-
-      <a class="btn" href="assets/resume.pdf" download>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        下载简历 PDF
-      </a>
-
-      <h2 class="section-title" style="margin-top: 32px;">📬 联系方式</h2>
-      <div class="contact-grid">
-        <div class="contact-item">
-          <strong>📧 邮箱</strong>
-          <a href="mailto:51284102015@stu.ecnu.edu.cn">51284102015@stu.ecnu.edu.cn</a>
-        </div>
-        <div class="contact-item">
-          <strong>📱 手机</strong>
-          <span>19818512496</span>
-        </div>
-        <div class="contact-item">
-          <strong>🐙 GitHub</strong>
-          <a href="https://github.com/aaaloooooof" target="_blank" rel="noopener noreferrer">github.com/aaaloooooof</a>
-        </div>
-        <div class="contact-item">
-          <strong>📕 小红书</strong>
-          <a href="https://xhslink.cn/m/9AVXSTHRclc" target="_blank" rel="noopener noreferrer">个人内容账号</a>
-        </div>
-      </div>
-
-      <div class="availability">
-        <h4>🎯 到岗条件</h4>
-        <ul>
-          <li>Base 上海</li>
-          <li>每周可实习 4-5 天</li>
-          <li>可到岗 6 个月以上</li>
-          <li>公司类型不限（大厂 / 创业公司 / 外企均可）</li>
-        </ul>
+      <div class="wechat">
+        <img src="assets/wechat.jpg" alt="微信二维码">
+        <span>微信扫一扫</span>
       </div>
     </div>
-  </div>
+
+    <div class="links frame"><span class="cr"></span>
+      <a class="lk" href="mailto:51284102015@stu.ecnu.edu.cn">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="m22 7-10 6L2 7"/></svg></span>
+        <span class="tx"><span class="k">Email</span><span class="v">51284102015@stu.ecnu.edu.cn</span></span>
+        <span class="ar">→</span>
+      </a>
+      <a class="lk" href="https://github.com/aaaloooooof" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></span>
+        <span class="tx"><span class="k">GitHub</span><span class="v">github.com/aaaloooooof</span></span>
+        <span class="ar">→</span>
+      </a>
+      <a class="lk" href="tel:19818512496">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span class="tx"><span class="k">Phone</span><span class="v">19818512496</span></span>
+        <span class="ar">→</span>
+      </a>
+      <a class="lk" href="https://github.com/aaaloooooof/personal-website" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+        <span class="tx"><span class="k">This Site</span><span class="v">本站源代码与迭代记录</span></span>
+        <span class="ar">→</span>
+      </a>
+    </div>
+
+    <footer class="foot">© 2026 楼婧怡 · aaaloooooof</footer>
+  </main>
+
+  <script>
+    (function () {
+      var t = document.querySelector('.nt-toggle'), m = document.querySelector('.nt-menu');
+      function set(o) { m.classList.toggle('open', o); t.classList.toggle('open', o); t.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : ''; }
+      t.addEventListener('click', function () { set(!m.classList.contains('open')); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+      m.addEventListener('click', function (e) { if (e.target === m) set(false); });
+    })();
+  </script>
 </body>
 </html>

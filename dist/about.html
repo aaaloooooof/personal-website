@@ -3,245 +3,168 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>关于我 | 楼婧怡</title>
+  <title>Background · 为什么我懂教育 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
     body {
-      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #1e2430;
+      font-family: "Inter", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(232, 221, 203, 0.55), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(217, 224, 234, 0.55), transparent 28%),
-        linear-gradient(180deg, #f8f5ef 0%, #f4f1eb 46%, #efebe4 100%);
+        radial-gradient(circle at 50% 24%, rgba(40,46,64,0.20), transparent 55%),
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+        #060608;
+      background-size: auto, 44px 44px, 44px 44px, auto;
+      color: #e8eaef;
+      overflow-x: hidden;
     }
-    .page {
-      width: min(920px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 40px 0 60px;
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
     }
-    .back-link {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 12px 16px; border-radius: 999px;
-      border: 1px solid rgba(46, 54, 69, 0.09);
-      background: rgba(255, 255, 255, 0.72);
-      color: #4c5563; font-size: 0.95rem;
-      box-shadow: 0 10px 28px rgba(71, 61, 49, 0.07);
-      text-decoration: none;
+
+    /* ══ 顶栏与菜单 ══ */
+    .nt-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10001; display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 26px; pointer-events: none; }
+    .nt-name { pointer-events: auto; text-decoration: none; display: inline-block; padding: 10px 16px 11px; border-radius: 14px; background: rgba(8,8,12,.55); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color .3s; }
+    .nt-name:hover { border-color: rgba(255,255,255,.24); }
+    .nt-name .zh { display: block; font-size: .98rem; font-weight: 300; color: #f2f2f4; letter-spacing: .3em; }
+    .nt-name .en { display: block; font-size: .58rem; font-weight: 300; letter-spacing: .34em; text-transform: uppercase; color: #9a9aa4; margin-top: 4px; }
+    .nt-toggle { pointer-events: auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(8,8,12,.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); cursor: pointer; position: relative; transition: border-color .3s, transform .45s cubic-bezier(.4,0,.2,1); }
+    .nt-toggle:hover { border-color: rgba(255,255,255,.32); }
+    .nt-toggle span { position: absolute; top: 50%; left: 50%; width: 16px; height: 1.5px; background: #e8e8ec; transform: translate(-50%,-50%); transition: background .25s; }
+    .nt-toggle span::before, .nt-toggle span::after { content: ""; position: absolute; left: 0; width: 16px; height: 1.5px; background: #e8e8ec; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .nt-toggle span::before { top: -5px; }
+    .nt-toggle span::after { top: 5px; }
+    .nt-toggle.open { transform: rotate(90deg); border-color: rgba(255,255,255,.4); }
+    .nt-toggle.open span { background: transparent; }
+    .nt-toggle.open span::before { transform: translateY(5px) rotate(45deg); }
+    .nt-toggle.open span::after { transform: translateY(-5px) rotate(-45deg); }
+    .nt-menu { position: fixed; inset: 0; z-index: 10000; background: rgba(5,5,9,.96); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: flex; flex-direction: column; justify-content: center; padding: 0 8vw; opacity: 0; visibility: hidden; transition: opacity .45s, visibility .45s; }
+    .nt-menu.open { opacity: 1; visibility: visible; }
+    .nt-link { display: flex; align-items: baseline; gap: 16px; padding: 11px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.06); opacity: 0; transform: translateY(20px); transition: opacity .5s, transform .5s; }
+    .nt-menu.open .nt-link { opacity: 1; transform: none; }
+    .nt-menu.open .nt-link:nth-child(1) { transition-delay: .06s; } .nt-menu.open .nt-link:nth-child(2) { transition-delay: .11s; }
+    .nt-menu.open .nt-link:nth-child(3) { transition-delay: .16s; } .nt-menu.open .nt-link:nth-child(4) { transition-delay: .21s; }
+    .nt-link .no { font-size: .7rem; letter-spacing: .2em; color: #62626e; width: 2em; }
+    .nt-link .t { font-size: clamp(1.05rem, 2.4vw, 1.45rem); font-weight: 400; color: #cfcfd6; letter-spacing: .06em; transition: color .3s, letter-spacing .3s; }
+    .nt-link:hover .t { color: #fff; letter-spacing: .12em; }
+    .nt-foot { margin-top: 36px; font-size: .72rem; letter-spacing: .16em; color: #565662; text-transform: uppercase; }
+
+    /* ══ 页面骨架 ══ */
+    .page { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 132px 28px 70px; }
+    .label { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: #8a8a96; margin-bottom: 16px; }
+    h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; line-height: 1.25; margin-bottom: 14px; }
+    h1 em { font-family: "Georgia", "Songti SC", serif; font-style: italic; font-weight: 400; }
+    .lede { color: #9aa0ac; font-size: .98rem; max-width: 560px; line-height: 1.85; margin-bottom: 64px; }
+
+    /* ══ 十字对位标记 ══ */
+    .frame { position: relative; }
+    .frame .cr { position: absolute; inset: 0; pointer-events: none; }
+    .frame::before, .frame::after,
+    .frame .cr::before, .frame .cr::after {
+      content: ""; position: absolute; width: 11px; height: 11px; pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3)) center/1px 11px no-repeat,
+        linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3)) center/11px 1px no-repeat;
     }
-    .back-link:hover { background: rgba(255, 255, 255, 0.92); color: #202631; }
-    .card {
-      margin-top: 20px; padding: 40px;
-      border-radius: 32px;
-      background: rgba(255, 252, 247, 0.72);
-      border: 1px solid rgba(68, 66, 62, 0.08);
-      box-shadow: 0 24px 80px rgba(76, 61, 44, 0.09);
-      backdrop-filter: blur(12px);
+    .frame::before { top: -6px; left: -6px; }
+    .frame::after { top: -6px; right: -6px; }
+    .frame .cr::before { bottom: -6px; left: -6px; }
+    .frame .cr::after { bottom: -6px; right: -6px; }
+
+    /* ══ 三栏 ══ */
+    .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,.09); margin-bottom: 72px; }
+    .col { padding: 30px 28px 34px; border-left: 1px solid rgba(255,255,255,.09); transition: background .3s; }
+    .col:first-child { border-left: none; }
+    .col:hover { background: rgba(255,255,255,.025); }
+    .col h4 { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: #8a8a96; font-weight: 500; margin-bottom: 26px; display: flex; align-items: center; gap: 10px; }
+    .col h4::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
+    .item { margin-bottom: 24px; }
+    .item:last-child { margin-bottom: 0; }
+    .item b { display: block; font-size: 1.5rem; font-weight: 600; color: #fff; letter-spacing: .01em; margin-bottom: 6px; }
+    .item b i { font-family: "Georgia", serif; font-style: italic; font-weight: 400; font-size: .85rem; color: #7c818d; margin-left: 6px; letter-spacing: .06em; }
+    .item p { font-size: .86rem; color: #9aa0ac; line-height: 1.8; }
+
+    /* ══ 教育与荣誉带 ══ */
+    .strip { border: 1px solid rgba(255,255,255,.09); padding: 8px 30px; margin-bottom: 60px; }
+    .strip .row { display: flex; align-items: baseline; gap: 18px; padding: 15px 0; border-top: 1px solid rgba(255,255,255,.06); }
+    .strip .row:first-child { border-top: none; }
+    .strip .yr { font-size: .72rem; letter-spacing: .18em; color: #62626e; min-width: 128px; font-variant-numeric: tabular-nums; }
+    .strip .tt { font-size: .95rem; color: #e4e6eb; }
+    .strip .dd { font-size: .82rem; color: #8f939f; margin-left: auto; text-align: right; }
+
+    .foot { text-align: center; font-size: .78rem; color: #565a66; letter-spacing: .06em; margin-top: 20px; }
+
+    @media (max-width: 860px) {
+      .page { padding: 112px 20px 50px; }
+      .cols { grid-template-columns: 1fr; }
+      .col { border-left: none; border-top: 1px solid rgba(255,255,255,.09); }
+      .col:first-child { border-top: none; }
+      .strip .yr { min-width: 0; }
+      .strip .row { flex-wrap: wrap; gap: 6px; }
+      .strip .dd { margin-left: 0; text-align: left; width: 100%; }
     }
-    .profile-header {
-      display: flex; align-items: center; gap: 24px;
-      margin-bottom: 32px;
-    }
-    .profile-header img {
-      width: 96px; height: 96px;
-      border-radius: 28px; object-fit: cover;
-      box-shadow: 0 14px 32px rgba(92, 79, 60, 0.14);
-    }
-    .profile-header h1 { margin: 0 0 6px; font-size: 1.8rem; color: #1a2130; }
-    .profile-header p { margin: 0; color: #6d7380; font-size: 1rem; line-height: 1.7; }
-    .quote {
-      border-left: 3px solid #cfb79a;
-      padding-left: 16px;
-      margin: 20px 0;
-      color: #5f6674;
-      font-style: italic;
-      line-height: 1.8;
-    }
-    h2 { font-size: 1.3rem; color: #1d2431; margin: 32px 0 14px; letter-spacing: -0.02em; }
-    h2:first-of-type { margin-top: 0; }
-    p { color: #4a5260; line-height: 1.85; font-size: 0.98rem; margin: 0 0 14px; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-    .skill-tag {
-      padding: 8px 14px; border-radius: 999px;
-      background: rgba(246, 241, 234, 0.95);
-      border: 1px solid rgba(79, 76, 69, 0.08);
-      color: #4f5663; font-size: 0.9rem;
-    }
-    .timeline { position: relative; padding-left: 20px; }
-    .timeline::before {
-      content: ""; position: absolute; left: 4px; top: 6px; bottom: 6px;
-      width: 1px; background: linear-gradient(180deg, rgba(185, 174, 159, 0.8), rgba(224, 218, 209, 0.4));
-    }
-    .timeline-item { position: relative; margin-bottom: 22px; }
-    .timeline-item::before {
-      content: ""; position: absolute; left: -20px; top: 6px;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: #cfb79a; box-shadow: 0 0 0 4px rgba(207, 183, 154, 0.16);
-    }
-    .timeline-item strong { display: block; color: #2a313d; font-size: 1.02rem; margin-bottom: 2px; }
-    .timeline-item .time { color: #8a909b; font-size: 0.85rem; }
-    .timeline-item p { margin-top: 6px; font-size: 0.94rem; }
-    .certs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-    .cert {
-      padding: 6px 12px; border-radius: 8px;
-      background: rgba(255,255,255,0.6);
-      border: 1px solid rgba(79, 76, 69, 0.1);
-      color: #5f6674; font-size: 0.85rem;
-    }
-    .highlight-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;
-    }
-    .highlight-box {
-      padding: 14px; border-radius: 16px;
-      background: rgba(255,255,255,0.5);
-      border: 1px solid rgba(79, 76, 69, 0.08);
-    }
-    .highlight-box strong { display: block; color: #2a313d; font-size: 1rem; margin-bottom: 4px; }
-    .highlight-box span { color: #6b7280; font-size: 0.9rem; line-height: 1.6; }
-    @media (max-width: 600px) {
-      .card { padding: 24px; border-radius: 24px; }
-      .profile-header { flex-direction: column; text-align: center; }
-      .highlight-grid { grid-template-columns: 1fr; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; } }
   </style>
 </head>
 <body>
-  <style>
-    body { padding-top: 64px; }
-    .nt-bar{position:fixed;top:0;left:0;right:0;z-index:10001;display:flex;align-items:flex-start;justify-content:space-between;padding:20px 26px;pointer-events:none}
-    .nt-name{pointer-events:auto;text-decoration:none;display:inline-block;padding:10px 16px 11px;border-radius:14px;background:rgba(8,8,12,.55);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .3s}
-    .nt-name:hover{border-color:rgba(255,255,255,.24)}
-    .nt-name .zh{display:block;font-size:.98rem;font-weight:300;color:#f2f2f4;letter-spacing:.3em}
-    .nt-name .en{display:block;font-size:.58rem;font-weight:300;letter-spacing:.34em;text-transform:uppercase;color:#9a9aa4;margin-top:4px}
-    .nt-toggle{pointer-events:auto;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(8,8,12,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer;position:relative;transition:border-color .3s,transform .45s cubic-bezier(.4,0,.2,1)}
-    .nt-toggle:hover{border-color:rgba(255,255,255,.32)}
-    .nt-toggle span{position:absolute;top:50%;left:50%;width:16px;height:1.5px;background:#e8e8ec;transform:translate(-50%,-50%);transition:background .25s}
-    .nt-toggle span::before,.nt-toggle span::after{content:"";position:absolute;left:0;width:16px;height:1.5px;background:#e8e8ec;transition:transform .35s cubic-bezier(.4,0,.2,1)}
-    .nt-toggle span::before{top:-5px}
-    .nt-toggle span::after{top:5px}
-    .nt-toggle.open{transform:rotate(90deg);border-color:rgba(255,255,255,.4)}
-    .nt-toggle.open span{background:transparent}
-    .nt-toggle.open span::before{transform:translateY(5px) rotate(45deg)}
-    .nt-toggle.open span::after{transform:translateY(-5px) rotate(-45deg)}
-    .nt-menu{position:fixed;inset:0;z-index:10000;background:rgba(5,5,9,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;justify-content:center;padding:0 8vw;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
-    .nt-menu.open{opacity:1;visibility:visible}
-    .nt-link{display:flex;align-items:baseline;gap:16px;padding:11px 0;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
-    .nt-menu.open .nt-link{opacity:1;transform:none}
-    .nt-menu.open .nt-link:nth-child(1){transition-delay:.06s}.nt-menu.open .nt-link:nth-child(2){transition-delay:.11s}
-    .nt-menu.open .nt-link:nth-child(3){transition-delay:.16s}.nt-menu.open .nt-link:nth-child(4){transition-delay:.21s}
-    .nt-menu.open .nt-link:nth-child(5){transition-delay:.26s}.nt-menu.open .nt-link:nth-child(6){transition-delay:.31s}
-    .nt-link .no{font-size:.7rem;letter-spacing:.2em;color:#62626e;width:2em}
-    .nt-link .t{font-size:clamp(1.05rem,2.4vw,1.45rem);font-weight:400;color:#cfcfd6;letter-spacing:.06em;transition:color .3s,letter-spacing .3s}
-    .nt-link:hover .t{color:#fff;letter-spacing:.12em}
-    .nt-foot{margin-top:36px;font-size:.72rem;letter-spacing:.16em;color:#565662;text-transform:uppercase}
-  </style>
   <header class="nt-bar">
     <a class="nt-name" href="index.html"><span class="zh">aaaloooooof</span><span class="en">Jingyi Lou · Portfolio</span></a>
     <button class="nt-toggle" aria-label="展开导航菜单" aria-expanded="false"><span></span></button>
   </header>
   <nav class="nt-menu" aria-label="全站导航">
-    <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">首页</span></a>
-    <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">项目案例</span></a>
-    <a class="nt-link" href="thoughts.html"><span class="no">03</span><span class="t">产品思考</span></a>
-    <a class="nt-link" href="weekly.html"><span class="no">04</span><span class="t">周报</span></a>
-    <a class="nt-link" href="about.html"><span class="no">05</span><span class="t">关于我</span></a>
-    <a class="nt-link" href="resume.html"><span class="no">06</span><span class="t">简历与联系</span></a>
+    <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">Hero · 首页</span></a>
+    <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">Projects · 产品墙</span></a>
+    <a class="nt-link" href="about.html"><span class="no">03</span><span class="t">Background · 为什么我懂教育</span></a>
+    <a class="nt-link" href="resume.html"><span class="no">04</span><span class="t">Contact · 联系方式</span></a>
     <div class="nt-foot">教育科技 × AI 产品 · github.com/aaaloooooof</div>
   </nav>
-  <script>
-    (function(){var t=document.querySelector('.nt-toggle'),m=document.querySelector('.nt-menu');function set(o){m.classList.toggle('open',o);t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}t.addEventListener('click',function(){set(!m.classList.contains('open'));});document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});m.addEventListener('click',function(e){if(e.target===m)set(false);});})();
-  </script>
-  <div class="page">
-    <a class="back-link" href="index.html">← 返回首页</a>
-    <div class="card">
-      <div class="profile-header">
-        <img src="assets/avatar.jpg" alt="avatar">
-        <div>
-          <h1>楼婧怡</h1>
-          <p>华东师范大学 · 课程与教学论 硕士在读<br>Focus on turning educational problems into runnable AI product prototypes.</p>
-        </div>
+
+  <main class="page">
+    <div class="label">Background</div>
+    <h1>懂学习的人，<br>才做得出<em>懂学习的 AI</em></h1>
+    <p class="lede">研究学习科学、站过讲台、做过内容——产品设计里的每一个判断，都有教育现场的一手经验兜底。</p>
+
+    <div class="cols frame"><span class="cr"></span>
+      <div class="col">
+        <h4>Research</h4>
+        <div class="item"><b>7 篇<i>1 作 / 通讯</i></b><p>中英文实证研究在投 / 录用，含 Learning and Instruction 等刊。</p></div>
+        <div class="item"><b>学习科学</b><p>研究方向：教育测量、教师教育、AI 教育应用。</p></div>
       </div>
-
-      <div class="quote">
-        "把教育问题变成可运行的 AI 产品原型。"
+      <div class="col">
+        <h4>Experience</h4>
+        <div class="item"><b>23 节<i>95%+ 参与率</i></b><p>AI 应用与 Python 创意编程课程独立设计交付，40+ 青少年学员。</p></div>
+        <div class="item"><b>量化负责人</b><p>教育工作坊量化分析与数据体系搭建。</p></div>
+        <div class="item"><b>200+ 人</b><p>复旦 NowIdea 产品社群创始人，定位孵化产品、对接投资。</p></div>
       </div>
-
-      <h2>🎯 我在做什么</h2>
-      <p>关注 AI × 教育场景的产品化实践：学习支持工具、教育数据分析、AI workflow 与前端原型开发。</p>
-      <p>持续的教育研究（学习科学、教师教育、教育评价）让产品设计更关注学习过程、用户认知负担与教育价值——而不只停留在功能实现层面。</p>
-
-      <h2>🛠️ 技能栈</h2>
-      <div class="skill-tags">
-        <span class="skill-tag">AI 产品 0→1</span>
-        <span class="skill-tag">需求分析</span>
-        <span class="skill-tag">用户研究</span>
-        <span class="skill-tag">数据分析</span>
-        <span class="skill-tag">Prompt 设计</span>
-        <span class="skill-tag">工作流编排</span>
-        <span class="skill-tag">Django + Vue</span>
-        <span class="skill-tag">内容运营</span>
-        <span class="skill-tag">教学课程设计</span>
+      <div class="col">
+        <h4>Content</h4>
+        <div class="item"><b>0→5000+</b><p>小红书个人内容账号冷启动增长。</p></div>
+        <div class="item"><b>多公众号</b><p>教育内容矩阵运营，持续输出产品与学习科学内容。</p></div>
       </div>
-
-      <h2>📍 经历</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <strong>华东师范大学 · 课程与教学论 硕士</strong>
-          <span class="time">2025.9 ～ 至今 · 推免生</span>
-          <p>研究关注：教育测量、学习科学与 AI 教育应用。7 篇中英文实证研究在投/录用。</p>
-        </div>
-        <div class="timeline-item">
-          <strong>杭州好好搭搭科技 · AI 课程讲师</strong>
-          <span class="time">2025.3 ～ 2025.6 · 实习</span>
-          <p>面向 40 余名青少年用户，独立完成 23 节 AI 应用与 Python 创意编程课程的内容设计和交付，课程参与率达 95% 以上。</p>
-        </div>
-        <div class="timeline-item">
-          <strong>复旦 NowIdea 社群 · 创始人</strong>
-          <span class="time">2026.7 ～ 至今</span>
-          <p>创立并运营 200-300 人产品社群，定位孵化产品、对接投资。</p>
-        </div>
-        <div class="timeline-item">
-          <strong>杭州师范大学 · 小学教育（数学）本科</strong>
-          <span class="time">2020.9 ～ 2025.06</span>
-          <p>综合排名 2/287。获国家奖学金、省政府奖学金（3 次）、三好学生（3 次）等。</p>
-        </div>
-      </div>
-
-      <h2>🏆 亮点</h2>
-      <div class="highlight-grid">
-        <div class="highlight-box">
-          <strong>竞赛</strong>
-          <span>挑战杯国家级金奖（学院首个）<br>互联网+国家级铜奖</span>
-        </div>
-        <div class="highlight-box">
-          <strong>科研</strong>
-          <span>7 篇中英文实证研究<br>含 Learning and Instruction 等刊</span>
-        </div>
-        <div class="highlight-box">
-          <strong>实践</strong>
-          <span>杭州亚运会开幕式舞蹈演员<br>省艺术节舞蹈一等奖</span>
-        </div>
-        <div class="highlight-box">
-          <strong>产品</strong>
-          <span>8 个月 7+ 个可运行原型<br>GitHub 11 个公开仓库</span>
-        </div>
-      </div>
-
-      <h2>📜 证书</h2>
-      <div class="certs">
-        <span class="cert">阿里云大模型工程师 ACA</span>
-        <span class="cert">高中数学教师资格证</span>
-        <span class="cert">CET-6</span>
-        <span class="cert">普通话二级乙等</span>
-      </div>
-
-      <h2>💡 产品观</h2>
-      <p>判断产品的三个问题：</p>
-      <p>1. <strong>AI 能否真正进入具体教育场景</strong>——不为用 AI 而用 AI</p>
-      <p>2. <strong>产品是否形成清晰的使用闭环</strong>——有完整的「进入—使用—反馈—留存」路径</p>
-      <p>3. <strong>技术是否能降低学习、教学或信息处理成本</strong>——价值锚点是"降本"，不是炫技</p>
     </div>
-  </div>
+
+    <div class="label">Education & Honors</div>
+    <div class="strip frame"><span class="cr"></span>
+      <div class="row"><span class="yr">2025 – 2028</span><span class="tt">华东师范大学 · 课程与教学论 硕士（推免）</span><span class="dd">2028 届 · 上海</span></div>
+      <div class="row"><span class="yr">2020 – 2025</span><span class="tt">杭州师范大学 · 小学教育（数学）本科</span><span class="dd">综合排名 2/287</span></div>
+      <div class="row"><span class="yr">竞赛</span><span class="tt">挑战杯 国家级金奖（学院首个）· 互联网+ 国家级铜奖</span><span class="dd"></span></div>
+      <div class="row"><span class="yr">荣誉</span><span class="tt">国家奖学金 · 省政府奖学金 ×3 · 阿里云大模型工程师 ACA · 高中数学教师资格证</span><span class="dd"></span></div>
+    </div>
+
+    <footer class="foot">© 2026 楼婧怡 · aaaloooooof</footer>
+  </main>
+
+  <script>
+    (function () {
+      var t = document.querySelector('.nt-toggle'), m = document.querySelector('.nt-menu');
+      function set(o) { m.classList.toggle('open', o); t.classList.toggle('open', o); t.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : ''; }
+      t.addEventListener('click', function () { set(!m.classList.contains('open')); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+      m.addEventListener('click', function (e) { if (e.target === m) set(false); });
+    })();
+  </script>
 </body>
 </html>
