@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Background · 为什么我懂教育 | 楼婧怡</title>
+  <title>About · 背景与思考 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -116,6 +116,18 @@
     .acc-b .tag { display: inline-block; font-size: .68rem; letter-spacing: .14em; color: #a8acb8; border: 1px solid rgba(255,255,255,.14); padding: 3px 10px; border-radius: 999px; margin-bottom: 9px; }
     .acc-b p { font-size: .83rem; color: #9aa0ac; line-height: 1.85; }
 
+    /* ══ AI 思考笔记 ══ */
+    .notes { border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; padding: 6px 26px; }
+    .note { display: flex; align-items: baseline; gap: 18px; padding: 17px 4px; border-top: 1px solid rgba(255,255,255,.06); text-decoration: none; transition: padding-left .3s, background .3s; }
+    .note:first-of-type { border-top: none; }
+    .note:hover { padding-left: 14px; background: rgba(255,255,255,.02); }
+    .note .nn { font-family: "Georgia", serif; font-style: italic; font-size: .95rem; color: #6f7480; min-width: 1.7em; }
+    .note .nt { font-size: .96rem; color: #e4e6eb; transition: color .3s; }
+    .note:hover .nt { color: #fff; }
+    .note .ns { font-size: .7rem; letter-spacing: .14em; color: #6f7480; white-space: nowrap; }
+    .note .na { margin-left: auto; flex: none; color: #565a66; transition: transform .3s, color .3s; }
+    .note:hover .na { transform: translateX(5px); color: #fff; }
+
     /* ══ 时间线 ══ */
     .tl { position: relative; margin: 0 0 66px 6px; padding-left: 34px; }
     .tl::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: rgba(255,255,255,.12); }
@@ -140,6 +152,7 @@
       .cols { grid-template-columns: 1fr; }
       .col { border-left: none; border-top: 1px solid rgba(255,255,255,.09); }
       .col:first-child { border-top: none; }
+      .note .ns { display: none; }
     }
     @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation: none !important; } .rv { opacity: 1; transform: none; } }
   </style>
@@ -152,15 +165,15 @@
   <nav class="nt-menu" aria-label="全站导航">
     <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">Hero · 首页</span></a>
     <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">Projects · 产品墙</span></a>
-    <a class="nt-link" href="about.html"><span class="no">03</span><span class="t">Background · 为什么我懂教育</span></a>
+    <a class="nt-link" href="about.html"><span class="no">03</span><span class="t">About · 背景与思考</span></a>
     <a class="nt-link" href="resume.html"><span class="no">04</span><span class="t">Contact · 联系方式</span></a>
     <div class="nt-foot">教育科技 × AI 产品 · github.com/aaaloooooof</div>
   </nav>
 
   <main class="page">
-    <div class="label rv">Background</div>
-    <h1 class="rv">懂学习的人，<br>才做得出<em>懂学习的 AI</em></h1>
-    <p class="lede rv">研究学习科学、站过讲台、做过内容——产品设计里的每一个判断，都有教育现场的一手经验兜底。</p>
+    <div class="label rv">About</div>
+    <h1 class="rv">教育产品的底气，<br>来自<em>教育现场</em></h1>
+    <p class="lede rv">研究学习科学、站过讲台、做过内容——产品设计里的每一个判断，都有一手经验兜底；关于 AI 的思考，则持续写在小红书。</p>
 
     <!-- 数字带 -->
     <div class="stats frame rv"><span class="cr"></span>
@@ -210,6 +223,16 @@
           <div class="acc-b"><div class="in"><span class="tag">持续输出</span><p>教育内容矩阵运营，持续输出产品与学习科学内容，训练把复杂问题讲清楚的能力。</p></div></div>
         </div>
       </div>
+    </div>
+
+    <!-- AI 思考笔记 -->
+    <div class="label rv">Notes · AI 思考（写在小红书）</div>
+    <div class="notes frame rv"><span class="cr"></span>
+      <a class="note" href="https://xhslink.cn/o/1nEqZAq4FZG" target="_blank" rel="noopener"><span class="nn">01</span><span class="nt">FDE，可能是企业 AI 时代最矛盾的岗位</span><span class="ns">行业观察 · 小红书</span><span class="na">→</span></a>
+      <a class="note" href="https://xhslink.cn/o/6JJSSg5oHFG" target="_blank" rel="noopener"><span class="nn">02</span><span class="nt">编程农场 vs 编程星露谷｜在游戏里学 Python</span><span class="ns">教育产品 · 小红书</span><span class="na">→</span></a>
+      <a class="note" href="https://xhslink.cn/o/37ep8178DjL" target="_blank" rel="noopener"><span class="nn">03</span><span class="nt">规范驱动的 Vibe Coding 全流程</span><span class="ns">工作流 · 小红书</span><span class="na">→</span></a>
+      <a class="note" href="https://xhslink.cn/o/7IB1sIlZrbO" target="_blank" rel="noopener"><span class="nn">04</span><span class="nt">如何做好 AI 产品叙事？Town 给了一套方法</span><span class="ns">产品叙事 · 小红书</span><span class="na">→</span></a>
+      <a class="note" href="https://xhslink.cn/o/AYlSy3nlIHt" target="_blank" rel="noopener"><span class="nn">05</span><span class="nt">AI 的下一步究竟是什么？</span><span class="ns">趋势思考 · 小红书</span><span class="na">→</span></a>
     </div>
 
     <!-- 教育与荣誉时间线 -->
