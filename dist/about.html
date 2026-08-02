@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>关于我 | aaaloooooof</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #1e2430;
+      background:
+        radial-gradient(circle at top left, rgba(232, 221, 203, 0.55), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(217, 224, 234, 0.55), transparent 28%),
+        linear-gradient(180deg, #f8f5ef 0%, #f4f1eb 46%, #efebe4 100%);
+    }
+    .page {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 60px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 16px; border-radius: 999px;
+      border: 1px solid rgba(46, 54, 69, 0.09);
+      background: rgba(255, 255, 255, 0.72);
+      color: #4c5563; font-size: 0.95rem;
+      box-shadow: 0 10px 28px rgba(71, 61, 49, 0.07);
+      text-decoration: none;
+    }
+    .back-link:hover { background: rgba(255, 255, 255, 0.92); color: #202631; }
+    .card {
+      margin-top: 20px; padding: 40px;
+      border-radius: 32px;
+      background: rgba(255, 252, 247, 0.72);
+      border: 1px solid rgba(68, 66, 62, 0.08);
+      box-shadow: 0 24px 80px rgba(76, 61, 44, 0.09);
+      backdrop-filter: blur(12px);
+    }
+    .profile-header {
+      display: flex; align-items: center; gap: 24px;
+      margin-bottom: 32px;
+    }
+    .profile-header img {
+      width: 96px; height: 96px;
+      border-radius: 28px; object-fit: cover;
+      box-shadow: 0 14px 32px rgba(92, 79, 60, 0.14);
+    }
+    .profile-header h1 { margin: 0 0 6px; font-size: 1.8rem; color: #1a2130; }
+    .profile-header p { margin: 0; color: #6d7380; font-size: 1rem; line-height: 1.7; }
+    h2 { font-size: 1.3rem; color: #1d2431; margin: 28px 0 12px; letter-spacing: -0.02em; }
+    p { color: #4a5260; line-height: 1.85; font-size: 0.98rem; margin: 0 0 14px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .skill-tag {
+      padding: 8px 14px; border-radius: 999px;
+      background: rgba(246, 241, 234, 0.95);
+      border: 1px solid rgba(79, 76, 69, 0.08);
+      color: #4f5663; font-size: 0.9rem;
+    }
+    .timeline { position: relative; padding-left: 20px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 4px; top: 6px; bottom: 6px;
+      width: 1px; background: linear-gradient(180deg, rgba(185, 174, 159, 0.8), rgba(224, 218, 209, 0.4));
+    }
+    .timeline-item { position: relative; margin-bottom: 20px; }
+    .timeline-item::before {
+      content: ""; position: absolute; left: -20px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #cfb79a; box-shadow: 0 0 0 4px rgba(207, 183, 154, 0.16);
+    }
+    .timeline-item strong { display: block; color: #2a313d; font-size: 1rem; }
+    .timeline-item span { color: #8a909b; font-size: 0.88rem; }
+    .timeline-item p { margin-top: 6px; font-size: 0.94rem; }
+    @media (max-width: 600px) {
+      .card { padding: 24px; border-radius: 24px; }
+      .profile-header { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back-link" href="index.html">← 返回首页</a>
+    <div class="card">
+      <div class="profile-header">
+        <img src="assets/avatar.jpg" alt="avatar">
+        <div>
+          <h1>aaaloooooof</h1>
+          <p>教育科技领域产品经理 · 关注 AI 与学习的交汇点<br>it turns a sandwich into a baquet</p>
+        </div>
+      </div>
+
+      <h2>🎯 我在做什么</h2>
+      <p>目前专注于教育科技领域的产品设计与用户研究，探索大模型如何真正落地到学习场景中。相信好的产品是技术与教育理念的平衡，而不是功能的堆砌。</p>
+
+      <h2>🛠️ 技能栈</h2>
+      <div class="skill-tags">
+        <span class="skill-tag">产品规划</span>
+        <span class="skill-tag">PRD 撰写</span>
+        <span class="skill-tag">用户研究</span>
+        <span class="skill-tag">数据分析</span>
+        <span class="skill-tag">A/B 测试</span>
+        <span class="skill-tag">AI 产品化</span>
+        <span class="skill-tag">教育科技</span>
+        <span class="skill-tag">交互设计</span>
+      </div>
+
+      <h2>📍 经历</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <strong>产品经理 · 某教育科技公司</strong>
+          <span>2023 - 至今</span>
+          <p>负责 AI 学习助手产品，从 0 到 1 完成产品设计与上线，DAU 增长至 10w+。</p>
+        </div>
+        <div class="timeline-item">
+          <strong>产品实习生 · 互联网大厂</strong>
+          <span>2022 - 2023</span>
+          <p>参与 B 端教育 SaaS 产品迭代，负责需求分析与用户访谈模块。</p>
+        </div>
+        <div class="timeline-item">
+          <strong>华东师范大学 · 教育学</strong>
+          <span>2019 - 2023</span>
+          <p>本科期间关注教育技术方向，毕业论文探讨 AI 辅助个性化学习路径设计。</p>
+        </div>
+      </div>
+
+      <h2>💡 我相信的</h2>
+      <p>"把一切事物教给一切人的艺术" —— 这是夸美纽斯在《大教学论》中提出的理想。今天的技术让这句话离现实更近了一步，但技术本身不是答案，理解用户、尊重教育规律才是。</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "head": {
+    "title": "aaaloooooof | it turns a sandwich into a baquet",
+    "description": "aaaloooooof personal page",
+    "favicon": "favicon.ico"
+  },
+  "intro": {
+    "title": "aaaloooooof",
+    "subtitle": "把一切事物教给一切人的艺术",
+    "enter": "ENTER",
+    "supportAuthor": false,
+    "background": true
+  },
+  "main": {
+    "name": "aaaloooooof",
+    "signature": "it turns a sandwich into a baquet",
+    "avatar": {
+      "link": "assets/avatar.jpg",
+      "height": 136,
+      "width": 136
+    }
+  }
+}

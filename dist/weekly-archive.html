@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>周报归档 | aaaloooooof</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #202631;
+      background: linear-gradient(180deg, #f8f5ef, #efebe4);
+    }
+    .page { width: min(920px, calc(100% - 28px)); margin: 0 auto; padding: 32px 0 48px; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px; padding: 11px 16px; border-radius: 999px;
+      border: 1px solid rgba(56, 56, 56, 0.08); background: rgba(255,255,255,0.8); color: #56606f; text-decoration: none;
+    }
+    .panel {
+      margin-top: 18px; padding: 24px; border-radius: 28px; background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(66, 62, 56, 0.08); box-shadow: 0 18px 48px rgba(85, 68, 44, 0.08);
+    }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    .desc { margin: 0 0 22px; color: #6d7481; }
+    .list { display: grid; gap: 14px; }
+    .item {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(247,243,237,0.88)); border: 1px solid rgba(75, 69, 61, 0.08);
+      color: inherit; text-decoration: none;
+    }
+    .item strong { display: block; margin-bottom: 6px; font-size: 1.02rem; }
+    .item span { color: #79818d; font-size: 0.92rem; }
+    .item em { font-style: normal; color: #8c7454; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back-link" href="weekly.html">← 返回周报</a>
+    <div class="panel">
+      <h1>周报归档</h1>
+      <p class="desc">这里会自动列出你在数据文件里写过的每一周。</p>
+      <div class="list" id="archive-list"></div>
+    </div>
+  </div>
+  <script src="data/weekly-data.js"></script>
+  <script>
+    (function () {
+      const data = window.WEEKLY_DATA;
+      if (!data || !data.weeks) return;
+      document.getElementById("archive-list").innerHTML = data.weeks.map(function (week, index) {
+        const href = index === 0 ? "weekly.html" : "weekly-post.html?week=" + encodeURIComponent(week.slug);
+        const action = index === 0 ? "查看" : "打开";
+        return '<a class="item" href="' + href + '"><div><strong>' + week.year + ' / 第 ' + week.week + ' 周</strong><span>' + week.summary + '</span></div><em>' + action + '</em></a>';
+      }).join("");
+    })();
+  </script>
+</body>
+</html>

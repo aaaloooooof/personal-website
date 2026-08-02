@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>周报 | aaaloooooof</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #1e2430;
+      background:
+        radial-gradient(circle at top left, rgba(232, 221, 203, 0.55), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(217, 224, 234, 0.55), transparent 28%),
+        linear-gradient(180deg, #f8f5ef 0%, #f4f1eb 46%, #efebe4 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .page {
+      width: min(1240px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 48px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(46, 54, 69, 0.09);
+      background: rgba(255, 255, 255, 0.72);
+      color: #4c5563;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 28px rgba(71, 61, 49, 0.07);
+    }
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.92);
+      color: #202631;
+    }
+    .page-shell {
+      margin-top: 18px;
+      padding: 22px;
+      border: 1px solid rgba(68, 66, 62, 0.08);
+      border-radius: 32px;
+      background: rgba(255, 252, 247, 0.68);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 80px rgba(76, 61, 44, 0.09);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.95fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .hero-card, .hero-side {
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(59, 57, 53, 0.08);
+      box-shadow: 0 16px 40px rgba(91, 75, 53, 0.08);
+    }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 34px;
+      min-height: 280px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(196, 205, 219, 0.55), transparent 22%),
+        radial-gradient(circle at 12% 18%, rgba(228, 215, 196, 0.65), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.92), rgba(246,242,235,0.84));
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -8% -34% 36%;
+      height: 240px;
+      background:
+        radial-gradient(circle at center, rgba(166, 176, 191, 0.2), transparent 58%),
+        repeating-linear-gradient(90deg, rgba(92, 108, 126, 0.08) 0 1px, transparent 1px 20px);
+      transform: rotate(-8deg);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(245, 240, 231, 0.96);
+      color: #786f63;
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      margin: 18px 0 10px;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: #1a2130;
+    }
+    .hero-desc {
+      margin: 0;
+      max-width: 640px;
+      color: #5f6674;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .hero-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(76, 82, 90, 0.08);
+      color: #434b59;
+      font-size: 0.92rem;
+    }
+    .hero-side {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.84), rgba(244,239,231,0.82));
+    }
+    .profile {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .profile img {
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 14px 24px rgba(92, 79, 60, 0.12);
+    }
+    .profile h2 {
+      margin: 0 0 6px;
+      font-size: 1.4rem;
+      color: #202631;
+    }
+    .profile p {
+      margin: 0;
+      color: #6d7380;
+      line-height: 1.7;
+      font-size: 0.94rem;
+    }
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mini-stat {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(56, 60, 67, 0.07);
+    }
+    .mini-stat .label {
+      color: #7a818d;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .mini-stat .value {
+      margin-top: 10px;
+      color: #1a2230;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.85fr) minmax(300px, 0.95fr);
+      gap: 18px;
+    }
+    .section-card {
+      border-radius: 28px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(61, 58, 54, 0.08);
+      box-shadow: 0 16px 40px rgba(91, 75, 53, 0.06);
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .section-head h3 {
+      margin: 0;
+      font-size: 1.7rem;
+      color: #1d2431;
+      letter-spacing: -0.03em;
+    }
+    .section-head p {
+      margin: 6px 0 0;
+      color: #707785;
+      line-height: 1.7;
+    }
+    .section-tag {
+      color: #8a8174;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+    .article-list {
+      display: grid;
+      gap: 14px;
+    }
+    .article-item {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 18px 18px 20px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,244,238,0.82));
+      border: 1px solid rgba(77, 77, 73, 0.08);
+    }
+    .article-no {
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 500;
+      letter-spacing: -0.06em;
+      color: #c0a98d;
+    }
+    .article-content h4 {
+      margin: 0 0 8px;
+      font-size: 1.18rem;
+      color: #1f2633;
+    }
+    .article-content p {
+      margin: 0;
+      color: #6d7481;
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+    .article-type {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #574b3f;
+      background: #f3ebe0;
+      border: 1px solid rgba(91, 79, 63, 0.08);
+    }
+    .aside-stack {
+      display: grid;
+      gap: 18px;
+    }
+    .keyword-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .keyword {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(246, 241, 234, 0.95);
+      border: 1px solid rgba(79, 76, 69, 0.08);
+      color: #4f5663;
+      font-size: 0.92rem;
+    }
+    .signal-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .signal-item {
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(250, 247, 242, 0.92);
+      border: 1px solid rgba(77, 72, 66, 0.07);
+    }
+    .signal-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      color: #212733;
+    }
+    .signal-item span {
+      color: #717887;
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+    .archive-list {
+      display: grid;
+      gap: 14px;
+      position: relative;
+      padding-left: 18px;
+    }
+    .archive-list::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(185, 174, 159, 0.8), rgba(224, 218, 209, 0.4));
+    }
+    .archive-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: #4a5260;
+    }
+    .archive-item::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 9px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #cfb79a;
+      box-shadow: 0 0 0 4px rgba(207, 183, 154, 0.16);
+    }
+    .archive-item strong {
+      font-size: 1rem;
+      color: #2a313d;
+    }
+    .archive-item span {
+      color: #8a909b;
+      font-size: 0.88rem;
+    }
+    .archive-item.active strong {
+      color: #7f6040;
+    }
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      color: #7f6547;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 980px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .hero-card,
+      .hero-side {
+        min-height: auto;
+      }
+    }
+    @media (max-width: 720px) {
+      .page {
+        width: min(100%, calc(100% - 20px));
+        padding-top: 20px;
+      }
+      .page-shell {
+        padding: 14px;
+        border-radius: 24px;
+      }
+      .hero-card,
+      .hero-side,
+      .section-card {
+        padding: 18px;
+        border-radius: 22px;
+      }
+      .article-item {
+        grid-template-columns: 58px 1fr;
+      }
+      .article-type {
+        grid-column: 2;
+        justify-self: start;
+      }
+      .mini-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back-link" href="index.html">← 返回首页</a>
+
+    <div class="page-shell">
+      <section class="hero">
+        <div class="hero-card">
+          <div class="eyebrow">Weekly Notes</div>
+          <h1 class="hero-title">周报</h1>
+          <p class="hero-desc">每周整理正在读的文章、在想的问题和值得留下来的片段。</p>
+          <div class="hero-meta">
+            <span class="hero-pill">本周主题：AI 产品化</span>
+            <span class="hero-pill">更新区间：5.20 - 5.26</span>
+            <span class="hero-pill">内容类型：文章 / 归档</span>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="profile">
+            <img src="assets/avatar.jpg" alt="avatar">
+            <div>
+              <h2>aaaloooooof</h2>
+              <p>it turns a sandwich into a baquet</p>
+          
+            </div>
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="label">本周精选</div>
+              <div class="value">03</div>
+            </div>
+            <div class="mini-stat">
+              <div class="label">关键词</div>
+              <div class="value">05</div>
+            </div>
+            <div class="mini-stat">
+              <div class="label">归档周数</div>
+              <div class="value">21</div>
+            </div>
+            <div class="mini-stat">
+              <div class="label">记录状态</div>
+              <div class="value">持续中</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <div class="layout">
+        <main class="section-card">
+          <div class="section-head">
+            <div>
+              <h3>本周精选</h3>
+      
+            </div>
+            <div class="section-tag">第 21 周</div>
+          </div>
+
+          <div class="article-list">
+            <a class="article-item" href="weekly-post-01.html">
+              <div class="article-no">01</div>
+              <div class="article-content">
+                <h4>训练后时代：大模型能力边界的下一站</h4>
+                <p>从推理到反思，重新看后训练在真实产品里的位置。</p>
+              </div>
+              <div class="article-type">模型</div>
+            </a>
+
+            <a class="article-item" href="weekly-post-02.html">
+              <div class="article-no">02</div>
+              <div class="article-content">
+                <h4>AI 产品的冷启动：从种子用户到正反馈飞轮</h4>
+                <p>早期用户从哪里来，产品怎样慢慢长出反馈闭环。</p>
+              </div>
+              <div class="article-type">产品</div>
+            </a>
+
+            <a class="article-item" href="weekly-post-03.html">
+              <div class="article-no">03</div>
+              <div class="article-content">
+                <h4>教育 AI 的下一段路：个性化与数据隐私的平衡</h4>
+                <p>个性化和隐私之间，真正要设计的是边界和信任。</p>
+              </div>
+              <div class="article-type">教育 AI</div>
+            </a>
+          </div>
+
+          <a class="footer-link" href="weekly-archive.html">查看全部周报 →</a>
+        </main>
+
+        <aside class="aside-stack">
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <h3>归档</h3>
+                <p>按周回看。</p>
+              </div>
+            </div>
+            <div class="archive-list">
+              <a class="archive-item active" href="weekly.html">
+                <strong>2024 / 第 21 周</strong>
+                <span>本周更新</span>
+              </a>
+              <a class="archive-item" href="weekly-archive.html">
+                <strong>2024 / 第 20 周</strong>
+                <span>模型与提示词</span>
+              </a>
+              <a class="archive-item" href="weekly-archive.html">
+                <strong>2024 / 第 19 周</strong>
+                <span>用户访谈摘记</span>
+              </a>
+              <a class="archive-item" href="weekly-archive.html">
+                <strong>2024 / 第 18 周</strong>
+                <span>教育场景拆解</span>
+              </a>
+              <a class="archive-item" href="weekly-archive.html">
+                <strong>2024 / 第 17 周</strong>
+                <span>产品节奏观察</span>
+              </a>
+            </div>
+            <a class="footer-link" href="weekly-archive.html">查看全部归档 →</a>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
