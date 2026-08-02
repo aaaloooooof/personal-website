@@ -24,6 +24,12 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
       background-size: 200px 200px;
     }
+    /* 鼠标跟随微光 */
+    body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(120,140,200,.07), transparent 70%);
+      transition: background .18s linear;
+    }
 
     /* ══ 顶栏与菜单 ══ */
     .nt-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10001; display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 26px; pointer-events: none; }
@@ -57,7 +63,7 @@
     .label { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: #8a8a96; margin-bottom: 16px; }
     h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; line-height: 1.25; margin-bottom: 14px; }
     h1 em { font-family: "Georgia", "Songti SC", serif; font-style: italic; font-weight: 400; }
-    .lede { color: #9aa0ac; font-size: .98rem; max-width: 560px; line-height: 1.85; margin-bottom: 64px; }
+    .lede { color: #9aa0ac; font-size: .98rem; max-width: 560px; line-height: 1.85; margin-bottom: 60px; }
 
     /* ══ 十字对位标记 ══ */
     .frame { position: relative; }
@@ -74,39 +80,68 @@
     .frame .cr::before { bottom: -6px; left: -6px; }
     .frame .cr::after { bottom: -6px; right: -6px; }
 
-    /* ══ 三栏 ══ */
-    .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,.09); margin-bottom: 72px; }
-    .col { padding: 30px 28px 34px; border-left: 1px solid rgba(255,255,255,.09); transition: background .3s; }
-    .col:first-child { border-left: none; }
-    .col:hover { background: rgba(255,255,255,.025); }
-    .col h4 { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: #8a8a96; font-weight: 500; margin-bottom: 26px; display: flex; align-items: center; gap: 10px; }
-    .col h4::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
-    .item { margin-bottom: 24px; }
-    .item:last-child { margin-bottom: 0; }
-    .item b { display: block; font-size: 1.5rem; font-weight: 600; color: #fff; letter-spacing: .01em; margin-bottom: 6px; }
-    .item b i { font-family: "Georgia", serif; font-style: italic; font-weight: 400; font-size: .85rem; color: #7c818d; margin-left: 6px; letter-spacing: .06em; }
-    .item p { font-size: .86rem; color: #9aa0ac; line-height: 1.8; }
+    /* ══ 滚动显现 ══ */
+    .rv { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1); }
+    .rv.in { opacity: 1; transform: none; }
 
-    /* ══ 教育与荣誉带 ══ */
-    .strip { border: 1px solid rgba(255,255,255,.09); padding: 8px 30px; margin-bottom: 60px; }
-    .strip .row { display: flex; align-items: baseline; gap: 18px; padding: 15px 0; border-top: 1px solid rgba(255,255,255,.06); }
-    .strip .row:first-child { border-top: none; }
-    .strip .yr { font-size: .72rem; letter-spacing: .18em; color: #62626e; min-width: 128px; font-variant-numeric: tabular-nums; }
-    .strip .tt { font-size: .95rem; color: #e4e6eb; }
-    .strip .dd { font-size: .82rem; color: #8f939f; margin-left: auto; text-align: right; }
+    /* ══ 数字带 ══ */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; }
+    .stat { padding: 30px 24px 28px; border-left: 1px solid rgba(255,255,255,.09); position: relative; overflow: hidden; transition: background .3s; }
+    .stat:first-child { border-left: none; }
+    .stat:hover { background: rgba(255,255,255,.025); }
+    .stat::after { content: ""; position: absolute; left: 24px; bottom: 0; width: 0; height: 1px; background: rgba(255,255,255,.45); transition: width .45s cubic-bezier(.4,0,.2,1); }
+    .stat:hover::after { width: calc(100% - 48px); }
+    .stat .n { display: flex; align-items: baseline; gap: 5px; font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 600; color: #fff; letter-spacing: .01em; font-variant-numeric: tabular-nums; line-height: 1.1; margin-bottom: 10px; }
+    .stat .n small { font-size: .85rem; font-weight: 400; color: #7c818d; letter-spacing: .08em; }
+    .stat .s { font-size: .8rem; color: #9aa0ac; line-height: 1.65; }
+
+    /* ══ 三个现场（手风琴三栏） ══ */
+    .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; align-items: start; }
+    .col { padding: 30px 28px 26px; border-left: 1px solid rgba(255,255,255,.09); }
+    .col:first-child { border-left: none; }
+    .col h4 { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: #8a8a96; font-weight: 500; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+    .col h4::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
+    .acc { border-top: 1px solid rgba(255,255,255,.06); }
+    .acc-h { width: 100%; display: flex; align-items: center; gap: 12px; padding: 15px 2px; background: none; border: none; cursor: pointer; text-align: left; color: inherit; font-family: inherit; }
+    .acc-h b { font-size: .98rem; font-weight: 500; color: #eceef2; letter-spacing: .02em; transition: color .3s; }
+    .acc-h:hover b { color: #fff; }
+    .acc-h .pm { margin-left: auto; flex: none; width: 18px; height: 18px; position: relative; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .acc-h .pm::before, .acc-h .pm::after { content: ""; position: absolute; background: #8a8a96; transition: background .3s; }
+    .acc-h .pm::before { left: 8px; top: 2px; width: 1.5px; height: 14px; }
+    .acc-h .pm::after { top: 8px; left: 2px; width: 14px; height: 1.5px; }
+    .acc.open .acc-h .pm { transform: rotate(135deg); }
+    .acc.open .acc-h .pm::before, .acc.open .acc-h .pm::after { background: #fff; }
+    .acc-b { max-height: 0; overflow: hidden; transition: max-height .5s cubic-bezier(.4,0,.2,1); }
+    .acc-b .in { padding: 0 2px 18px; }
+    .acc-b .tag { display: inline-block; font-size: .68rem; letter-spacing: .14em; color: #a8acb8; border: 1px solid rgba(255,255,255,.14); padding: 3px 10px; border-radius: 999px; margin-bottom: 9px; }
+    .acc-b p { font-size: .83rem; color: #9aa0ac; line-height: 1.85; }
+
+    /* ══ 时间线 ══ */
+    .tl { position: relative; margin: 0 0 66px 6px; padding-left: 34px; }
+    .tl::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: rgba(255,255,255,.12); }
+    .tl .line { position: absolute; left: 0; top: 6px; width: 1px; height: 0; background: linear-gradient(rgba(232,234,239,.9), rgba(232,234,239,.25)); transition: height 1.6s cubic-bezier(.3,.7,.2,1); }
+    .tl.in .line { height: calc(100% - 12px); }
+    .tl-item { position: relative; padding: 0 0 34px; }
+    .tl-item:last-child { padding-bottom: 4px; }
+    .tl-item::before { content: ""; position: absolute; left: -38px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: #060608; border: 1.5px solid rgba(255,255,255,.4); transition: background .3s, border-color .3s, box-shadow .3s; }
+    .tl-item:hover::before { background: #e8eaef; border-color: #e8eaef; box-shadow: 0 0 12px rgba(232,234,239,.5); }
+    .tl-item .yr { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: #6f7480; margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+    .tl-item .tt { font-size: .98rem; color: #e4e6eb; margin-bottom: 4px; transition: color .3s; }
+    .tl-item:hover .tt { color: #fff; }
+    .tl-item .dd { font-size: .82rem; color: #8f939f; line-height: 1.7; }
 
     .foot { text-align: center; font-size: .78rem; color: #565a66; letter-spacing: .06em; margin-top: 20px; }
 
     @media (max-width: 860px) {
       .page { padding: 112px 20px 50px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat:nth-child(3) { border-left: none; }
+      .stat:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.09); }
       .cols { grid-template-columns: 1fr; }
       .col { border-left: none; border-top: 1px solid rgba(255,255,255,.09); }
       .col:first-child { border-top: none; }
-      .strip .yr { min-width: 0; }
-      .strip .row { flex-wrap: wrap; gap: 6px; }
-      .strip .dd { margin-left: 0; text-align: left; width: 100%; }
     }
-    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; } }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation: none !important; } .rv { opacity: 1; transform: none; } }
   </style>
 </head>
 <body>
@@ -123,47 +158,166 @@
   </nav>
 
   <main class="page">
-    <div class="label">Background</div>
-    <h1>懂学习的人，<br>才做得出<em>懂学习的 AI</em></h1>
-    <p class="lede">研究学习科学、站过讲台、做过内容——产品设计里的每一个判断，都有教育现场的一手经验兜底。</p>
+    <div class="label rv">Background</div>
+    <h1 class="rv">懂学习的人，<br>才做得出<em>懂学习的 AI</em></h1>
+    <p class="lede rv">研究学习科学、站过讲台、做过内容——产品设计里的每一个判断，都有教育现场的一手经验兜底。</p>
 
-    <div class="cols frame"><span class="cr"></span>
+    <!-- 数字带 -->
+    <div class="stats frame rv"><span class="cr"></span>
+      <div class="stat"><div class="n"><span data-n="7">0</span><small>篇</small></div><div class="s">实证研究论文，1 作 / 通讯，含 Learning and Instruction 等刊</div></div>
+      <div class="stat"><div class="n"><span data-n="23">0</span><small>节</small></div><div class="s">独立设计交付的 AI 与编程课程，95%+ 课堂参与率</div></div>
+      <div class="stat"><div class="n"><span data-n="200">0</span><small>+ 人</small></div><div class="s">复旦 NowIdea 产品社群，从 0 运营到 200+ 成员</div></div>
+      <div class="stat"><div class="n"><span data-n="5000">0</span><small>+</small></div><div class="s">小红书账号零预算冷启动粉丝量</div></div>
+    </div>
+
+    <!-- 三个现场 -->
+    <div class="label rv">三个现场 · 点击展开</div>
+    <div class="cols frame rv"><span class="cr"></span>
       <div class="col">
-        <h4>Research</h4>
-        <div class="item"><b>7 篇<i>1 作 / 通讯</i></b><p>中英文实证研究在投 / 录用，含 Learning and Instruction 等刊。</p></div>
-        <div class="item"><b>学习科学</b><p>研究方向：教育测量、教师教育、AI 教育应用。</p></div>
+        <h4>Research · 研究</h4>
+        <div class="acc">
+          <button class="acc-h"><b>7 篇论文</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">1 作 / 通讯</span><p>中英文实证研究在投与录用，含 Learning and Instruction 等期刊。研究问题全部来自真实学习场景，而非文献缝隙。</p></div></div>
+        </div>
+        <div class="acc">
+          <button class="acc-h"><b>学习科学底座</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">方法论</span><p>研究方向覆盖教育测量、教师教育、AI 教育应用。用 ZPD、脚手架等学习科学框架指导交互设计，而不是凭感觉做教育产品。</p></div></div>
+        </div>
       </div>
       <div class="col">
-        <h4>Experience</h4>
-        <div class="item"><b>23 节<i>95%+ 参与率</i></b><p>AI 应用与 Python 创意编程课程独立设计交付，40+ 青少年学员。</p></div>
-        <div class="item"><b>量化负责人</b><p>教育工作坊量化分析与数据体系搭建。</p></div>
-        <div class="item"><b>200+ 人</b><p>复旦 NowIdea 产品社群创始人，定位孵化产品、对接投资。</p></div>
+        <h4>Experience · 现场</h4>
+        <div class="acc">
+          <button class="acc-h"><b>23 节课程</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">95%+ 参与率</span><p>面向 40+ 青少年独立设计并交付 AI 应用与 Python 创意编程课程，从大纲、教具到课堂互动全流程负责。</p></div></div>
+        </div>
+        <div class="acc">
+          <button class="acc-h"><b>工作坊量化负责人</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">数据体系</span><p>为教育工作坊搭建量化分析与数据体系，用数据而不是印象评估教学效果。</p></div></div>
+        </div>
+        <div class="acc">
+          <button class="acc-h"><b>NowIdea 创始人</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">200+ 成员</span><p>复旦产品社群，定位孵化产品、对接投资，从 0 到 200+ 成员的完整冷启动。</p></div></div>
+        </div>
       </div>
       <div class="col">
-        <h4>Content</h4>
-        <div class="item"><b>0→5000+</b><p>小红书个人内容账号冷启动增长。</p></div>
-        <div class="item"><b>多公众号</b><p>教育内容矩阵运营，持续输出产品与学习科学内容。</p></div>
+        <h4>Content · 内容</h4>
+        <div class="acc">
+          <button class="acc-h"><b>小红书 0→5000+</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">冷启动</span><p>零预算个人账号，靠内容定位与选题迭代完成增长——一套可以直接复用到产品增长上的打法。</p></div></div>
+        </div>
+        <div class="acc">
+          <button class="acc-h"><b>多公众号矩阵</b><span class="pm"></span></button>
+          <div class="acc-b"><div class="in"><span class="tag">持续输出</span><p>教育内容矩阵运营，持续输出产品与学习科学内容，训练把复杂问题讲清楚的能力。</p></div></div>
+        </div>
       </div>
     </div>
 
-    <div class="label">Education & Honors</div>
-    <div class="strip frame"><span class="cr"></span>
-      <div class="row"><span class="yr">2025 – 2028</span><span class="tt">华东师范大学 · 课程与教学论 硕士（推免）</span><span class="dd">2028 届 · 上海</span></div>
-      <div class="row"><span class="yr">2020 – 2025</span><span class="tt">杭州师范大学 · 小学教育（数学）本科</span><span class="dd">综合排名 2/287</span></div>
-      <div class="row"><span class="yr">竞赛</span><span class="tt">挑战杯 国家级金奖（学院首个）· 互联网+ 国家级铜奖</span><span class="dd"></span></div>
-      <div class="row"><span class="yr">荣誉</span><span class="tt">国家奖学金 · 省政府奖学金 ×3 · 阿里云大模型工程师 ACA · 高中数学教师资格证</span><span class="dd"></span></div>
+    <!-- 教育与荣誉时间线 -->
+    <div class="label rv">Education & Honors</div>
+    <div class="tl rv" id="tl"><span class="line"></span>
+      <div class="tl-item">
+        <div class="yr">2025 – 2028</div>
+        <div class="tt">华东师范大学 · 课程与教学论 硕士（推免）</div>
+        <div class="dd">2028 届 · 上海</div>
+      </div>
+      <div class="tl-item">
+        <div class="yr">2020 – 2025</div>
+        <div class="tt">杭州师范大学 · 小学教育（数学）本科</div>
+        <div class="dd">综合排名 2 / 287</div>
+      </div>
+      <div class="tl-item">
+        <div class="yr">竞赛</div>
+        <div class="tt">挑战杯 国家级金奖（学院首个）· 互联网+ 国家级铜奖</div>
+        <div class="dd"></div>
+      </div>
+      <div class="tl-item">
+        <div class="yr">荣誉</div>
+        <div class="tt">国家奖学金 · 省政府奖学金 ×3 · 阿里云大模型工程师 ACA · 高中数学教师资格证</div>
+        <div class="dd"></div>
+      </div>
     </div>
 
-    <footer class="foot">© 2026 楼婧怡 · aaaloooooof</footer>
+    <footer class="foot">© loujingyi · aaaloooooof</footer>
   </main>
 
   <script>
+    /* ══ 顶栏展开菜单 ══ */
     (function () {
       var t = document.querySelector('.nt-toggle'), m = document.querySelector('.nt-menu');
       function set(o) { m.classList.toggle('open', o); t.classList.toggle('open', o); t.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : ''; }
       t.addEventListener('click', function () { set(!m.classList.contains('open')); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
       m.addEventListener('click', function (e) { if (e.target === m) set(false); });
+    })();
+
+    /* ══ 鼠标跟随微光 ══ */
+    (function () {
+      document.addEventListener('mousemove', function (e) {
+        document.body.style.setProperty('--mx', e.clientX + 'px');
+        document.body.style.setProperty('--my', e.clientY + 'px');
+      }, { passive: true });
+    })();
+
+    /* ══ 手风琴 ══ */
+    (function () {
+      document.querySelectorAll('.acc-h').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var acc = btn.parentElement, body = acc.querySelector('.acc-b'), open = acc.classList.contains('open');
+          acc.parentElement.querySelectorAll('.acc.open').forEach(function (o) {
+            o.classList.remove('open');
+            o.querySelector('.acc-b').style.maxHeight = '0px';
+          });
+          if (!open) {
+            acc.classList.add('open');
+            body.style.maxHeight = body.scrollHeight + 'px';
+          }
+        });
+      });
+    })();
+
+    /* ══ 滚动显现 + 数字滚动 + 时间线 ══ */
+    (function () {
+      var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
+      function countUp(el) {
+        var target = parseInt(el.getAttribute('data-n'), 10), dur = 1300, t0 = null;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / dur, 1);
+          el.textContent = Math.round(ease(p) * target).toLocaleString();
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      function revealAll() {
+        document.querySelectorAll('.rv').forEach(function (el) {
+          el.classList.add('in');
+          el.querySelectorAll('[data-n]').forEach(countUp);
+        });
+        document.getElementById('tl').classList.add('in');
+      }
+      if (!('IntersectionObserver' in window)) { revealAll(); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var el = en.target;
+          el.classList.add('in');
+          el.querySelectorAll('[data-n]').forEach(countUp);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.18 });
+      document.querySelectorAll('.rv').forEach(function (el, i) {
+        el.style.transitionDelay = Math.min(i * 60, 240) + 'ms';
+        io.observe(el);
+      });
+      var tl = document.getElementById('tl');
+      new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (en) { if (en.isIntersecting) { tl.classList.add('in'); obs.disconnect(); } });
+      }, { threshold: 0.25 }).observe(tl);
+      /* 兜底：2.5 秒后首屏标题仍未显现则全部显现 */
+      setTimeout(function () {
+        var h1 = document.querySelector('h1.rv');
+        if (h1 && !h1.classList.contains('in')) revealAll();
+      }, 2500);
     })();
   </script>
 </body>

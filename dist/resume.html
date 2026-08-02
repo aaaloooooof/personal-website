@@ -85,8 +85,15 @@
     .chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .chips span { padding: 5px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: #a8acb8; font-size: .78rem; }
     .wechat { text-align: center; flex: none; }
-    .wechat img { width: 112px; height: 112px; border-radius: 12px; object-fit: cover; display: block; border: 1px solid rgba(255,255,255,.12); }
-    .wechat span { font-size: .7rem; color: #6f7480; letter-spacing: .16em; display: block; margin-top: 9px; }
+    .qr { position: relative; background: #fff; padding: 9px; border-radius: 14px; box-shadow: 0 12px 32px rgba(0,0,0,.55); overflow: hidden; }
+    .qr img { width: 104px; height: 104px; border-radius: 7px; object-fit: cover; display: block; }
+    .qr::after {
+      content: ""; position: absolute; left: 0; right: 0; top: -30%; height: 26%;
+      background: linear-gradient(180deg, transparent, rgba(120,200,255,.28), transparent);
+      animation: scan 3.2s cubic-bezier(.4,0,.4,1) infinite;
+    }
+    @keyframes scan { 0% { top: -30%; } 55%, 100% { top: 110%; } }
+    .wechat span { font-size: .64rem; color: #6f7480; letter-spacing: .3em; text-transform: uppercase; display: block; margin-top: 11px; }
 
     /* ══ 联系通道 ══ */
     .links { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(255,255,255,.09); margin-bottom: 60px; }
@@ -131,7 +138,7 @@
 
   <main class="page">
     <div class="label">Contact</div>
-    <h1>联系方式 <em>+ 求职状态</em></h1>
+    <h1>联系方式</h1>
     <p class="lede">如果你正在找一位懂教育、能独立把想法做成可运行产品的 AI 产品经理，欢迎直接联系。</p>
 
     <div class="card frame"><span class="cr"></span>
@@ -147,8 +154,8 @@
         </div>
       </div>
       <div class="wechat">
-        <img src="assets/wechat.jpg" alt="微信二维码">
-        <span>微信扫一扫</span>
+        <div class="qr"><img src="assets/wechat.jpg" alt="微信二维码"></div>
+        <span>WeChat</span>
       </div>
     </div>
 
@@ -175,7 +182,7 @@
       </a>
     </div>
 
-    <footer class="foot">© 2026 楼婧怡 · aaaloooooof</footer>
+    <footer class="foot">© loujingyi · aaaloooooof</footer>
   </main>
 
   <script>
