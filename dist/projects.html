@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>项目案例 | aaaloooooof</title>
+  <title>项目案例 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     * { box-sizing: border-box; }
@@ -27,8 +27,9 @@
     .topbar img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.88); }
     .topbar-text h1 { margin: 0 0 4px; font-size: 1.5rem; color: #fff; }
     .topbar-text p { margin: 0; color: #c8cfda; font-size: 0.92rem; }
-    .section-title { margin: 0 0 24px; font-size: 1.85rem; color: #fff; }
-    .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .section-title { margin: 0 0 8px; font-size: 1.85rem; color: #fff; }
+    .section-desc { margin: 0 0 28px; color: #a0aec0; font-size: 0.95rem; }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
     .project-card {
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -38,18 +39,23 @@
       transition: transform 0.2s, border-color 0.2s;
     }
     .project-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.18); }
+    .project-card .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
     .project-card .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: #a0aec0;
-      font-size: 0.78rem;
-      margin-bottom: 14px;
+      display: inline-block; padding: 4px 12px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); color: #a0aec0; font-size: 0.78rem;
     }
     .project-card h3 { margin: 0 0 10px; font-size: 1.2rem; color: #fff; }
     .project-card p { margin: 0 0 16px; color: #b0b8c8; line-height: 1.7; font-size: 0.95rem; }
-    .project-card .meta { display: flex; gap: 16px; color: #6b7280; font-size: 0.85rem; }
+    .project-card .meta { display: flex; flex-wrap: wrap; gap: 12px; color: #6b7280; font-size: 0.85rem; }
+    .project-card .links { margin-top: 14px; display: flex; gap: 12px; }
+    .project-card .links a {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 14px; border-radius: 8px;
+      background: rgba(255,255,255,0.06); color: #d1d5db;
+      text-decoration: none; font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .project-card .links a:hover { background: rgba(255,255,255,0.12); color: #fff; }
     .cursor-glow { position: fixed; left: 0; top: 0; width: 14px; height: 14px; margin-left: -7px; margin-top: -7px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(173,216,255,0.42) 45%, rgba(173,216,255,0) 75%); pointer-events: none; z-index: 9999; opacity: .82; transform: translate3d(-100px, -100px, 0); transition: transform .08s linear; mix-blend-mode: screen; }
   </style>
   <script>
@@ -72,46 +78,97 @@
       <div class="topbar">
         <img src="assets/avatar.jpg" alt="avatar">
         <div class="topbar-text">
-          <h1>aaaloooooof</h1>
-          <p>it turns a sandwich into a baquet</p>
+          <h1>楼婧怡</h1>
+          <p>aaaloooooof · 教育科技 × AI 产品</p>
         </div>
       </div>
       <h2 class="section-title">项目案例</h2>
+      <p class="section-desc">8 个月 7+ 个可运行原型，覆盖 AI 教育、工作流自动化、数据产品等方向。</p>
+
       <div class="project-grid">
         <div class="project-card">
-          <span class="tag">AI 教育</span>
-          <h3>智能学习助手</h3>
-          <p>基于大模型的个性化学习辅导产品，覆盖 K12 数学、英语等学科，通过对话式交互提供解题思路与知识讲解。</p>
+          <div class="tags">
+            <span class="tag">AI 教育</span>
+            <span class="tag">0→1 产品</span>
+          </div>
+          <h3>LearnLoop · 个性化学习路径产品</h3>
+          <p>从学习目标不清晰、资源分散和反馈不足等痛点出发，独立定义并落地「诊断—推荐—执行—反馈—复盘」产品闭环。完成信息架构、用户流程和领域模型设计，AI 辅助开发 Django＋Vue 前后端分离 MVP。</p>
           <div class="meta">
-            <span>📅 2024</span>
-            <span>👤 PM + 用户研究</span>
+            <span>📅 2025-2026</span>
+            <span>👤 独立主导</span>
+          </div>
+          <div class="links">
+            <a href="https://learnloop-8dc995b0-18pwnmpof.eazo.dev/" target="_blank">在线 Demo →</a>
+            <a href="https://github.com/aaaloooooof/learnloop" target="_blank">GitHub →</a>
           </div>
         </div>
+
         <div class="project-card">
-          <span class="tag">B端产品</span>
-          <h3>教师备课工作台</h3>
-          <p>面向教师的 AI 辅助备课系统，集成课件生成、学情分析、作业设计等功能，提升教师工作效率 40%+。</p>
+          <div class="tags">
+            <span class="tag">数据产品</span>
+            <span class="tag">0→1 孵化</span>
+          </div>
+          <h3>MILOU 数字展厅 H5</h3>
+          <p>将线下艺术展内容产品化为移动端 H5，打通「扫码进入—内容浏览—互动传播」完整用户链路。搭建「访问—浏览—互动—分享」行为指标体系，首轮获得 123 UV / 218 会话 / 1091 次浏览 / 1159 次互动，提出数据驱动的迭代方案。</p>
           <div class="meta">
-            <span>📅 2023-2024</span>
-            <span>👤 产品负责人</span>
+            <span>📅 2025-2026</span>
+            <span>📊 123 UV · 3.0 平均深度</span>
           </div>
         </div>
+
         <div class="project-card">
-          <span class="tag">数据产品</span>
-          <h3>学情数据看板</h3>
-          <p>为教育管理者设计的数据可视化平台，整合多维度学习数据，支持自定义报表与预警机制。</p>
+          <div class="tags">
+            <span class="tag">工作流自动化</span>
+            <span class="tag">AI 工具</span>
+          </div>
+          <h3>AI 教育政策新闻稿自动生成工作流</h3>
+          <p>为国外教育政策新闻稿生产搭建全自动工作流，先后用 n8n + Gemini、Coze、Codex 三平台各实现一版。最终版定时每周三早 9 点自动发送到邮箱，内容生产从「人工 1 小时 2 篇」变为「全自动、零人力」。</p>
           <div class="meta">
-            <span>📅 2023</span>
-            <span>👤 PRD + 数据分析</span>
+            <span>📅 2025-2026</span>
+            <span>⚡ 效率：1h/2篇 → 全自动</span>
           </div>
         </div>
+
         <div class="project-card">
-          <span class="tag">用户体验</span>
-          <h3>学生端 UX 改版</h3>
-          <p>主导学生端 App 的交互重构，通过 20+ 场用户访谈与 A/B 测试，将核心功能使用率提升 35%。</p>
+          <div class="tags">
+            <span class="tag">AI Skill</span>
+            <span class="tag">教育场景</span>
+          </div>
+          <h3>初中数学几何辅导 Agent</h3>
+          <p>基于 ZPD 脚手架教学法设计的 AI 辅导 Skill，模拟家教场景中的引导式教学。在真实学生使用中验证效果，覆盖几何概念讲解、解题思路引导与错误分析。</p>
           <div class="meta">
-            <span>📅 2023</span>
-            <span>👤 用户研究</span>
+            <span>📅 2025-2026</span>
+            <span>🎯 真实学生验证</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="tags">
+            <span class="tag">B端交付</span>
+            <span class="tag">全栈开发</span>
+          </div>
+          <h3>五金公司 ERP 系统</h3>
+          <p>采用 FDE（Fast Design & Engineering）模式为五金公司交付自用 ERP 系统。在客户 HTML 原型基础上完善功能，Netlify 部署 + Supabase 数据库，4 天完成交付，客户实际使用 1 个月反馈良好。</p>
+          <div class="meta">
+            <span>📅 2025-2026</span>
+            <span>⏱️ 4 天交付</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="tags">
+            <span class="tag">C端原型</span>
+            <span class="tag">AI 应用</span>
+          </div>
+          <h3>TimeLume / Idea Editor / BackCurve</h3>
+          <p>三个 C 端 AI 产品原型：TimeLume（自然语言时间记录）、Idea Editor（创意发散重组）、BackCurve（AI 体态自查）。快速验证不同场景下的 AI 交互模式。</p>
+          <div class="meta">
+            <span>📅 2025-2026</span>
+            <span>🧪 快速原型验证</span>
+          </div>
+          <div class="links">
+            <a href="https://timelume-1452acd5.eazo.dev/" target="_blank">TimeLume →</a>
+            <a href="https://idea-editor-6814532f.eazo.dev/" target="_blank">Idea Editor →</a>
           </div>
         </div>
       </div>

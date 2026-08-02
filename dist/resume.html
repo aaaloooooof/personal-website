@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>简历与联系 | aaaloooooof</title>
+  <title>简历与联系 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     * { box-sizing: border-box; }
@@ -28,6 +28,7 @@
     .back-link { display: inline-flex; align-items: center; gap: 8px; color: #d8e0ee; margin-bottom: 18px; opacity: .88; text-decoration: none; }
     .back-link:hover { opacity: 1; color: #fff; }
     .section-title { margin: 0 0 16px; font-size: 1.6rem; color: #fff; }
+    .summary { color: #b0b8c8; line-height: 1.8; margin: 0 0 24px; font-size: 0.98rem; }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
     .contact-item {
       padding: 18px; border-radius: 16px;
@@ -47,6 +48,12 @@
       transition: background 0.2s;
     }
     .btn:hover { background: rgba(255,255,255,0.18); }
+    .availability {
+      margin-top: 24px; padding: 16px 20px; border-radius: 14px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .availability h4 { margin: 0 0 10px; color: #fff; font-size: 1rem; }
+    .availability ul { margin: 0; padding-left: 18px; color: #a0aec0; font-size: 0.92rem; line-height: 1.8; }
     .cursor-glow { position: fixed; left: 0; top: 0; width: 14px; height: 14px; margin-left: -7px; margin-top: -7px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(173,216,255,0.42) 45%, rgba(173,216,255,0) 75%); pointer-events: none; z-index: 9999; opacity: .82; transform: translate3d(-100px, -100px, 0); transition: transform .08s linear; mix-blend-mode: screen; }
     @media (max-width: 600px) {
       .contact-grid { grid-template-columns: 1fr; }
@@ -72,15 +79,18 @@
       <div class="topbar">
         <img src="assets/avatar.jpg" alt="avatar">
         <div class="topbar-text">
-          <h1>aaaloooooof</h1>
-          <p>it turns a sandwich into a baquet</p>
+          <h1>楼婧怡</h1>
+          <p>华东师范大学 · 课程与教学论硕士 · 2028 届</p>
         </div>
       </div>
 
-      <h2 class="section-title">📄 简历</h2>
-      <p style="color: #b0b8c8; line-height: 1.8; margin: 0 0 20px;">
-        教育科技产品经理，关注 AI 与学习的交汇点。华东师范大学教育学背景，2 年+ 产品经验，主导过 AI 学习助手从 0 到 1。
+      <h2 class="section-title">📄 简介</h2>
+      <p class="summary">
+        Focus on turning educational problems into runnable AI product prototypes.<br><br>
+        华东师范大学课程与教学论硕士在读（推免），本科杭州师范大学小学教育（数学）综合排名 2/287。<br>
+        关注 AI × 教育场景的产品化实践，8 个月独立完成 7+ 个可运行原型，覆盖学习路径规划、工作流自动化、数字展厅、Agent Skill 等方向。
       </p>
+
       <a class="btn" href="assets/resume.pdf" download>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         下载简历 PDF
@@ -93,17 +103,27 @@
           <a href="mailto:51284102015@stu.ecnu.edu.cn">51284102015@stu.ecnu.edu.cn</a>
         </div>
         <div class="contact-item">
+          <strong>📱 手机</strong>
+          <span>19818512496</span>
+        </div>
+        <div class="contact-item">
           <strong>🐙 GitHub</strong>
           <a href="https://github.com/aaaloooooof" target="_blank" rel="noopener noreferrer">github.com/aaaloooooof</a>
         </div>
         <div class="contact-item">
-          <strong>💬 微信</strong>
-          <span>（请通过邮箱联系后添加）</span>
+          <strong>📕 小红书</strong>
+          <a href="https://xhslink.cn/m/9AVXSTHRclc" target="_blank" rel="noopener noreferrer">个人内容账号</a>
         </div>
-        <div class="contact-item">
-          <strong>📍 城市</strong>
-          <span>上海</span>
-        </div>
+      </div>
+
+      <div class="availability">
+        <h4>🎯 到岗条件</h4>
+        <ul>
+          <li>Base 上海</li>
+          <li>每周可实习 4-5 天</li>
+          <li>可到岗 6 个月以上</li>
+          <li>公司类型不限（大厂 / 创业公司 / 外企均可）</li>
+        </ul>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>关于我 | aaaloooooof</title>
+  <title>关于我 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     * { box-sizing: border-box; }
@@ -50,7 +50,16 @@
     }
     .profile-header h1 { margin: 0 0 6px; font-size: 1.8rem; color: #1a2130; }
     .profile-header p { margin: 0; color: #6d7380; font-size: 1rem; line-height: 1.7; }
-    h2 { font-size: 1.3rem; color: #1d2431; margin: 28px 0 12px; letter-spacing: -0.02em; }
+    .quote {
+      border-left: 3px solid #cfb79a;
+      padding-left: 16px;
+      margin: 20px 0;
+      color: #5f6674;
+      font-style: italic;
+      line-height: 1.8;
+    }
+    h2 { font-size: 1.3rem; color: #1d2431; margin: 32px 0 14px; letter-spacing: -0.02em; }
+    h2:first-of-type { margin-top: 0; }
     p { color: #4a5260; line-height: 1.85; font-size: 0.98rem; margin: 0 0 14px; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
     .skill-tag {
@@ -64,18 +73,36 @@
       content: ""; position: absolute; left: 4px; top: 6px; bottom: 6px;
       width: 1px; background: linear-gradient(180deg, rgba(185, 174, 159, 0.8), rgba(224, 218, 209, 0.4));
     }
-    .timeline-item { position: relative; margin-bottom: 20px; }
+    .timeline-item { position: relative; margin-bottom: 22px; }
     .timeline-item::before {
       content: ""; position: absolute; left: -20px; top: 6px;
       width: 10px; height: 10px; border-radius: 50%;
       background: #cfb79a; box-shadow: 0 0 0 4px rgba(207, 183, 154, 0.16);
     }
-    .timeline-item strong { display: block; color: #2a313d; font-size: 1rem; }
-    .timeline-item span { color: #8a909b; font-size: 0.88rem; }
+    .timeline-item strong { display: block; color: #2a313d; font-size: 1.02rem; margin-bottom: 2px; }
+    .timeline-item .time { color: #8a909b; font-size: 0.85rem; }
     .timeline-item p { margin-top: 6px; font-size: 0.94rem; }
+    .certs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .cert {
+      padding: 6px 12px; border-radius: 8px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(79, 76, 69, 0.1);
+      color: #5f6674; font-size: 0.85rem;
+    }
+    .highlight-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;
+    }
+    .highlight-box {
+      padding: 14px; border-radius: 16px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(79, 76, 69, 0.08);
+    }
+    .highlight-box strong { display: block; color: #2a313d; font-size: 1rem; margin-bottom: 4px; }
+    .highlight-box span { color: #6b7280; font-size: 0.9rem; line-height: 1.6; }
     @media (max-width: 600px) {
       .card { padding: 24px; border-radius: 24px; }
       .profile-header { flex-direction: column; text-align: center; }
+      .highlight-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -86,47 +113,89 @@
       <div class="profile-header">
         <img src="assets/avatar.jpg" alt="avatar">
         <div>
-          <h1>aaaloooooof</h1>
-          <p>教育科技领域产品经理 · 关注 AI 与学习的交汇点<br>it turns a sandwich into a baquet</p>
+          <h1>楼婧怡</h1>
+          <p>华东师范大学 · 课程与教学论 硕士在读<br>Focus on turning educational problems into runnable AI product prototypes.</p>
         </div>
       </div>
 
+      <div class="quote">
+        "把教育问题变成可运行的 AI 产品原型。"
+      </div>
+
       <h2>🎯 我在做什么</h2>
-      <p>目前专注于教育科技领域的产品设计与用户研究，探索大模型如何真正落地到学习场景中。相信好的产品是技术与教育理念的平衡，而不是功能的堆砌。</p>
+      <p>关注 AI × 教育场景的产品化实践：学习支持工具、教育数据分析、AI workflow 与前端原型开发。</p>
+      <p>持续的教育研究（学习科学、教师教育、教育评价）让产品设计更关注学习过程、用户认知负担与教育价值——而不只停留在功能实现层面。</p>
 
       <h2>🛠️ 技能栈</h2>
       <div class="skill-tags">
-        <span class="skill-tag">产品规划</span>
-        <span class="skill-tag">PRD 撰写</span>
+        <span class="skill-tag">AI 产品 0→1</span>
+        <span class="skill-tag">需求分析</span>
         <span class="skill-tag">用户研究</span>
         <span class="skill-tag">数据分析</span>
-        <span class="skill-tag">A/B 测试</span>
-        <span class="skill-tag">AI 产品化</span>
-        <span class="skill-tag">教育科技</span>
-        <span class="skill-tag">交互设计</span>
+        <span class="skill-tag">Prompt 设计</span>
+        <span class="skill-tag">工作流编排</span>
+        <span class="skill-tag">Django + Vue</span>
+        <span class="skill-tag">内容运营</span>
+        <span class="skill-tag">教学课程设计</span>
       </div>
 
       <h2>📍 经历</h2>
       <div class="timeline">
         <div class="timeline-item">
-          <strong>产品经理 · 某教育科技公司</strong>
-          <span>2023 - 至今</span>
-          <p>负责 AI 学习助手产品，从 0 到 1 完成产品设计与上线，DAU 增长至 10w+。</p>
+          <strong>华东师范大学 · 课程与教学论 硕士</strong>
+          <span class="time">2025.9 ～ 至今 · 推免生</span>
+          <p>研究关注：教育测量、学习科学与 AI 教育应用。7 篇中英文实证研究在投/录用。</p>
         </div>
         <div class="timeline-item">
-          <strong>产品实习生 · 互联网大厂</strong>
-          <span>2022 - 2023</span>
-          <p>参与 B 端教育 SaaS 产品迭代，负责需求分析与用户访谈模块。</p>
+          <strong>杭州好好搭搭科技 · AI 课程讲师</strong>
+          <span class="time">2025.3 ～ 2025.6 · 实习</span>
+          <p>面向 40 余名青少年用户，独立完成 23 节 AI 应用与 Python 创意编程课程的内容设计和交付，课程参与率达 95% 以上。</p>
         </div>
         <div class="timeline-item">
-          <strong>华东师范大学 · 教育学</strong>
-          <span>2019 - 2023</span>
-          <p>本科期间关注教育技术方向，毕业论文探讨 AI 辅助个性化学习路径设计。</p>
+          <strong>复旦 NowIdea 社群 · 创始人</strong>
+          <span class="time">2026.7 ～ 至今</span>
+          <p>创立并运营 200-300 人产品社群，定位孵化产品、对接投资。</p>
+        </div>
+        <div class="timeline-item">
+          <strong>杭州师范大学 · 小学教育（数学）本科</strong>
+          <span class="time">2020.9 ～ 2025.06</span>
+          <p>综合排名 2/287。获国家奖学金、省政府奖学金（3 次）、三好学生（3 次）等。</p>
         </div>
       </div>
 
-      <h2>💡 我相信的</h2>
-      <p>"把一切事物教给一切人的艺术" —— 这是夸美纽斯在《大教学论》中提出的理想。今天的技术让这句话离现实更近了一步，但技术本身不是答案，理解用户、尊重教育规律才是。</p>
+      <h2>🏆 亮点</h2>
+      <div class="highlight-grid">
+        <div class="highlight-box">
+          <strong>竞赛</strong>
+          <span>挑战杯国家级金奖（学院首个）<br>互联网+国家级铜奖</span>
+        </div>
+        <div class="highlight-box">
+          <strong>科研</strong>
+          <span>7 篇中英文实证研究<br>含 Learning and Instruction 等刊</span>
+        </div>
+        <div class="highlight-box">
+          <strong>实践</strong>
+          <span>杭州亚运会开幕式舞蹈演员<br>省艺术节舞蹈一等奖</span>
+        </div>
+        <div class="highlight-box">
+          <strong>产品</strong>
+          <span>8 个月 7+ 个可运行原型<br>GitHub 11 个公开仓库</span>
+        </div>
+      </div>
+
+      <h2>📜 证书</h2>
+      <div class="certs">
+        <span class="cert">阿里云大模型工程师 ACA</span>
+        <span class="cert">高中数学教师资格证</span>
+        <span class="cert">CET-6</span>
+        <span class="cert">普通话二级乙等</span>
+      </div>
+
+      <h2>💡 产品观</h2>
+      <p>判断产品的三个问题：</p>
+      <p>1. <strong>AI 能否真正进入具体教育场景</strong>——不为用 AI 而用 AI</p>
+      <p>2. <strong>产品是否形成清晰的使用闭环</strong>——有完整的「进入—使用—反馈—留存」路径</p>
+      <p>3. <strong>技术是否能降低学习、教学或信息处理成本</strong>——价值锚点是"降本"，不是炫技</p>
     </div>
   </div>
 </body>
