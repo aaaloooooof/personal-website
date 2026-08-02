@@ -73,6 +73,51 @@
   </script>
 </head>
 <body>
+  <style>
+    body { padding-top: 64px; }
+    .nt-bar{position:fixed;top:0;left:0;right:0;z-index:10001;display:flex;align-items:flex-start;justify-content:space-between;padding:20px 26px;pointer-events:none}
+    .nt-name{pointer-events:auto;text-decoration:none;display:inline-block;padding:10px 16px 11px;border-radius:14px;background:rgba(8,8,12,.55);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color .3s}
+    .nt-name:hover{border-color:rgba(255,255,255,.24)}
+    .nt-name .zh{display:block;font-size:.98rem;font-weight:300;color:#f2f2f4;letter-spacing:.3em}
+    .nt-name .en{display:block;font-size:.58rem;font-weight:300;letter-spacing:.34em;text-transform:uppercase;color:#9a9aa4;margin-top:4px}
+    .nt-toggle{pointer-events:auto;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(8,8,12,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer;position:relative;transition:border-color .3s,transform .45s cubic-bezier(.4,0,.2,1)}
+    .nt-toggle:hover{border-color:rgba(255,255,255,.32)}
+    .nt-toggle span{position:absolute;top:50%;left:50%;width:16px;height:1.5px;background:#e8e8ec;transform:translate(-50%,-50%);transition:background .25s}
+    .nt-toggle span::before,.nt-toggle span::after{content:"";position:absolute;left:0;width:16px;height:1.5px;background:#e8e8ec;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+    .nt-toggle span::before{top:-5px}
+    .nt-toggle span::after{top:5px}
+    .nt-toggle.open{transform:rotate(90deg);border-color:rgba(255,255,255,.4)}
+    .nt-toggle.open span{background:transparent}
+    .nt-toggle.open span::before{transform:translateY(5px) rotate(45deg)}
+    .nt-toggle.open span::after{transform:translateY(-5px) rotate(-45deg)}
+    .nt-menu{position:fixed;inset:0;z-index:10000;background:rgba(5,5,9,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;justify-content:center;padding:0 8vw;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
+    .nt-menu.open{opacity:1;visibility:visible}
+    .nt-link{display:flex;align-items:baseline;gap:20px;padding:15px 0;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+    .nt-menu.open .nt-link{opacity:1;transform:none}
+    .nt-menu.open .nt-link:nth-child(1){transition-delay:.06s}.nt-menu.open .nt-link:nth-child(2){transition-delay:.11s}
+    .nt-menu.open .nt-link:nth-child(3){transition-delay:.16s}.nt-menu.open .nt-link:nth-child(4){transition-delay:.21s}
+    .nt-menu.open .nt-link:nth-child(5){transition-delay:.26s}.nt-menu.open .nt-link:nth-child(6){transition-delay:.31s}
+    .nt-link .no{font-size:.7rem;letter-spacing:.2em;color:#62626e;width:2em}
+    .nt-link .t{font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:500;color:#cfcfd6;letter-spacing:.06em;transition:color .3s,letter-spacing .3s}
+    .nt-link:hover .t{color:#fff;letter-spacing:.12em}
+    .nt-foot{margin-top:36px;font-size:.72rem;letter-spacing:.16em;color:#565662;text-transform:uppercase}
+  </style>
+  <header class="nt-bar">
+    <a class="nt-name" href="index.html"><span class="zh">楼婧怡</span><span class="en">Jingyi Lou · aaaloooooof</span></a>
+    <button class="nt-toggle" aria-label="展开导航菜单" aria-expanded="false"><span></span></button>
+  </header>
+  <nav class="nt-menu" aria-label="全站导航">
+    <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">首页</span></a>
+    <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">项目案例</span></a>
+    <a class="nt-link" href="thoughts.html"><span class="no">03</span><span class="t">产品思考</span></a>
+    <a class="nt-link" href="weekly.html"><span class="no">04</span><span class="t">周报</span></a>
+    <a class="nt-link" href="about.html"><span class="no">05</span><span class="t">关于我</span></a>
+    <a class="nt-link" href="resume.html"><span class="no">06</span><span class="t">简历与联系</span></a>
+    <div class="nt-foot">教育科技 × AI 产品 · github.com/aaaloooooof</div>
+  </nav>
+  <script>
+    (function(){var t=document.querySelector('.nt-toggle'),m=document.querySelector('.nt-menu');function set(o){m.classList.toggle('open',o);t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}t.addEventListener('click',function(){set(!m.classList.contains('open'));});document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});m.addEventListener('click',function(e){if(e.target===m)set(false);});})();
+  </script>
   <div class="page">
     <div class="panel">
       <a class="back-link" href="index.html">← 返回首页</a>

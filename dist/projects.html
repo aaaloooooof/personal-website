@@ -6,173 +6,465 @@
   <title>项目案例 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
     body {
       font-family: "Inter", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at center, rgba(28,38,65,0.18), transparent 45%),
-        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
-        #060606;
+        radial-gradient(circle at 50% 30%, rgba(40,46,64,0.20), transparent 55%),
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+        #060608;
       background-size: auto, 44px 44px, 44px 44px, auto;
-      color: #e8edf6;
-      min-height: 100vh;
+      color: #e8eaef;
+      overflow-x: hidden;
     }
-    .page { min-height: 100vh; padding: 32px 20px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; color: #d8e0ee; margin-bottom: 24px; opacity: .88; text-decoration: none; }
-    .back-link:hover { opacity: 1; color: #fff; }
-    .topbar { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
-    .topbar img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.88); }
-    .topbar-text h1 { margin: 0 0 4px; font-size: 1.5rem; color: #fff; }
-    .topbar-text p { margin: 0; color: #c8cfda; font-size: 0.92rem; }
-    .section-title { margin: 0 0 8px; font-size: 1.85rem; color: #fff; }
-    .section-desc { margin: 0 0 28px; color: #a0aec0; font-size: 0.95rem; }
-    .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-    .project-card {
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(10, 14, 24, 0.72);
-      backdrop-filter: blur(14px);
-      padding: 28px;
-      transition: transform 0.2s, border-color 0.2s;
+
+    /* ══ 共享黑夜顶栏 ══ */
+    .nt-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10001; display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 26px; pointer-events: none; }
+    .nt-name { pointer-events: auto; text-decoration: none; display: inline-block; padding: 10px 16px 11px; border-radius: 14px; background: rgba(8,8,12,.55); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color .3s; }
+    .nt-name:hover { border-color: rgba(255,255,255,.24); }
+    .nt-name .zh { display: block; font-size: .98rem; font-weight: 300; color: #f2f2f4; letter-spacing: .3em; }
+    .nt-name .en { display: block; font-size: .58rem; font-weight: 300; letter-spacing: .34em; text-transform: uppercase; color: #9a9aa4; margin-top: 4px; }
+    .nt-toggle { pointer-events: auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(8,8,12,.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); cursor: pointer; position: relative; transition: border-color .3s, transform .45s cubic-bezier(.4,0,.2,1); }
+    .nt-toggle:hover { border-color: rgba(255,255,255,.32); }
+    .nt-toggle span { position: absolute; top: 50%; left: 50%; width: 16px; height: 1.5px; background: #e8e8ec; transform: translate(-50%,-50%); transition: background .25s; }
+    .nt-toggle span::before, .nt-toggle span::after { content: ""; position: absolute; left: 0; width: 16px; height: 1.5px; background: #e8e8ec; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .nt-toggle span::before { top: -5px; }
+    .nt-toggle span::after { top: 5px; }
+    .nt-toggle.open { transform: rotate(90deg); border-color: rgba(255,255,255,.4); }
+    .nt-toggle.open span { background: transparent; }
+    .nt-toggle.open span::before { transform: translateY(5px) rotate(45deg); }
+    .nt-toggle.open span::after { transform: translateY(-5px) rotate(-45deg); }
+    .nt-menu { position: fixed; inset: 0; z-index: 10000; background: rgba(5,5,9,.96); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: flex; flex-direction: column; justify-content: center; padding: 0 8vw; opacity: 0; visibility: hidden; transition: opacity .45s, visibility .45s; }
+    .nt-menu.open { opacity: 1; visibility: visible; }
+    .nt-link { display: flex; align-items: baseline; gap: 20px; padding: 15px 0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.06); opacity: 0; transform: translateY(20px); transition: opacity .5s, transform .5s; }
+    .nt-menu.open .nt-link { opacity: 1; transform: none; }
+    .nt-menu.open .nt-link:nth-child(1) { transition-delay: .06s; } .nt-menu.open .nt-link:nth-child(2) { transition-delay: .11s; }
+    .nt-menu.open .nt-link:nth-child(3) { transition-delay: .16s; } .nt-menu.open .nt-link:nth-child(4) { transition-delay: .21s; }
+    .nt-menu.open .nt-link:nth-child(5) { transition-delay: .26s; } .nt-menu.open .nt-link:nth-child(6) { transition-delay: .31s; }
+    .nt-link .no { font-size: .7rem; letter-spacing: .2em; color: #62626e; width: 2em; }
+    .nt-link .t { font-size: clamp(1.6rem, 4.5vw, 2.4rem); font-weight: 500; color: #cfcfd6; letter-spacing: .06em; transition: color .3s, letter-spacing .3s; }
+    .nt-link:hover .t { color: #fff; letter-spacing: .12em; }
+    .nt-foot { margin-top: 36px; font-size: .72rem; letter-spacing: .16em; color: #565662; text-transform: uppercase; }
+
+    /* ══ 页头 ══ */
+    .stage { min-height: 100vh; display: flex; flex-direction: column; padding: 108px 0 40px; }
+    .ph { text-align: center; padding: 0 24px; }
+    .ph .label { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: #8a8a96; margin-bottom: 14px; }
+    .ph h1 { font-size: clamp(1.5rem, 3.4vw, 2.3rem); font-weight: 500; color: #f2f2f5; letter-spacing: .02em; margin-bottom: 10px; }
+    .ph p { font-size: .9rem; color: #8f939f; }
+
+    /* ══ 胶片轮播 ══ */
+    .carousel { position: relative; flex: 1; min-height: 460px; margin-top: 8px; user-select: none; }
+    .film { position: absolute; inset: 0; }
+    .frame {
+      position: absolute; left: 50%; top: 46%;
+      width: 168px; height: 168px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform .65s cubic-bezier(.32,.72,.24,1), opacity .65s, filter .65s, box-shadow .65s;
+      will-change: transform;
     }
-    .project-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.18); }
-    .project-card .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-    .project-card .tag {
-      display: inline-block; padding: 4px 12px; border-radius: 999px;
-      background: rgba(255,255,255,0.08); color: #a0aec0; font-size: 0.78rem;
+    .frame .art {
+      width: 100%; height: 100%;
+      border-radius: inherit;
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 18px 46px rgba(0,0,0,.55);
+      overflow: hidden;
+      position: relative;
+      filter: grayscale(1) contrast(1.06);
+      background: #101014;
+      display: flex; align-items: flex-end;
     }
-    .project-card h3 { margin: 0 0 10px; font-size: 1.2rem; color: #fff; }
-    .project-card p { margin: 0 0 16px; color: #b0b8c8; line-height: 1.7; font-size: 0.95rem; }
-    .project-card .meta { display: flex; flex-wrap: wrap; gap: 12px; color: #6b7280; font-size: 0.85rem; }
-    .project-card .links { margin-top: 14px; display: flex; gap: 12px; }
-    .project-card .links a {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 6px 14px; border-radius: 8px;
-      background: rgba(255,255,255,0.06); color: #d1d5db;
-      text-decoration: none; font-size: 0.85rem;
-      border: 1px solid rgba(255,255,255,0.08);
+    .frame .art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.38)); }
+    .frame .art .glyph { position: absolute; top: 12px; left: 14px; font-size: 1.3rem; filter: grayscale(1); opacity: .92; }
+    .frame .art .no { position: relative; z-index: 1; padding: 10px 12px; font-size: 1.5rem; font-weight: 600; color: rgba(255,255,255,.9); letter-spacing: .04em; font-family: "Georgia", serif; font-style: italic; }
+
+    /* 中央画框（p2 黑色大相框） */
+    .frame.is-center {
+      width: min(400px, 74vw); height: min(400px, 74vw);
+      cursor: zoom-in;
     }
-    .project-card .links a:hover { background: rgba(255,255,255,0.12); color: #fff; }
-    .cursor-glow { position: fixed; left: 0; top: 0; width: 14px; height: 14px; margin-left: -7px; margin-top: -7px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(173,216,255,0.42) 45%, rgba(173,216,255,0) 75%); pointer-events: none; z-index: 9999; opacity: .82; transform: translate3d(-100px, -100px, 0); transition: transform .08s linear; mix-blend-mode: screen; }
+    .frame.is-center .art {
+      border: 10px solid #0b0b0e;
+      outline: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      box-shadow: 0 34px 90px rgba(0,0,0,.75), 0 0 0 1px rgba(0,0,0,.9);
+    }
+    .frame.is-center .art .no { font-size: 2.6rem; padding: 18px 20px; }
+    .frame.is-center .art .glyph { font-size: 2rem; top: 18px; left: 20px; }
+    .frame.is-center::after {
+      content: "点击查看完整案例";
+      position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%);
+      font-size: .72rem; letter-spacing: .22em; color: #777d8a; white-space: nowrap;
+    }
+    .frame:not(.is-center):hover { filter: brightness(1.25); }
+
+    /* 不同项目的黑白艺术底纹 */
+    .art-1 { background: radial-gradient(circle at 30% 25%, #3a3a40, #141418 62%), repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 2px, transparent 2px 14px); }
+    .art-2 { background: linear-gradient(160deg, #2c2c32, #0e0e12 70%), repeating-radial-gradient(circle at 70% 30%, rgba(255,255,255,.07) 0 2px, transparent 2px 18px); }
+    .art-3 { background: conic-gradient(from 200deg at 60% 40%, #26262c, #3c3c44, #101014, #26262c), repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 12px); }
+    .art-4 { background: radial-gradient(circle at 70% 70%, #43434c, #121216 58%), repeating-linear-gradient(-45deg, rgba(255,255,255,.05) 0 2px, transparent 2px 16px); }
+    .art-5 { background: linear-gradient(30deg, #1a1a20 20%, #38383f 55%, #0d0d11 85%), repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 10px); }
+    .art-6 { background: radial-gradient(ellipse at 50% 20%, #4a4a52, #17171c 60%), conic-gradient(from 90deg at 30% 80%, rgba(255,255,255,.06), transparent 30%); }
+
+    /* 箭头 */
+    .arrow-btn {
+      position: absolute; top: 46%; transform: translateY(-50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(10,10,14,.6);
+      color: #d8d8de; font-size: 1.5rem; cursor: pointer; z-index: 30;
+      backdrop-filter: blur(8px); transition: border-color .3s, background .3s;
+      line-height: 1; padding-bottom: 4px;
+    }
+    .arrow-btn:hover { border-color: rgba(255,255,255,.34); background: rgba(20,20,26,.8); }
+    .arrow-btn.prev { left: max(18px, 4vw); }
+    .arrow-btn.next { right: max(18px, 4vw); }
+
+    /* 展签 */
+    .caption { text-align: center; margin-top: 52px; padding: 0 24px; min-height: 74px; }
+    .caption .year { font-size: .68rem; letter-spacing: .34em; color: #6f7480; text-transform: uppercase; margin-bottom: 8px; transition: opacity .3s; }
+    .caption .title { font-family: "Georgia", "Songti SC", serif; font-style: italic; font-size: 1.35rem; color: #ececef; letter-spacing: .04em; transition: opacity .3s; }
+    .caption .idx { margin-top: 12px; font-size: .7rem; letter-spacing: .3em; color: #555a66; }
+    .caption.fading .year, .caption.fading .title { opacity: 0; }
+
+    /* ══ 观展室（案例详情） ══ */
+    .case-room {
+      position: fixed; inset: 0; z-index: 10020;
+      background: rgba(4,4,7,.92);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      opacity: 0; visibility: hidden;
+      transition: opacity .4s, visibility .4s;
+      overflow-y: auto;
+    }
+    .case-room.open { opacity: 1; visibility: visible; }
+    .case-panel {
+      width: min(860px, calc(100% - 36px));
+      margin: 72px auto 80px;
+      background: #0c0c11;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 22px;
+      padding: clamp(28px, 5vw, 56px);
+      transform: translateY(26px);
+      transition: transform .45s cubic-bezier(.4,0,.2,1);
+    }
+    .case-room.open .case-panel { transform: none; }
+    .case-close {
+      position: fixed; top: 22px; right: 26px; z-index: 10021;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2); background: rgba(12,12,16,.7);
+      color: #e8e8ec; font-size: 1.2rem; cursor: pointer;
+      transition: border-color .3s, transform .3s;
+    }
+    .case-close:hover { border-color: rgba(255,255,255,.45); transform: rotate(90deg); }
+    .case-head .no { font-size: .7rem; letter-spacing: .26em; color: #8a8a96; text-transform: uppercase; margin-bottom: 12px; }
+    .case-head h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; margin-bottom: 12px; }
+    .case-head .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .case-head .tag { padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); color: #a8acb8; font-size: .76rem; }
+    .case-head .lede { color: #aeb2bd; line-height: 1.85; font-size: .98rem; margin: 14px 0 6px; }
+    .case-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 4px; }
+    .case-links a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,.14); color: #d8dae2; text-decoration: none; font-size: .85rem; transition: border-color .3s, background .3s; }
+    .case-links a:hover { border-color: rgba(255,255,255,.34); background: rgba(255,255,255,.05); }
+    .case-sec { margin-top: 34px; border-top: 1px solid rgba(255,255,255,.07); padding-top: 26px; }
+    .case-sec h3 { font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: #8f8f9b; margin-bottom: 12px; font-weight: 500; }
+    .case-sec p { color: #b6bac5; line-height: 1.9; font-size: .95rem; margin-bottom: 10px; }
+    .case-sec ul { color: #b6bac5; line-height: 1.9; font-size: .95rem; padding-left: 1.2em; }
+    .case-sec li { margin-bottom: 6px; }
+
+    @media (max-width: 640px) {
+      .carousel { min-height: 400px; }
+      .frame { width: 118px; height: 118px; }
+      .arrow-btn { display: none; }
+      .stage { padding-top: 96px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .frame, .case-panel, .nt-menu, .nt-link { transition-duration: .01s !important; }
+    }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.matchMedia('(hover: hover)').matches) {
-        const glow = document.createElement('div');
-        glow.className = 'cursor-glow';
-        document.body.appendChild(glow);
-        window.addEventListener('mousemove', (event) => {
-          glow.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
-        });
-      }
-    });
-  </script>
 </head>
 <body>
-  <div class="page">
-    <div class="container">
-      <a class="back-link" href="index.html">← 返回首页</a>
-      <div class="topbar">
-        <img src="assets/avatar.jpg" alt="avatar">
-        <div class="topbar-text">
-          <h1>楼婧怡</h1>
-          <p>aaaloooooof · 教育科技 × AI 产品</p>
-        </div>
-      </div>
-      <h2 class="section-title">项目案例</h2>
-      <p class="section-desc">8 个月 7+ 个可运行原型，覆盖 AI 教育、工作流自动化、数据产品等方向。</p>
+  <!-- ══ 共享黑夜顶栏 ══ -->
+  <header class="nt-bar">
+    <a class="nt-name" href="index.html">
+      <span class="zh">楼婧怡</span>
+      <span class="en">Jingyi Lou · aaaloooooof</span>
+    </a>
+    <button class="nt-toggle" aria-label="展开导航菜单" aria-expanded="false"><span></span></button>
+  </header>
+  <nav class="nt-menu" aria-label="全站导航">
+    <a class="nt-link" href="index.html"><span class="no">01</span><span class="t">首页</span></a>
+    <a class="nt-link" href="projects.html"><span class="no">02</span><span class="t">项目案例</span></a>
+    <a class="nt-link" href="thoughts.html"><span class="no">03</span><span class="t">产品思考</span></a>
+    <a class="nt-link" href="weekly.html"><span class="no">04</span><span class="t">周报</span></a>
+    <a class="nt-link" href="about.html"><span class="no">05</span><span class="t">关于我</span></a>
+    <a class="nt-link" href="resume.html"><span class="no">06</span><span class="t">简历与联系</span></a>
+    <div class="nt-foot">教育科技 × AI 产品 · github.com/aaaloooooof</div>
+  </nav>
 
-      <div class="project-grid">
-        <div class="project-card">
-          <div class="tags">
-            <span class="tag">AI 教育</span>
-            <span class="tag">0→1 产品</span>
-          </div>
-          <h3>LearnLoop · 个性化学习路径产品</h3>
-          <p>从学习目标不清晰、资源分散和反馈不足等痛点出发，独立定义并落地「诊断—推荐—执行—反馈—复盘」产品闭环。完成信息架构、用户流程和领域模型设计，AI 辅助开发 Django＋Vue 前后端分离 MVP。</p>
-          <div class="meta">
-            <span>📅 2025-2026</span>
-            <span>👤 独立主导</span>
-          </div>
-          <div class="links">
-            <a href="https://learnloop-8dc995b0-18pwnmpof.eazo.dev/" target="_blank">在线 Demo →</a>
-            <a href="https://github.com/aaaloooooof/learnloop" target="_blank">GitHub →</a>
-          </div>
-        </div>
+  <main class="stage">
+    <header class="ph">
+      <div class="label">Selected Work · 项目案例</div>
+      <h1>把教育问题变成可运行的 AI 产品</h1>
+      <p>← → 浏览项目胶片，点击中央画框进入观展室查看完整案例</p>
+    </header>
 
-        <div class="project-card">
-          <div class="tags">
-            <span class="tag">数据产品</span>
-            <span class="tag">0→1 孵化</span>
-          </div>
-          <h3>MILOU 数字展厅 H5</h3>
-          <p>将线下艺术展内容产品化为移动端 H5，打通「扫码进入—内容浏览—互动传播」完整用户链路。搭建「访问—浏览—互动—分享」行为指标体系，首轮获得 123 UV / 218 会话 / 1091 次浏览 / 1159 次互动，提出数据驱动的迭代方案。</p>
-          <div class="meta">
-            <span>📅 2025-2026</span>
-            <span>📊 123 UV · 3.0 平均深度</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="tags">
-            <span class="tag">工作流自动化</span>
-            <span class="tag">AI 工具</span>
-          </div>
-          <h3>AI 教育政策新闻稿自动生成工作流</h3>
-          <p>为国外教育政策新闻稿生产搭建全自动工作流，先后用 n8n + Gemini、Coze、Codex 三平台各实现一版。最终版定时每周三早 9 点自动发送到邮箱，内容生产从「人工 1 小时 2 篇」变为「全自动、零人力」。</p>
-          <div class="meta">
-            <span>📅 2025-2026</span>
-            <span>⚡ 效率：1h/2篇 → 全自动</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="tags">
-            <span class="tag">AI Skill</span>
-            <span class="tag">教育场景</span>
-          </div>
-          <h3>初中数学几何辅导 Agent</h3>
-          <p>基于 ZPD 脚手架教学法设计的 AI 辅导 Skill，模拟家教场景中的引导式教学。在真实学生使用中验证效果，覆盖几何概念讲解、解题思路引导与错误分析。</p>
-          <div class="meta">
-            <span>📅 2025-2026</span>
-            <span>🎯 真实学生验证</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="tags">
-            <span class="tag">B端交付</span>
-            <span class="tag">全栈开发</span>
-          </div>
-          <h3>五金公司 ERP 系统</h3>
-          <p>采用 FDE（Fast Design & Engineering）模式为五金公司交付自用 ERP 系统。在客户 HTML 原型基础上完善功能，Netlify 部署 + Supabase 数据库，4 天完成交付，客户实际使用 1 个月反馈良好。</p>
-          <div class="meta">
-            <span>📅 2025-2026</span>
-            <span>⏱️ 4 天交付</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="tags">
-            <span class="tag">C端原型</span>
-            <span class="tag">AI 应用</span>
-          </div>
-          <h3>TimeLume / Idea Editor / BackCurve</h3>
-          <p>三个 C 端 AI 产品原型：TimeLume（自然语言时间记录）、Idea Editor（创意发散重组）、BackCurve（AI 体态自查）。快速验证不同场景下的 AI 交互模式。</p>
-          <div class="meta">
-            <span>📅 2025-2026</span>
-            <span>🧪 快速原型验证</span>
-          </div>
-          <div class="links">
-            <a href="https://timelume-1452acd5.eazo.dev/" target="_blank">TimeLume →</a>
-            <a href="https://idea-editor-6814532f.eazo.dev/" target="_blank">Idea Editor →</a>
-          </div>
-        </div>
-      </div>
+    <div class="carousel" id="carousel">
+      <div class="film" id="film"></div>
+      <button class="arrow-btn prev" id="prevBtn" aria-label="上一个项目">‹</button>
+      <button class="arrow-btn next" id="nextBtn" aria-label="下一个项目">›</button>
     </div>
+
+    <div class="caption" id="caption">
+      <div class="year" id="capYear"></div>
+      <div class="title" id="capTitle"></div>
+      <div class="idx" id="capIdx"></div>
+    </div>
+  </main>
+
+  <!-- ══ 观展室 ══ -->
+  <div class="case-room" id="caseRoom" role="dialog" aria-modal="true">
+    <button class="case-close" id="caseClose" aria-label="关闭案例详情">✕</button>
+    <div class="case-panel" id="casePanel"></div>
   </div>
+
+  <script>
+    /* ══ 顶栏展开菜单 ══ */
+    (function () {
+      var t = document.querySelector('.nt-toggle'), m = document.querySelector('.nt-menu');
+      function set(open) {
+        m.classList.toggle('open', open); t.classList.toggle('open', open);
+        t.setAttribute('aria-expanded', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      t.addEventListener('click', function () { set(!m.classList.contains('open')); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+      m.addEventListener('click', function (e) { if (e.target === m) set(false); });
+    })();
+
+    /* ══ 项目数据 ══ */
+    var PROJECTS = [
+      {
+        no: '01', year: '2025 – 2026', glyph: '🔄',
+        title: 'LearnLoop · 个性化学习路径产品',
+        tags: ['AI 教育', '0→1 产品', 'Django + Vue'],
+        lede: '从学习目标不清晰、资源分散和反馈不足等痛点出发，独立定义并落地「诊断—推荐—执行—反馈—复盘」产品闭环。',
+        links: [
+          { t: '在线 Demo →', u: 'https://learnloop-8dc995b0-18pwnmpof.eazo.dev/' },
+          { t: 'GitHub →', u: 'https://github.com/aaaloooooof/learnloop' }
+        ],
+        secs: [
+          ['问题与用户', '自学者普遍面临三个断点：不知道从哪里开始、学习资源分散、学完之后缺少反馈。目标用户是有明确提升意愿、但缺少结构化路径的自学者。'],
+          ['个人角色', '独立主导：问题定义、用户流程、信息架构、领域模型设计，并用 AI 辅助完成 Django＋Vue 前后端分离 MVP 的开发。'],
+          ['关键决策', '<ul><li>把产品闭环定义为「诊断—推荐—执行—反馈—复盘」，而不是简单的课程列表。</li><li>先做领域模型和信息架构，再进入开发，避免原型期结构反复。</li><li>选择前后端分离，方便后续接入 AI 推荐能力。</li></ul>'],
+          ['产出与复盘', '可运行的 MVP 已上线（见 Demo 链接）。下一步：接入真实学习数据，验证推荐策略的有效性。']
+        ]
+      },
+      {
+        no: '02', year: '2025 – 2026', glyph: '🖼️',
+        title: 'MILOU 数字展厅 H5',
+        tags: ['数据产品', '0→1 孵化'],
+        lede: '将线下艺术展内容产品化为移动端 H5，打通「扫码进入—内容浏览—互动传播」完整用户链路，并搭建行为指标体系。',
+        links: [],
+        secs: [
+          ['问题与用户', '线下展览内容触达有限、无法沉淀观众行为。把展览内容搬到移动端 H5，让观众可以远程观展、互动并分享。'],
+          ['个人角色', '负责内容产品化与数据体系：设计「访问—浏览—互动—分享」行为指标，把一次性的展览变成可持续迭代的产品。'],
+          ['关键数据', '<ul><li>首轮上线：123 UV / 218 会话</li><li>1091 次浏览 / 1159 次互动</li><li>平均浏览深度 3.0</li></ul>'],
+          ['产出与复盘', '基于首轮数据提出数据驱动的迭代方案。验证了「小体量内容产品也能用数据说话」的方法。']
+        ]
+      },
+      {
+        no: '03', year: '2025 – 2026', glyph: '⚡',
+        title: 'AI 教育政策新闻稿自动生成工作流',
+        tags: ['工作流自动化', 'n8n / Coze / Codex'],
+        lede: '为国外教育政策新闻稿生产搭建全自动工作流，内容生产从「人工 1 小时 2 篇」变为「全自动、零人力」。',
+        links: [],
+        secs: [
+          ['问题与用户', '教育政策新闻稿需要定期产出，人工撰写每篇约 30 分钟，且流程重复、可标准化程度高——典型的自动化候选场景。'],
+          ['关键决策', '<ul><li>同一工作流先后在 n8n + Gemini、Coze、Codex 三个平台各实现一版，横向对比平台能力边界。</li><li>最终版定时每周三早 9 点自动发送到邮箱，完全无人值守。</li></ul>'],
+          ['产出与复盘', '效率从「人工 1 小时 / 2 篇」到「全自动零人力」。三平台对比沉淀了对 AI 工作流工具选型的一手判断。']
+        ]
+      },
+      {
+        no: '04', year: '2025 – 2026', glyph: '📐',
+        title: '初中数学几何辅导 Agent',
+        tags: ['AI Skill', '教育场景', 'ZPD 教学法'],
+        lede: '基于 ZPD 脚手架教学法设计的 AI 辅导 Skill，模拟家教场景中的引导式教学，在真实学生使用中验证效果。',
+        links: [],
+        secs: [
+          ['问题与用户', '直接给答案的 AI 并不能教会学生。目标用户是初中几何学习者，需要的是「引导」而非「代做」。'],
+          ['关键决策', '<ul><li>以维果茨基最近发展区（ZPD）和脚手架教学法为设计基础：Agent 只提供阶梯式提示，不直接给完整解答。</li><li>覆盖几何概念讲解、解题思路引导与错误分析三类场景。</li></ul>'],
+          ['产出与复盘', 'Skill 在真实学生使用中得到验证。下一步：沉淀学生错误类型数据，优化提示阶梯的粒度。']
+        ]
+      },
+      {
+        no: '05', year: '2025 – 2026', glyph: '🏭',
+        title: '五金公司 ERP 系统',
+        tags: ['B 端交付', '全栈开发', 'FDE 模式'],
+        lede: '采用 FDE（Fast Design & Engineering）模式为五金公司交付自用 ERP 系统，4 天完成交付。',
+        links: [],
+        secs: [
+          ['问题与用户', '五金公司需要一套贴合自身业务的自用 ERP。客户提供了 HTML 原型，需要在此基础上完善为可实际使用的系统。'],
+          ['个人角色', '独立交付：在客户原型基础上完善功能，完成 Netlify 部署与 Supabase 数据库接入。'],
+          ['关键数据', '<ul><li>4 天完成交付</li><li>客户实际使用 1 个月，反馈良好</li></ul>'],
+          ['产出与复盘', '验证了 FDE 模式在小微 B 端场景的适用性：从原型到可用系统的极短路径。']
+        ]
+      },
+      {
+        no: '06', year: '2025 – 2026', glyph: '✨',
+        title: 'TimeLume / Idea Editor / BackCurve',
+        tags: ['C 端原型', 'AI 应用', '快速验证'],
+        lede: '三个 C 端 AI 产品原型：自然语言时间记录、创意发散重组、AI 体态自查，快速验证不同场景下的 AI 交互模式。',
+        links: [
+          { t: 'TimeLume →', u: 'https://timelume-1452acd5.eazo.dev/' },
+          { t: 'Idea Editor →', u: 'https://idea-editor-6814532f.eazo.dev/' }
+        ],
+        secs: [
+          ['问题与用户', 'C 端 AI 应用的核心不确定性在于交互模式是否成立。用三个小原型分别验证三个假设：自然语言能否降低记录成本、AI 能否帮助创意重组、视觉自查是否有真实需求。'],
+          ['三个原型', '<ul><li>TimeLume：自然语言时间记录与回顾</li><li>Idea Editor：创意发散与重组编辑器</li><li>BackCurve：AI 体态自查工具</li></ul>'],
+          ['产出与复盘', '三个原型均可在线体验。快速原型的方法让我能以周为单位测试产品假设，而不是凭感觉做判断。']
+        ]
+      }
+    ];
+
+    /* ══ 胶片轮播 ══ */
+    var film = document.getElementById('film');
+    var capYear = document.getElementById('capYear');
+    var capTitle = document.getElementById('capTitle');
+    var capIdx = document.getElementById('capIdx');
+    var caption = document.getElementById('caption');
+    var active = 0;
+    var N = PROJECTS.length;
+
+    PROJECTS.forEach(function (p, i) {
+      var f = document.createElement('div');
+      f.className = 'frame';
+      f.setAttribute('role', 'button');
+      f.setAttribute('tabindex', '0');
+      f.setAttribute('aria-label', p.title);
+      f.innerHTML = '<div class="art art-' + (i + 1) + '"><span class="glyph">' + p.glyph + '</span><span class="no">' + p.no + '</span></div>';
+      f.addEventListener('click', function () {
+        if (i === active) openCase(i); else go(i);
+      });
+      f.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); i === active ? openCase(i) : go(i); }
+      });
+      film.appendChild(f);
+    });
+    var frames = Array.prototype.slice.call(film.children);
+
+    function layout() {
+      var small = window.innerWidth <= 640;
+      var spacing = small ? 128 : 218;
+      frames.forEach(function (f, i) {
+        var off = i - active;
+        var ao = Math.abs(off);
+        var isC = off === 0;
+        f.classList.toggle('is-center', isC);
+        var x, s, r, op, z;
+        if (isC) { x = 0; s = 1; r = 0; op = 1; z = 20; }
+        else {
+          var dir = off > 0 ? 1 : -1;
+          var centerClear = small ? 150 : 300; // 让开中央画框
+          x = dir * (centerClear + (ao - 1) * spacing);
+          s = Math.max(0.72, 1 - ao * 0.1);
+          r = dir * (2.5 + ((i % 2) ? 2 : -1.5));
+          op = Math.max(0.12, 1 - ao * 0.24);
+          z = 20 - ao;
+        }
+        f.style.zIndex = z;
+        f.style.opacity = op;
+        f.style.transform = 'translate(-50%,-50%) translateX(' + x + 'px) scale(' + s + ') rotate(' + r + 'deg)';
+        f.style.pointerEvents = (small && ao > 2) || (!small && ao > 3) ? 'none' : 'auto';
+      });
+    }
+
+    function renderCaption() {
+      caption.classList.add('fading');
+      setTimeout(function () {
+        var p = PROJECTS[active];
+        capYear.textContent = p.year;
+        capTitle.textContent = p.title;
+        capIdx.textContent = (active + 1) + ' / ' + N;
+        caption.classList.remove('fading');
+      }, 180);
+    }
+
+    function go(i) {
+      active = (i + N) % N;
+      layout();
+      renderCaption();
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', function () { go(active - 1); });
+    document.getElementById('nextBtn').addEventListener('click', function () { go(active + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (document.getElementById('caseRoom').classList.contains('open')) return;
+      if (document.querySelector('.nt-menu').classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') go(active - 1);
+      if (e.key === 'ArrowRight') go(active + 1);
+    });
+
+    /* 触摸滑动 */
+    var touchX = null;
+    var carousel = document.getElementById('carousel');
+    carousel.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40) go(active + (dx < 0 ? 1 : -1));
+      touchX = null;
+    }, { passive: true });
+
+    window.addEventListener('resize', layout);
+
+    /* ══ 观展室 ══ */
+    var caseRoom = document.getElementById('caseRoom');
+    var casePanel = document.getElementById('casePanel');
+    var lastFocus = null;
+
+    function openCase(i) {
+      var p = PROJECTS[i];
+      var html = '<div class="case-head">'
+        + '<div class="no">Project ' + p.no + ' · ' + p.year + '</div>'
+        + '<h2>' + p.title + '</h2>'
+        + '<div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('') + '</div>'
+        + '<p class="lede">' + p.lede + '</p>';
+      if (p.links.length) {
+        html += '<div class="case-links">' + p.links.map(function (l) {
+          return '<a href="' + l.u + '" target="_blank" rel="noopener">' + l.t + '</a>';
+        }).join('') + '</div>';
+      }
+      html += '</div>';
+      p.secs.forEach(function (s) {
+        html += '<div class="case-sec"><h3>' + s[0] + '</h3>' + (/^<ul>/.test(s[1]) ? s[1] : '<p>' + s[1] + '</p>') + '</div>';
+      });
+      casePanel.innerHTML = html;
+      lastFocus = document.activeElement;
+      caseRoom.classList.add('open');
+      caseRoom.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      document.getElementById('caseClose').focus();
+    }
+
+    function closeCase() {
+      caseRoom.classList.remove('open');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    document.getElementById('caseClose').addEventListener('click', closeCase);
+    caseRoom.addEventListener('click', function (e) { if (e.target === caseRoom) closeCase(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && caseRoom.classList.contains('open')) closeCase();
+    });
+
+    /* 初始化 */
+    layout();
+    var p0 = PROJECTS[0];
+    capYear.textContent = p0.year;
+    capTitle.textContent = p0.title;
+    capIdx.textContent = '1 / ' + N;
+  </script>
 </body>
 </html>
