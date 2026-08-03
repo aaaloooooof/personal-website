@@ -12,13 +12,24 @@
       font-family: "Inter", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
         radial-gradient(circle at 50% 30%, rgba(40,46,64,0.20), transparent 55%),
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
         #060608;
-      background-size: auto, 44px 44px, 44px 44px, auto;
       color: #e8eaef;
       overflow-x: hidden;
     }
+    /* ══ 十字光标 / 网格呼吸 / 翻页过渡 ══ */
+    #bgGrid { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+    body, body a, body button, body [role="button"] { cursor: none; }
+    .cx { position: fixed; top: 0; left: 0; width: 22px; height: 22px; pointer-events: none; z-index: 10050; transform: translate(-50%,-50%); transition: width .25s, height .25s; }
+    .cx::before, .cx::after { content: ""; position: absolute; background: rgba(232,234,239,.85); }
+    .cx::before { left: 50%; top: 0; width: 1px; height: 100%; transform: translateX(-50%); }
+    .cx::after { top: 50%; left: 0; height: 1px; width: 100%; transform: translateY(-50%); }
+    .cx.snap { width: 44px; height: 44px; }
+    @media (hover: none), (pointer: coarse) { .cx { display: none; } body, body a, body button, body [role="button"] { cursor: auto; } }
+    .pg-veil { position: fixed; inset: 0; background: #060608; opacity: 0; pointer-events: none; transition: opacity .22s ease; z-index: 10060; }
+    .pg-veil.on { opacity: 1; }
+    .stage { opacity: 0; transform: translateY(12px); transition: opacity .45s ease, transform .45s ease; }
+    body.ready .stage { opacity: 1; transform: none; }
+    .frame .art { transition: transform .18s ease-out; }
 
     /* ══ 共享黑夜顶栏 ══ */
     .nt-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10001; display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 26px; pointer-events: none; }
@@ -212,6 +223,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .frame, .case-panel, .nt-menu, .nt-link { transition-duration: .01s !important; }
+      .stage { opacity: 1; transform: none; }
+      .pg-veil { display: none; }
     }
   </style>
 </head>
@@ -494,6 +507,84 @@
     capYear.textContent = p0.year;
     capTitle.textContent = p0.title;
     capIdx.textContent = '1 / ' + N;
+  </script>
+
+  <script>
+    /* ══ 十字光标 ══ */
+    (function () {
+      if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+      var cx = document.createElement('div'); cx.className = 'cx'; document.body.appendChild(cx);
+      document.addEventListener('mousemove', function (e) {
+        cx.style.left = e.clientX + 'px'; cx.style.top = e.clientY + 'px';
+        var t = e.target.closest ? e.target.closest('a,button,[role="button"],.mini,.frame') : null;
+        cx.classList.toggle('snap', !!t);
+      }, { passive: true });
+    })();
+
+    /* ══ 网格点阵随光标呼吸 ══ */
+    (function () {
+      var cv = document.createElement('canvas'); cv.id = 'bgGrid';
+      document.body.insertBefore(cv, document.body.firstChild);
+      var ctx = cv.getContext('2d'), mx = -9999, my = -9999, W, H;
+      function rs() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+      rs(); window.addEventListener('resize', rs);
+      document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+      document.addEventListener('mouseleave', function () { mx = -9999; my = -9999; });
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (var x = 22; x < W; x += 44) for (var y = 22; y < H; y += 44) {
+          var d = Math.hypot(x - mx, y - my), g = Math.max(0, 1 - d / 150);
+          ctx.fillStyle = 'rgba(255,255,255,' + (0.05 + g * 0.5) + ')';
+          ctx.fillRect(x - 1, y - 1, 2, 2);
+        }
+        if (!reduced) requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ══ 中央胶片 3D 倾斜 ══ */
+    (function () {
+      if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+      var carousel = document.getElementById('carousel');
+      carousel.addEventListener('mousemove', function (e) {
+        var art = document.querySelector('.frame.is-center .art');
+        if (!art) return;
+        var r = carousel.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - .5;
+        var py = (e.clientY - r.top) / r.height - .5;
+        art.style.transform = 'perspective(900px) rotateY(' + (px * 6) + 'deg) rotateX(' + (-py * 6) + 'deg)';
+      }, { passive: true });
+      carousel.addEventListener('mouseleave', function () {
+        document.querySelectorAll('.frame .art').forEach(function (a) { a.style.transform = ''; });
+      });
+      var obs = new MutationObserver(function () {
+        document.querySelectorAll('.frame:not(.is-center) .art').forEach(function (a) { a.style.transform = ''; });
+      });
+      document.querySelectorAll('.frame').forEach(function (f) { obs.observe(f, { attributes: true, attributeFilter: ['class'] }); });
+    })();
+
+    /* ══ 页面翻页过渡 ══ */
+    (function () {
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) { document.body.classList.add('ready'); return; }
+      var veil = document.createElement('div'); veil.className = 'pg-veil on'; document.body.appendChild(veil);
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        document.body.classList.add('ready');
+        veil.classList.remove('on');
+        setTimeout(function () { veil.remove(); }, 320);
+      }); });
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href || a.target === '_blank' || href.indexOf('http') === 0 || !/\.html(#.*)?$/.test(href)) return;
+        e.preventDefault();
+        var v = document.createElement('div'); v.className = 'pg-veil'; document.body.appendChild(v);
+        requestAnimationFrame(function () { v.classList.add('on'); });
+        setTimeout(function () { location.href = href; }, 220);
+      });
+    })();
   </script>
 </body>
 </html>

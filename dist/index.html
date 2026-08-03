@@ -34,7 +34,7 @@
 .hp-hero{display:flex;flex-direction:column;align-items:center;text-align:center}
 .hp-hero .pm-minimal-header img{width:104px!important;height:104px!important}
 .gates{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:820px;width:100%;margin:50px auto 0}
-.gate{position:relative;display:flex;flex-direction:column;gap:12px;aspect-ratio:1/1;padding:20px;text-decoration:none;color:#c9cdd6;border:1px solid rgba(255,255,255,.1);background:rgba(10,10,15,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .3s,background .3s,transform .35s cubic-bezier(.4,0,.2,1)}
+.gate{position:relative;display:flex;flex-direction:column;gap:12px;aspect-ratio:1/1;padding:20px;text-decoration:none;color:#c9cdd6;border:1px solid rgba(255,255,255,.1);background:rgba(10,10,15,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .3s,background .3s,transform .18s ease-out}
 .gate:hover{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.045);transform:translateY(-5px)}
 .gate-ico{width:44px;height:44px;flex:none;border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;color:#d8dae2;position:relative;transition:background .3s,border-color .3s,color .3s}
 .gate-ico svg{width:20px;height:20px}
@@ -56,6 +56,15 @@
 .c1{top:-6px;left:-6px}.c2{top:-6px;right:-6px}.c3{bottom:-6px;left:-6px}.c4{bottom:-6px;right:-6px}
 .hp-foot{text-align:center;font-size:.78rem;color:#565a66;margin-top:40px;letter-spacing:.06em}
 @media (max-width:640px){.hp{padding:0 20px 32px}.gates{grid-template-columns:1fr;max-width:320px;margin-top:38px}.gate{aspect-ratio:auto;flex-direction:row;align-items:center;gap:14px;padding:16px 18px}.gate-ar{position:static;margin-left:auto}}
+body,body a,body button,body .enter,body .nt-toggle{cursor:none}
+.cx{position:fixed;top:0;left:0;width:22px;height:22px;pointer-events:none;z-index:10050;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+.cx::before,.cx::after{content:"";position:absolute;background:rgba(232,234,239,.85)}
+.cx::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
+.cx::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-50%)}
+.cx.snap{width:44px;height:44px}
+@media (hover:none),(pointer:coarse){.cx{display:none}body,body a,body button,body .enter,body .nt-toggle{cursor:auto}}
+.pg-veil{position:fixed;inset:0;background:#060608;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:10060}
+.pg-veil.on{opacity:1}
 </style></div></div></div><script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script><script>window.$ = selector => document.querySelector(selector)
 const getOriginalContent = selector => $(selector).getAttribute("original-content")
 window.subtitle = getOriginalContent(".content-subtitle")
@@ -87,4 +96,41 @@ window.config = {
 	SUNRAYS_RESOLUTION: 196,
 	SUNRAYS_WEIGHT: 1.0,
 }
-</script><script src="js/main.js"></script><script src="js/background.js"></script></main></body>
+</script><script src="js/main.js"></script><script src="js/background.js"></script><script>
+/* 十字光标 */
+(function(){
+  if(window.matchMedia&&window.matchMedia('(hover: none), (pointer: coarse)').matches)return;
+  var cx=document.createElement('div');cx.className='cx';document.body.appendChild(cx);
+  document.addEventListener('mousemove',function(e){
+    cx.style.left=e.clientX+'px';cx.style.top=e.clientY+'px';
+    var t=e.target.closest?e.target.closest('a,button,[role="button"],.enter,.gate,.nt-toggle,.nt-link'):null;
+    cx.classList.toggle('snap',!!t);
+  },{passive:true});
+})();
+/* 方块 3D 倾斜 */
+(function(){
+  if(window.matchMedia&&window.matchMedia('(hover: none), (pointer: coarse)').matches)return;
+  document.querySelectorAll('.gate').forEach(function(g){
+    g.addEventListener('mousemove',function(e){
+      var r=g.getBoundingClientRect();
+      var px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+      g.style.transform='translateY(-5px) perspective(700px) rotateY('+(px*6)+'deg) rotateX('+(-py*6)+'deg)';
+    },{passive:true});
+    g.addEventListener('mouseleave',function(){g.style.transform='';});
+  });
+})();
+/* 出场翻页过渡 */
+(function(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href||a.target==='_blank'||href.indexOf('http')===0||!/\.html(#.*)?$/.test(href))return;
+    e.preventDefault();
+    var v=document.createElement('div');v.className='pg-veil';document.body.appendChild(v);
+    requestAnimationFrame(function(){v.classList.add('on');});
+    setTimeout(function(){location.href=href;},220);
+  });
+})();
+</script></main></body>

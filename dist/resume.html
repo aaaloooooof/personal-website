@@ -12,13 +12,25 @@
       font-family: "Inter", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
         radial-gradient(circle at 50% 24%, rgba(40,46,64,0.20), transparent 55%),
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
         #060608;
-      background-size: auto, 44px 44px, 44px 44px, auto;
       color: #e8eaef;
       overflow-x: hidden;
     }
+    /* ══ 十字光标 / 网格呼吸 / 翻页过渡 / 复制提示 ══ */
+    #bgGrid { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+    body, body a, body button, body [role="button"] { cursor: none; }
+    .cx { position: fixed; top: 0; left: 0; width: 22px; height: 22px; pointer-events: none; z-index: 10050; transform: translate(-50%,-50%); transition: width .25s, height .25s; }
+    .cx::before, .cx::after { content: ""; position: absolute; background: rgba(232,234,239,.85); }
+    .cx::before { left: 50%; top: 0; width: 1px; height: 100%; transform: translateX(-50%); }
+    .cx::after { top: 50%; left: 0; height: 1px; width: 100%; transform: translateY(-50%); }
+    .cx.snap { width: 44px; height: 44px; }
+    @media (hover: none), (pointer: coarse) { .cx { display: none; } body, body a, body button, body [role="button"] { cursor: auto; } }
+    .pg-veil { position: fixed; inset: 0; background: #060608; opacity: 0; pointer-events: none; transition: opacity .22s ease; z-index: 10060; }
+    .pg-veil.on { opacity: 1; }
+    .page { opacity: 0; transform: translateY(12px); transition: opacity .45s ease, transform .45s ease; }
+    body.ready .page { opacity: 1; transform: none; }
+    .toast { position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%) translateY(16px); background: #e8eaef; color: #0a0a0c; font-size: .8rem; padding: 10px 18px; border-radius: 24px; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; z-index: 10055; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     body::before {
       content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
@@ -120,7 +132,7 @@
       .lk:first-child { border-top: none; }
       .lk:nth-child(even) { border-left: none; }
     }
-    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01s !important; animation: none !important; } .page { opacity: 1; transform: none; } .pg-veil { display: none; } }
   </style>
 </head>
 <body>
@@ -160,20 +172,20 @@
     </div>
 
     <div class="links frame"><span class="cr"></span>
-      <a class="lk" href="mailto:51284102015@stu.ecnu.edu.cn">
+      <a class="lk cp" href="mailto:51284102015@stu.ecnu.edu.cn" data-copy="51284102015@stu.ecnu.edu.cn">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="m22 7-10 6L2 7"/></svg></span>
-        <span class="tx"><span class="k">Email</span><span class="v">51284102015@stu.ecnu.edu.cn</span></span>
-        <span class="ar">→</span>
+        <span class="tx"><span class="k">Email · 点击复制</span><span class="v">51284102015@stu.ecnu.edu.cn</span></span>
+        <span class="ar">⧉</span>
       </a>
       <a class="lk" href="https://github.com/aaaloooooof" target="_blank" rel="noopener">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></span>
         <span class="tx"><span class="k">GitHub</span><span class="v">github.com/aaaloooooof</span></span>
         <span class="ar">→</span>
       </a>
-      <a class="lk" href="tel:19818512496">
+      <a class="lk cp" href="tel:19818512496" data-copy="19818512496">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-        <span class="tx"><span class="k">Phone</span><span class="v">19818512496</span></span>
-        <span class="ar">→</span>
+        <span class="tx"><span class="k">Phone · 点击复制</span><span class="v">19818512496</span></span>
+        <span class="ar">⧉</span>
       </a>
       <a class="lk" href="https://github.com/aaaloooooof/personal-website" target="_blank" rel="noopener">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
@@ -192,6 +204,81 @@
       t.addEventListener('click', function () { set(!m.classList.contains('open')); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
       m.addEventListener('click', function (e) { if (e.target === m) set(false); });
+    })();
+  </script>
+
+  <script>
+    /* ══ 十字光标 ══ */
+    (function () {
+      if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+      var cx = document.createElement('div'); cx.className = 'cx'; document.body.appendChild(cx);
+      document.addEventListener('mousemove', function (e) {
+        cx.style.left = e.clientX + 'px'; cx.style.top = e.clientY + 'px';
+        var t = e.target.closest ? e.target.closest('a,button,[role="button"],.lk,.qr') : null;
+        cx.classList.toggle('snap', !!t);
+      }, { passive: true });
+    })();
+
+    /* ══ 网格点阵随光标呼吸 ══ */
+    (function () {
+      var cv = document.createElement('canvas'); cv.id = 'bgGrid';
+      document.body.insertBefore(cv, document.body.firstChild);
+      var ctx = cv.getContext('2d'), mx = -9999, my = -9999, W, H;
+      function rs() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+      rs(); window.addEventListener('resize', rs);
+      document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+      document.addEventListener('mouseleave', function () { mx = -9999; my = -9999; });
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (var x = 22; x < W; x += 44) for (var y = 22; y < H; y += 44) {
+          var d = Math.hypot(x - mx, y - my), g = Math.max(0, 1 - d / 150);
+          ctx.fillStyle = 'rgba(255,255,255,' + (0.05 + g * 0.5) + ')';
+          ctx.fillRect(x - 1, y - 1, 2, 2);
+        }
+        if (!reduced) requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ══ 点击复制 + toast ══ */
+    (function () {
+      var toast = document.createElement('div'); toast.className = 'toast'; document.body.appendChild(toast);
+      document.querySelectorAll('.lk.cp').forEach(function (row) {
+        row.addEventListener('click', function (e) {
+          e.preventDefault();
+          var text = row.getAttribute('data-copy');
+          if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {});
+          toast.textContent = '已复制 ' + text;
+          toast.classList.add('show');
+          clearTimeout(row._t);
+          row._t = setTimeout(function () { toast.classList.remove('show'); }, 1400);
+        });
+      });
+    })();
+
+    /* ══ 页面翻页过渡 ══ */
+    (function () {
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) { document.body.classList.add('ready'); return; }
+      var veil = document.createElement('div'); veil.className = 'pg-veil on'; document.body.appendChild(veil);
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        document.body.classList.add('ready');
+        veil.classList.remove('on');
+        setTimeout(function () { veil.remove(); }, 320);
+      }); });
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href || a.target === '_blank' || href.indexOf('http') === 0 || !/\.html(#.*)?$/.test(href)) return;
+        if (a.classList.contains('cp')) return;
+        e.preventDefault();
+        var v = document.createElement('div');
+        v.className = 'pg-veil'; document.body.appendChild(v);
+        requestAnimationFrame(function () { v.classList.add('on'); });
+        setTimeout(function () { location.href = href; }, 220);
+      });
     })();
   </script>
 </body>
