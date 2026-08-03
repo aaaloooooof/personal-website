@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>About · 背景与思考 | 楼婧怡</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { min-height: 100%; }
@@ -42,10 +45,12 @@
 
     /* ══ 顶栏与菜单 ══ */
     .nt-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10001; display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 26px; pointer-events: none; }
-    .nt-name { pointer-events: auto; text-decoration: none; display: inline-block; padding: 10px 16px 11px; border-radius: 14px; background: rgba(8,8,12,.55); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color .3s; }
-    .nt-name:hover { border-color: rgba(255,255,255,.24); }
-    .nt-name .zh { display: block; font-size: .98rem; font-weight: 300; color: #f2f2f4; letter-spacing: .3em; }
-    .nt-name .en { display: block; font-size: .58rem; font-weight: 300; letter-spacing: .34em; text-transform: uppercase; color: #9a9aa4; margin-top: 4px; }
+    .nt-name { pointer-events: auto; text-decoration: none; display: inline-flex; align-items: baseline; gap: 10px; padding: 8px 4px; }
+    .nt-name .mk { font-family: "Instrument Serif", Georgia, "Songti SC", serif; font-size: 1.06rem; line-height: 1; letter-spacing: 0; color: #f2f2f4; }
+    .nt-name .mk i { font-style: italic; }
+    .nt-name .sep { width: 1px; height: 12px; background: rgba(255,255,255,.18); align-self: center; }
+    .nt-name .id { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .58rem; letter-spacing: .13em; color: #62626e; align-self: center; transition: color .3s; }
+    .nt-name:hover .id { color: #9aa0ac; }
     .nt-toggle { pointer-events: auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(8,8,12,.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); cursor: pointer; position: relative; transition: border-color .3s, transform .45s cubic-bezier(.4,0,.2,1); }
     .nt-toggle:hover { border-color: rgba(255,255,255,.32); }
     .nt-toggle span { position: absolute; top: 50%; left: 50%; width: 16px; height: 1.5px; background: #e8e8ec; transform: translate(-50%,-50%); transition: background .25s; }
@@ -76,16 +81,24 @@
     .lede { color: #9aa0ac; font-size: .98rem; max-width: 580px; line-height: 1.85; margin-bottom: 60px; }
 
     /* ══ 页头 ══ */
-    .hero { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: end; margin-bottom: 72px; }
-    .hero .label { margin-bottom: 18px; }
-    .hero h1 { margin-bottom: 0; }
-    .hero .sub { margin-top: 18px; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: #62626e; }
-    .hero .sub b { color: #a8acb8; font-weight: 400; }
-    .hero-r { padding-left: 26px; border-left: 1px solid rgba(255,255,255,.14); }
-    .hero .lede { margin-bottom: 18px; max-width: none; }
-    .hero-meta { font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: #62626e; line-height: 2; }
-    .hero-meta i { font-style: normal; color: #a8e6a3; }
-    .ghost { position: absolute; right: -14px; top: -96px; font-family: "Georgia", serif; font-style: italic; font-size: clamp(7rem, 16vw, 11rem); line-height: 1; color: rgba(255,255,255,.04); pointer-events: none; user-select: none; }
+    .hero { position: relative; margin-bottom: 72px; max-width: 880px; }
+    .hero .top { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+    .hero .top .n { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: #62626e; }
+    .hero .top .bar { flex: 1; height: 1px; background: rgba(255,255,255,.09); }
+    .hero .top .st { display: inline-flex; align-items: center; gap: 7px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: #a8e6a3; }
+    .hero .top .st i { width: 5px; height: 5px; border-radius: 50%; background: #a8e6a3; box-shadow: 0 0 0 0 rgba(168,230,163,.55); animation: pl 2.6s ease-out infinite; }
+    @keyframes pl { 0% { box-shadow: 0 0 0 0 rgba(168,230,163,.5); } 70% { box-shadow: 0 0 0 10px rgba(168,230,163,0); } 100% { box-shadow: 0 0 0 0 rgba(168,230,163,0); } }
+    .hero h1 { font-family: "Noto Serif SC", "Songti SC", serif; font-weight: 900; font-size: clamp(1.5rem, 3.4vw, 2.3rem); line-height: 1.42; letter-spacing: -.005em; max-width: 26ch; margin-bottom: 0; }
+    .hero h1 em { font-style: normal; font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: 1.14em; }
+    .hero h1 u { text-decoration: none; position: relative; white-space: nowrap; }
+    .hero h1 u::after { content: ""; position: absolute; left: 0; right: 0; bottom: .08em; height: 1px; background: #a8e6a3; opacity: .5; }
+    .hero .fnote { display: grid; grid-template-columns: auto auto auto; justify-content: start; margin-top: 30px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.09); }
+    .hero .fnote div { padding: 0 22px; }
+    .hero .fnote div:first-child { padding-left: 0; }
+    .hero .fnote div+div { border-left: 1px solid rgba(255,255,255,.09); }
+    .hero .fnote .k { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; color: #62626e; }
+    .hero .fnote .v { font-size: .84rem; color: #9aa0ac; margin-top: 4px; white-space: nowrap; }
+    @media (max-width: 760px) { .hero .fnote { grid-template-columns: 1fr; gap: 12px; } .hero .fnote div { padding: 0; } .hero .fnote div+div { border-left: none; } .hero .fnote .v { white-space: normal; } }
 
     /* ══ 十字对位标记 ══ */
     .frame { position: relative; }
@@ -202,7 +215,7 @@
 <body>
   <div class="progress" id="progress"></div>
   <header class="nt-bar">
-    <a class="nt-name" href="index.html"><span class="zh">aaaloooooof</span><span class="en">Jingyi Lou · Portfolio</span></a>
+    <a class="nt-name" href="index.html"><span class="mk">Jingyi <i>Lou</i></span><span class="sep"></span><span class="id">@aaaloooooof</span></a>
     <button class="nt-toggle" aria-label="展开导航菜单" aria-expanded="false"><span></span></button>
   </header>
   <nav class="nt-menu" aria-label="全站导航">
@@ -215,15 +228,12 @@
 
   <main class="page">
     <header class="hero rv">
-      <span class="ghost">03</span>
-      <div class="hero-l">
-        <div class="label">About · 背景与思考</div>
-        <h1>做产品的<em>底稿</em></h1>
-        <div class="sub">Research <b>×</b> Teaching <b>×</b> Content <b>→</b> Product</div>
-      </div>
-      <div class="hero-r">
-        <p class="lede">学习科学 × AI 教育的研究训练，加上一线教学与内容经验——不讲故事，下面的数字与事实自己说明。关于 AI 的零散思考，持续写在小红书。</p>
-        <div class="hero-meta">上海 · ECNU 2028 届<br><i>● 正在找 AI 产品实习岗位</i></div>
+      <div class="top"><span class="n">About · 背景与思考</span><span class="bar"></span><span class="st"><i></i>正在找 AI 产品实习</span></div>
+      <h1>我研究人怎么学，<br>所以我做<u>教得会人</u>的 <em>AI</em> 产品。</h1>
+      <div class="fnote">
+        <div><div class="k">Base</div><div class="v">上海</div></div>
+        <div><div class="k">在读</div><div class="v">ECNU 课程与教学论 · 2028 届</div></div>
+        <div><div class="k">底子</div><div class="v">研究 / 教学 / 内容</div></div>
       </div>
     </header>
 
