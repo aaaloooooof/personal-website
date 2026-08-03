@@ -166,7 +166,7 @@
       margin: 72px auto 80px;
       background: #0c0c11;
       border: 1px solid rgba(255,255,255,.1);
-      border-radius: 22px;
+      border-radius: 4px;
       padding: clamp(28px, 5vw, 56px);
       transform: translateY(26px);
       transition: transform .45s cubic-bezier(.4,0,.2,1);
@@ -180,19 +180,25 @@
       transition: border-color .3s, transform .3s;
     }
     .case-close:hover { border-color: rgba(255,255,255,.45); transform: rotate(90deg); }
-    .case-head .no { font-size: .7rem; letter-spacing: .26em; color: #8a8a96; text-transform: uppercase; margin-bottom: 12px; }
-    .case-head h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; margin-bottom: 12px; }
-    .case-head .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-    .case-head .tag { padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); color: #a8acb8; font-size: .76rem; }
-    .case-head .lede { color: #aeb2bd; line-height: 1.85; font-size: .98rem; margin: 14px 0 6px; }
-    .case-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 4px; }
-    .case-links a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,.14); color: #d8dae2; text-decoration: none; font-size: .85rem; transition: border-color .3s, background .3s; }
-    .case-links a:hover { border-color: rgba(255,255,255,.34); background: rgba(255,255,255,.05); }
-    .case-sec { margin-top: 34px; border-top: 1px solid rgba(255,255,255,.07); padding-top: 26px; }
-    .case-sec h3 { font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: #8f8f9b; margin-bottom: 12px; font-weight: 500; }
+    .case-head .no { display: flex; align-items: center; gap: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .62rem; letter-spacing: .18em; color: #62626e; text-transform: uppercase; margin-bottom: 24px; }
+    .case-head .no::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.09); }
+    .case-head h2 { font-family: "Instrument Serif", "Noto Serif SC", "Songti SC", serif; font-weight: 900; font-size: clamp(1.55rem, 3.4vw, 2.15rem); line-height: 1.32; color: #f2f2f5; letter-spacing: -.005em; margin-bottom: 18px; }
+    .case-head .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+    .case-head .tag { padding: 5px 11px; border-radius: 3px; border: 1px solid rgba(255,255,255,.12); color: #8a8a96; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; }
+    .case-head .lede { color: #cfd3dc; line-height: 1.9; font-size: 1.04rem; margin: 20px 0 4px; max-width: 56ch; }
+    .case-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 6px; }
+    .case-links a { display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; border: 1px solid rgba(255,255,255,.16); color: #d8dae2; text-decoration: none; font-size: .82rem; letter-spacing: .04em; transition: border-color .3s, background .3s, transform .18s; }
+    .case-links a:first-child { background: #e8eaef; border-color: #e8eaef; color: #08080c; }
+    .case-links a:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
+    .case-links a:first-child:hover { background: #fff; border-color: #fff; }
+    .case-sec { display: grid; grid-template-columns: 148px 1fr; gap: 26px; margin-top: 0; border-top: 1px solid rgba(255,255,255,.08); padding: 24px 0 22px; }
+    .case-sec h3 { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: #8a8a96; font-weight: 400; padding-top: 5px; margin-bottom: 0; }
+    .case-sec h3 .sn { display: block; color: #a8e6a3; margin-bottom: 7px; }
     .case-sec p { color: #b6bac5; line-height: 1.9; font-size: .95rem; margin-bottom: 10px; }
     .case-sec ul { color: #b6bac5; line-height: 1.9; font-size: .95rem; padding-left: 1.2em; }
     .case-sec li { margin-bottom: 6px; }
+    .case-sec b { color: #eceef2; font-weight: 500; }
+    @media (max-width: 640px) { .case-sec { grid-template-columns: 1fr; gap: 8px; } }
 
     /* ══ 更多原型 · 小工具合集 ══ */
     .minis { position: relative; width: min(640px, calc(100% - 48px)); margin: 74px auto 26px; border: 1px solid rgba(255,255,255,.09); background: rgba(10,10,15,.45); padding: 24px 28px 16px; }
@@ -480,8 +486,8 @@
         }).join('') + '</div>';
       }
       html += '</div>';
-      p.secs.forEach(function (s) {
-        html += '<div class="case-sec"><h3>' + s[0] + '</h3>' + (/^<ul>/.test(s[1]) ? s[1] : '<p>' + s[1] + '</p>') + '</div>';
+      p.secs.forEach(function (s, k) {
+        html += '<div class="case-sec"><h3><span class="sn">S.0' + (k + 1) + '</span>' + s[0] + '</h3><div>' + (/^<ul>/.test(s[1]) ? s[1] : '<p>' + s[1] + '</p>') + '</div></div>';
       });
       casePanel.innerHTML = html;
       lastFocus = document.activeElement;

@@ -99,6 +99,15 @@ window.config = {
 	SUNRAYS_WEIGHT: 1.0,
 }
 </script><script src="js/main.js"></script><script src="js/background.js"></script><script>
+/* 顶栏菜单 */
+(function(){
+  var t=document.querySelector('.nt-toggle'),m=document.querySelector('.nt-menu');
+  if(!t||!m)return;
+  function set(o){m.classList.toggle('open',o);t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+  t.addEventListener('click',function(){set(!m.classList.contains('open'));});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  m.addEventListener('click',function(e){if(e.target===m)set(false);});
+})();
 /* 十字光标 */
 (function(){
   if(window.matchMedia&&window.matchMedia('(hover: none), (pointer: coarse)').matches)return;

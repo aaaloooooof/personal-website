@@ -135,12 +135,13 @@
 
     /* ══ 选项卡 ══ */
     .tabs { border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; }
-    .tab-btns { display: flex; border-bottom: 1px solid rgba(255,255,255,.09); position: relative; }
+    .tab-btns { display: flex; border-bottom: 1px solid rgba(255,255,255,.09); }
     .tab-btn { flex: 1; background: none; border: none; border-left: 1px solid rgba(255,255,255,.09); padding: 19px 10px 17px; font-family: inherit; font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; color: #6f7480; cursor: none; position: relative; transition: color .3s, background .3s; }
     .tab-btn:first-child { border-left: none; }
     .tab-btn:hover { color: #c9cdd6; background: rgba(255,255,255,.02); }
     .tab-btn.on { color: #fff; }
-    .tab-ind { position: absolute; bottom: -1px; height: 2px; background: #e8eaef; transition: left .4s cubic-bezier(.4,0,.2,1), width .4s cubic-bezier(.4,0,.2,1); }
+    .tab-btn .pb { position: absolute; left: 0; bottom: -1px; height: 1px; width: 0; background: #e8eaef; }
+    .tab-btn:not(.on) .pb { display: none; }
     .tab-panel { display: none; padding: 12px 30px 10px; }
     .tab-panel.on { display: block; animation: tabIn .5s cubic-bezier(.2,.6,.2,1); }
     @keyframes tabIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -229,7 +230,7 @@
   <main class="page">
     <header class="hero rv">
       <div class="top"><span class="n">About · 背景与思考</span><span class="bar"></span><span class="st"><i></i>正在找 AI 产品实习</span></div>
-      <h1>我研究人怎么学，<br>所以我做<u>教得会人</u>的 <em>AI</em> 产品。</h1>
+      <h1>研究、教学、内容，<br>都在回答同一个问题：<u>人是怎么学会的</u>。</h1>
       <div class="fnote">
         <div><div class="k">Base</div><div class="v">上海</div></div>
         <div><div class="k">在读</div><div class="v">ECNU 课程与教学论 · 2028 届</div></div>
@@ -249,10 +250,9 @@
     <div class="label rv">三个现场 · 点击切换</div>
     <div class="tabs frame rv"><span class="cr"></span>
       <div class="tab-btns" role="tablist">
-        <button class="tab-btn on" data-tab="t1" role="tab" aria-selected="true">Research · 研究</button>
-        <button class="tab-btn" data-tab="t2" role="tab" aria-selected="false">Experience · 现场</button>
-        <button class="tab-btn" data-tab="t3" role="tab" aria-selected="false">Content · 内容</button>
-        <span class="tab-ind" id="tabInd"></span>
+        <button class="tab-btn on" data-tab="t1" role="tab" aria-selected="true">Research · 研究<span class="pb"></span></button>
+        <button class="tab-btn" data-tab="t2" role="tab" aria-selected="false">Experience · 现场<span class="pb"></span></button>
+        <button class="tab-btn" data-tab="t3" role="tab" aria-selected="false">Content · 内容<span class="pb"></span></button>
       </div>
       <div class="tab-panel on" id="t1" role="tabpanel">
         <div class="pi"><span class="pk">7 篇论文<i>1 作 / 通讯多篇</i></span><span class="pd">中英文实证研究在投与录用，1 篇已被<b>华东师范大学学报</b>录用。选题覆盖 STEM 教育、职前教师职业焦虑、灵活就业力与认知负荷——都来自真实学习场景。</span></div>
@@ -335,34 +335,31 @@
       }, { passive: true });
     })();
 
-    /* ══ 选项卡（滑动指示器 + 自动轮播） ══ */
+    /* ══ 选项卡（自动轮播 + 手动切换） ══ */
     (function () {
       var btns = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
       var tabsEl = document.querySelector('.tabs');
-      var ind = document.getElementById('tabInd');
-      var idx = 0, timer = null, DUR = 6000;
+      var idx = 0, raf = null, t0 = null, DUR = 6000;
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function moveInd() {
-        var b = btns[idx];
-        ind.style.left = b.offsetLeft + 'px';
-        ind.style.width = b.offsetWidth + 'px';
-      }
       function show(i) {
         idx = i;
         btns.forEach(function (x, j) {
           x.classList.toggle('on', j === i);
           x.setAttribute('aria-selected', j === i ? 'true' : 'false');
+          x.querySelector('.pb').style.width = '0';
         });
         document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
         document.getElementById(btns[i].getAttribute('data-tab')).classList.add('on');
-        moveInd();
       }
-      function start() {
-        if (reduced) return;
-        stop();
-        timer = setTimeout(function () { show((idx + 1) % btns.length); start(); }, DUR);
+      function tick(ts) {
+        if (!t0) t0 = ts;
+        var p = (ts - t0) / DUR;
+        if (p >= 1) { show((idx + 1) % btns.length); t0 = null; raf = requestAnimationFrame(tick); return; }
+        btns[idx].querySelector('.pb').style.width = (p * 100) + '%';
+        raf = requestAnimationFrame(tick);
       }
-      function stop() { if (timer) clearTimeout(timer); timer = null; }
+      function start() { if (reduced) return; if (raf) cancelAnimationFrame(raf); t0 = null; raf = requestAnimationFrame(tick); }
+      function stop() { if (raf) cancelAnimationFrame(raf); raf = null; }
       btns.forEach(function (b, i) {
         b.addEventListener('click', function () { show(i); start(); });
       });
@@ -372,8 +369,6 @@
         if (e.key === 'ArrowRight') { show((idx + 1) % btns.length); start(); }
         if (e.key === 'ArrowLeft') { show((idx - 1 + btns.length) % btns.length); start(); }
       });
-      window.addEventListener('resize', moveInd);
-      moveInd();
       start();
     })();
 
