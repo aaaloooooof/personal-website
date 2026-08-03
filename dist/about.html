@@ -65,6 +65,18 @@
     h1 em { font-family: "Georgia", "Songti SC", serif; font-style: italic; font-weight: 400; }
     .lede { color: #9aa0ac; font-size: .98rem; max-width: 580px; line-height: 1.85; margin-bottom: 60px; }
 
+    /* ══ 页头 ══ */
+    .hero { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: end; margin-bottom: 72px; }
+    .hero .label { margin-bottom: 18px; }
+    .hero h1 { margin-bottom: 0; }
+    .hero .sub { margin-top: 18px; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: #62626e; }
+    .hero .sub b { color: #a8acb8; font-weight: 400; }
+    .hero-r { padding-left: 26px; border-left: 1px solid rgba(255,255,255,.14); }
+    .hero .lede { margin-bottom: 18px; max-width: none; }
+    .hero-meta { font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: #62626e; line-height: 2; }
+    .hero-meta i { font-style: normal; color: #a8e6a3; }
+    .ghost { position: absolute; right: -14px; top: -96px; font-family: "Georgia", serif; font-style: italic; font-size: clamp(7rem, 16vw, 11rem); line-height: 1; color: rgba(255,255,255,.04); pointer-events: none; user-select: none; }
+
     /* ══ 十字对位标记 ══ */
     .frame { position: relative; }
     .frame .cr { position: absolute; inset: 0; pointer-events: none; }
@@ -165,6 +177,9 @@
 
     @media (max-width: 860px) {
       .page { padding: 112px 20px 50px; }
+      .hero { grid-template-columns: 1fr; gap: 30px; margin-bottom: 56px; }
+      .hero-r { padding-left: 18px; }
+      .ghost { top: -70px; right: -6px; }
       .stats { grid-template-columns: 1fr 1fr; }
       .stat:nth-child(3) { border-left: none; }
       .stat:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.09); }
@@ -190,9 +205,18 @@
   </nav>
 
   <main class="page">
-    <div class="label rv">About · 背景与思考</div>
-    <h1 class="rv">研究过、教过、写过，<br>现在做<em>产品</em></h1>
-    <p class="lede rv">学习科学 × AI 教育的研究训练，加上一线教学与内容经验——这是我做产品判断时的底稿。关于 AI 的零散思考，持续写在小红书。</p>
+    <header class="hero rv">
+      <span class="ghost">03</span>
+      <div class="hero-l">
+        <div class="label">About · 背景与思考</div>
+        <h1>让<em>经历</em>说话</h1>
+        <div class="sub">Research <b>×</b> Teaching <b>×</b> Content <b>→</b> Product</div>
+      </div>
+      <div class="hero-r">
+        <p class="lede">学习科学 × AI 教育的研究训练，加上一线教学与内容经验——不讲故事，下面的数字与事实自己说明。关于 AI 的零散思考，持续写在小红书。</p>
+        <div class="hero-meta">上海 · ECNU 2028 届<br><i>● 开放 AI 产品实习机会</i></div>
+      </div>
+    </header>
 
     <!-- 数字带 -->
     <div class="stats frame rv"><span class="cr"></span>
@@ -257,11 +281,6 @@
         <div class="yr">2020 – 2025</div>
         <div class="tt">杭州师范大学 · 小学教育（数学）本科</div>
         <div class="dd">综合排名 2 / 287 · 省优秀毕业生</div>
-      </div>
-      <div class="tl-item">
-        <div class="yr">2023</div>
-        <div class="tt">杭州亚运会开幕式演出舞蹈演员</div>
-        <div class="dd">及亚运会 MV 拍摄 · 央视宣传片《天水之门》</div>
       </div>
       <div class="tl-item">
         <div class="yr">竞赛</div>
@@ -405,7 +424,7 @@
       }, { threshold: 0.25 }).observe(tl);
       /* 兜底：2.5 秒后首屏标题仍未显现则全部显现 */
       setTimeout(function () {
-        var h1 = document.querySelector('h1.rv');
+        var h1 = document.querySelector('.hero.rv') || document.querySelector('h1.rv');
         if (h1 && !h1.classList.contains('in')) revealAll();
       }, 2500);
     })();
