@@ -58,6 +58,7 @@
     .nt-foot { margin-top: 36px; font-size: .72rem; letter-spacing: .16em; color: #565662; text-transform: uppercase; }
 
     /* ══ 页面骨架 ══ */
+    .progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: linear-gradient(90deg, rgba(232,234,239,.95), rgba(140,160,220,.5)); z-index: 10002; transition: width .12s linear; }
     .page { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 132px 28px 70px; }
     .label { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: #8a8a96; margin-bottom: 16px; }
     h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 500; color: #f2f2f5; letter-spacing: .01em; line-height: 1.25; margin-bottom: 14px; }
@@ -88,6 +89,9 @@
     .stat { padding: 30px 24px 28px; border-left: 1px solid rgba(255,255,255,.09); position: relative; overflow: hidden; transition: background .3s; }
     .stat:first-child { border-left: none; }
     .stat:hover { background: rgba(255,255,255,.025); }
+    .stat::before { content: ""; position: absolute; inset: 0; background: radial-gradient(190px circle at var(--lx, 50%) var(--ly, 40%), rgba(140,160,220,.14), transparent 70%); opacity: 0; transition: opacity .35s; pointer-events: none; }
+    .stat:hover::before { opacity: 1; }
+    .stat .n, .stat .s { position: relative; }
     .stat::after { content: ""; position: absolute; left: 24px; bottom: 0; width: 0; height: 1px; background: rgba(255,255,255,.45); transition: width .45s cubic-bezier(.4,0,.2,1); }
     .stat:hover::after { width: calc(100% - 48px); }
     .stat .n { display: flex; align-items: baseline; gap: 5px; font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 600; color: #fff; letter-spacing: .01em; font-variant-numeric: tabular-nums; line-height: 1.1; margin-bottom: 10px; }
@@ -101,8 +105,8 @@
     .tab-btn:first-child { border-left: none; }
     .tab-btn:hover { color: #c9cdd6; background: rgba(255,255,255,.02); }
     .tab-btn.on { color: #fff; }
-    .tab-btn::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 1px; background: #e8eaef; transform: scaleX(0); transition: transform .4s cubic-bezier(.4,0,.2,1); }
-    .tab-btn.on::after { transform: scaleX(1); }
+    .tab-btn .pb { position: absolute; left: 0; bottom: -1px; height: 1px; width: 0; background: #e8eaef; }
+    .tab-btn:not(.on) .pb { display: none; }
     .tab-panel { display: none; padding: 12px 30px 10px; }
     .tab-panel.on { display: block; animation: tabIn .5s cubic-bezier(.2,.6,.2,1); }
     @keyframes tabIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -123,7 +127,12 @@
 
     /* ══ AI 思考笔记 ══ */
     .notes { border: 1px solid rgba(255,255,255,.09); margin-bottom: 76px; padding: 6px 26px; }
-    .note { display: flex; align-items: baseline; gap: 18px; padding: 17px 4px; border-top: 1px solid rgba(255,255,255,.06); text-decoration: none; transition: padding-left .3s, background .3s; }
+    .note { display: flex; align-items: baseline; gap: 18px; padding: 17px 4px; border-top: 1px solid rgba(255,255,255,.06); text-decoration: none; opacity: 0; transform: translateY(14px); transition: opacity .55s cubic-bezier(.2,.6,.2,1), transform .55s cubic-bezier(.2,.6,.2,1), padding-left .3s, background .3s; }
+    .notes.in .note { opacity: 1; transform: none; }
+    .notes.in .note:nth-of-type(1) { transition-delay: .05s; } .notes.in .note:nth-of-type(2) { transition-delay: .13s; }
+    .notes.in .note:nth-of-type(3) { transition-delay: .21s; } .notes.in .note:nth-of-type(4) { transition-delay: .29s; }
+    .notes.in .note:nth-of-type(5) { transition-delay: .37s; }
+    .notes.settled .note { transition-delay: 0s; }
     .note:first-of-type { border-top: none; }
     .note:hover { padding-left: 14px; background: rgba(255,255,255,.02); }
     .note .nn { font-family: "Georgia", serif; font-style: italic; font-size: .95rem; color: #6f7480; min-width: 1.7em; }
@@ -138,7 +147,12 @@
     .tl::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: rgba(255,255,255,.12); }
     .tl .line { position: absolute; left: 0; top: 6px; width: 1px; height: 0; background: linear-gradient(rgba(232,234,239,.9), rgba(232,234,239,.25)); transition: height 1.6s cubic-bezier(.3,.7,.2,1); }
     .tl.in .line { height: calc(100% - 12px); }
-    .tl-item { position: relative; padding: 0 0 34px; }
+    .tl-item { position: relative; padding: 0 0 34px; opacity: 0; transform: translateX(-12px); transition: opacity .55s cubic-bezier(.2,.6,.2,1), transform .55s cubic-bezier(.2,.6,.2,1); }
+    .tl.in .tl-item { opacity: 1; transform: none; }
+    .tl.in .tl-item:nth-child(2) { transition-delay: .15s; } .tl.in .tl-item:nth-child(3) { transition-delay: .35s; }
+    .tl.in .tl-item:nth-child(4) { transition-delay: .55s; } .tl.in .tl-item:nth-child(5) { transition-delay: .75s; }
+    .tl.in .tl-item:nth-child(6) { transition-delay: .95s; }
+    .tl.settled .tl-item { transition-delay: 0s; }
     .tl-item:last-child { padding-bottom: 4px; }
     .tl-item::before { content: ""; position: absolute; left: -38px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: #060608; border: 1.5px solid rgba(255,255,255,.4); transition: background .3s, border-color .3s, box-shadow .3s; }
     .tl-item:hover::before { background: #e8eaef; border-color: #e8eaef; box-shadow: 0 0 12px rgba(232,234,239,.5); }
@@ -162,6 +176,7 @@
   </style>
 </head>
 <body>
+  <div class="progress" id="progress"></div>
   <header class="nt-bar">
     <a class="nt-name" href="index.html"><span class="zh">aaaloooooof</span><span class="en">Jingyi Lou · Portfolio</span></a>
     <button class="nt-toggle" aria-label="展开导航菜单" aria-expanded="false"><span></span></button>
@@ -191,9 +206,9 @@
     <div class="label rv">三个现场 · 点击切换</div>
     <div class="tabs frame rv"><span class="cr"></span>
       <div class="tab-btns" role="tablist">
-        <button class="tab-btn on" data-tab="t1" role="tab" aria-selected="true">Research · 研究</button>
-        <button class="tab-btn" data-tab="t2" role="tab" aria-selected="false">Experience · 现场</button>
-        <button class="tab-btn" data-tab="t3" role="tab" aria-selected="false">Content · 内容</button>
+        <button class="tab-btn on" data-tab="t1" role="tab" aria-selected="true">Research · 研究<span class="pb"></span></button>
+        <button class="tab-btn" data-tab="t2" role="tab" aria-selected="false">Experience · 现场<span class="pb"></span></button>
+        <button class="tab-btn" data-tab="t3" role="tab" aria-selected="false">Content · 内容<span class="pb"></span></button>
       </div>
       <div class="tab-panel on" id="t1" role="tabpanel">
         <div class="pi"><span class="pk">7 篇论文<i>1 作 / 通讯多篇</i></span><span class="pd">中英文实证研究在投与录用，1 篇已被<b>华东师范大学学报</b>录用。选题覆盖 STEM 教育、职前教师职业焦虑、灵活就业力与认知负荷——都来自真实学习场景。</span></div>
@@ -281,17 +296,64 @@
       }, { passive: true });
     })();
 
-    /* ══ 选项卡 ══ */
+    /* ══ 选项卡（自动轮播 + 手动切换） ══ */
     (function () {
-      var btns = document.querySelectorAll('.tab-btn');
-      btns.forEach(function (b) {
-        b.addEventListener('click', function () {
-          btns.forEach(function (x) { x.classList.remove('on'); x.setAttribute('aria-selected', 'false'); });
-          document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
-          b.classList.add('on');
-          b.setAttribute('aria-selected', 'true');
-          document.getElementById(b.getAttribute('data-tab')).classList.add('on');
+      var btns = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+      var tabsEl = document.querySelector('.tabs');
+      var idx = 0, raf = null, t0 = null, DUR = 6000;
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function show(i) {
+        idx = i;
+        btns.forEach(function (x, j) {
+          x.classList.toggle('on', j === i);
+          x.setAttribute('aria-selected', j === i ? 'true' : 'false');
+          x.querySelector('.pb').style.width = '0';
         });
+        document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
+        document.getElementById(btns[i].getAttribute('data-tab')).classList.add('on');
+      }
+      function tick(ts) {
+        if (!t0) t0 = ts;
+        var p = (ts - t0) / DUR;
+        if (p >= 1) { show((idx + 1) % btns.length); t0 = null; raf = requestAnimationFrame(tick); return; }
+        btns[idx].querySelector('.pb').style.width = (p * 100) + '%';
+        raf = requestAnimationFrame(tick);
+      }
+      function start() { if (reduced) return; if (raf) cancelAnimationFrame(raf); t0 = null; raf = requestAnimationFrame(tick); }
+      function stop() { if (raf) cancelAnimationFrame(raf); raf = null; }
+      btns.forEach(function (b, i) {
+        b.addEventListener('click', function () { show(i); start(); });
+      });
+      tabsEl.addEventListener('mouseenter', stop);
+      tabsEl.addEventListener('mouseleave', start);
+      tabsEl.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { show((idx + 1) % btns.length); start(); }
+        if (e.key === 'ArrowLeft') { show((idx - 1 + btns.length) % btns.length); start(); }
+      });
+      start();
+    })();
+
+    /* ══ 顶部滚动进度条 ══ */
+    (function () {
+      var bar = document.getElementById('progress');
+      function upd() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      document.addEventListener('scroll', upd, { passive: true });
+      window.addEventListener('resize', upd);
+      upd();
+    })();
+
+    /* ══ 数字卡鼠标聚光 ══ */
+    (function () {
+      document.querySelectorAll('.stat').forEach(function (s) {
+        s.addEventListener('mousemove', function (e) {
+          var r = s.getBoundingClientRect();
+          s.style.setProperty('--lx', (e.clientX - r.left) + 'px');
+          s.style.setProperty('--ly', (e.clientY - r.top) + 'px');
+        }, { passive: true });
       });
     })();
 
@@ -308,12 +370,19 @@
         }
         requestAnimationFrame(step);
       }
+      function settle(el) {
+        if (el.classList && (el.classList.contains('notes') || el.id === 'tl')) {
+          setTimeout(function () { el.classList.add('settled'); }, 1100);
+        }
+      }
       function revealAll() {
         document.querySelectorAll('.rv').forEach(function (el) {
           el.classList.add('in');
           el.querySelectorAll('[data-n]').forEach(countUp);
+          settle(el);
         });
         document.getElementById('tl').classList.add('in');
+        settle(document.getElementById('tl'));
       }
       if (!('IntersectionObserver' in window)) { revealAll(); return; }
       var io = new IntersectionObserver(function (entries) {
@@ -322,6 +391,7 @@
           var el = en.target;
           el.classList.add('in');
           el.querySelectorAll('[data-n]').forEach(countUp);
+          settle(el);
           io.unobserve(el);
         });
       }, { threshold: 0.18 });
@@ -331,7 +401,7 @@
       });
       var tl = document.getElementById('tl');
       new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (en) { if (en.isIntersecting) { tl.classList.add('in'); obs.disconnect(); } });
+        entries.forEach(function (en) { if (en.isIntersecting) { tl.classList.add('in'); settle(tl); obs.disconnect(); } });
       }, { threshold: 0.25 }).observe(tl);
       /* 兜底：2.5 秒后首屏标题仍未显现则全部显现 */
       setTimeout(function () {

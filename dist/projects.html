@@ -200,6 +200,8 @@
     .mini .md { font-size: .76rem; color: #7c818d; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .mini .ma { margin-left: auto; flex: none; color: #565a66; font-size: .8rem; transition: transform .3s, color .3s; }
     .mini:hover .ma { transform: translateX(4px); color: #fff; }
+    div.mini { cursor: default; }
+    .micro { border-top: 1px solid rgba(255,255,255,.05); padding: 14px 4px 8px; font-size: .74rem; letter-spacing: .1em; color: #62626e; }
     @media (max-width: 640px) { .mini .md { display: none; } }
 
     @media (max-width: 640px) {
@@ -250,13 +252,14 @@
     </div>
 
     <div class="minis"><span class="cr"></span>
-      <h5>更多原型 · 小工具合集</h5>
-      <a class="mini" href="https://github.com/aaaloooooof/mavis-demo-generator" target="_blank" rel="noopener"><span class="mn">Mavis Demo Generator</span><span class="md">AI 演示生成与导出平台</span><span class="ma">→</span></a>
-      <a class="mini" href="https://github.com/aaaloooooof/mirror-campus" target="_blank" rel="noopener"><span class="mn">MirrorCampus</span><span class="md">校园 AI 治理数据看板</span><span class="ma">→</span></a>
-      <a class="mini" href="https://github.com/aaaloooooof/my-Woolly-Coder" target="_blank" rel="noopener"><span class="mn">Woolly-Coder</span><span class="md">Codex 桌面宠物</span><span class="ma">→</span></a>
-      <a class="mini" href="https://github.com/aaaloooooof/obsidian-job-copilot" target="_blank" rel="noopener"><span class="mn">Job Copilot</span><span class="md">Obsidian 求职助手</span><span class="ma">→</span></a>
-      <a class="mini" href="https://github.com/aaaloooooof/personalized-learning-system" target="_blank" rel="noopener"><span class="mn">Personalized Learning System</span><span class="md">个性化学习系统框架</span><span class="ma">→</span></a>
-      <a class="mini" href="https://github.com/aaaloooooof/work--system" target="_blank" rel="noopener"><span class="mn">Work System</span><span class="md">个人工作流系统</span><span class="ma">→</span></a>
+      <h5>小项目区 · 更多原型</h5>
+      <div class="mini"><span class="mn">06 · 初中数学几何辅导 Agent</span><span class="md">ZPD 脚手架引导，家教场景真实学生验证</span></div>
+      <a class="mini" href="https://timelume-1452acd5.eazo.dev/" target="_blank" rel="noopener"><span class="mn">07 · TimeLume</span><span class="md">自然语言时间记录与周期报告</span><span class="ma">→</span></a>
+      <a class="mini" href="https://idea-editor-6814532f.eazo.dev/" target="_blank" rel="noopener"><span class="mn">08 · Idea Editor</span><span class="md">创意发散与重组编辑器</span><span class="ma">→</span></a>
+      <div class="mini"><span class="mn">09 · BackCurve</span><span class="md">AI 体态自查工具</span></div>
+      <a class="mini" href="https://github.com/aaaloooooof/my-Woolly-Coder" target="_blank" rel="noopener"><span class="mn">10 · Woolly-Coder</span><span class="md">Codex 桌面宠物</span><span class="ma">→</span></a>
+      <a class="mini" href="https://github.com/aaaloooooof/obsidian-job-copilot" target="_blank" rel="noopener"><span class="mn">11 · Job Copilot</span><span class="md">Obsidian 求职助手</span><span class="ma">→</span></a>
+      <div class="micro">一行小字 · 教育督导政策爬虫 · 小红书调研爬虫 · Chrome 阅读插件</div>
     </div>
   </main>
 
@@ -299,16 +302,18 @@
         ]
       },
       {
-        no: '02', year: '2025 – 2026', glyph: '🖼️',
-        title: 'MILOU 数字展厅 H5',
-        tags: ['数据产品', '0→1 孵化'],
-        lede: '将线下艺术展内容产品化为移动端 H5，打通「扫码进入—内容浏览—互动传播」完整用户链路，并搭建行为指标体系。',
-        links: [],
+        no: '02', year: '2025 – 2026', glyph: '🏛️',
+        title: 'MirrorCampus · 校园 AI 治理看板',
+        tags: ['数据看板', 'AI 治理', '校园场景'],
+        lede: '面向校园场景的 AI 治理数据看板原型：把政策、风险与学习分析三类数据放进同一个可视化界面，回答「学校如何看得见、管得住 AI 使用」。',
+        links: [
+          { t: 'GitHub →', u: 'https://github.com/aaaloooooof/mirror-campus' }
+        ],
         secs: [
-          ['问题与用户', '线下展览内容触达有限、无法沉淀观众行为。把展览内容搬到移动端 H5，让观众可以远程观展、互动并分享。'],
-          ['个人角色', '负责内容产品化与数据体系：设计「访问—浏览—互动—分享」行为指标，把一次性的展览变成可持续迭代的产品。'],
-          ['关键数据', '<ul><li>首轮上线：123 UV / 218 会话</li><li>1091 次浏览 / 1159 次互动</li><li>平均浏览深度 3.0</li></ul>'],
-          ['产出与复盘', '基于首轮数据提出数据驱动的迭代方案。验证了「小体量内容产品也能用数据说话」的方法。']
+          ['问题与用户', '校园里 AI 使用快速增长，但管理者看不到使用情况、风险点与政策执行的落地程度。目标用户是教育管理者与研究者。'],
+          ['个人角色', '独立设计指标结构与看板信息架构，并快速搭建可运行原型。'],
+          ['关键决策', '<ul><li>把指标分为政策、风险、学习分析三层，先看全局再钻取细节。</li><li>用看板这种最轻的形态验证「AI 治理」叙事的表达力。</li></ul>'],
+          ['产出与复盘', '可运行原型已开源（GitHub）。验证了治理类数据产品的指标分层方法，后续可接入真实数据源。']
         ]
       },
       {
@@ -324,19 +329,7 @@
         ]
       },
       {
-        no: '04', year: '2025 – 2026', glyph: '📐',
-        title: '初中数学几何辅导 Agent',
-        tags: ['AI Skill', '教育场景', 'ZPD 教学法'],
-        lede: '基于 ZPD 脚手架教学法设计的 AI 辅导 Skill，模拟家教场景中的引导式教学，在真实学生使用中验证效果。',
-        links: [],
-        secs: [
-          ['问题与用户', '直接给答案的 AI 并不能教会学生。目标用户是初中几何学习者，需要的是「引导」而非「代做」。'],
-          ['关键决策', '<ul><li>以维果茨基最近发展区（ZPD）和脚手架教学法为设计基础：Agent 只提供阶梯式提示，不直接给完整解答。</li><li>覆盖几何概念讲解、解题思路引导与错误分析三类场景。</li></ul>'],
-          ['产出与复盘', 'Skill 在真实学生使用中得到验证。下一步：沉淀学生错误类型数据，优化提示阶梯的粒度。']
-        ]
-      },
-      {
-        no: '05', year: '2025 – 2026', glyph: '🏭',
+        no: '04', year: '2025 – 2026', glyph: '🏭',
         title: '五金公司 ERP 系统',
         tags: ['B 端交付', '全栈开发', 'FDE 模式'],
         lede: '采用 FDE（Fast Design & Engineering）模式为五金公司交付自用 ERP 系统，4 天完成交付。',
@@ -349,18 +342,16 @@
         ]
       },
       {
-        no: '06', year: '2025 – 2026', glyph: '✨',
-        title: 'TimeLume / Idea Editor / BackCurve',
-        tags: ['C 端原型', 'AI 应用', '快速验证'],
-        lede: '三个 C 端 AI 产品原型：自然语言时间记录、创意发散重组、AI 体态自查，快速验证不同场景下的 AI 交互模式。',
-        links: [
-          { t: 'TimeLume →', u: 'https://timelume-1452acd5.eazo.dev/' },
-          { t: 'Idea Editor →', u: 'https://idea-editor-6814532f.eazo.dev/' }
-        ],
+        no: '05', year: '2025 – 2026', glyph: '🖼️',
+        title: 'MILOU 数字展厅 H5',
+        tags: ['数据产品', '0→1 孵化'],
+        lede: '将线下艺术展内容产品化为移动端 H5，打通「扫码进入—内容浏览—互动传播」完整用户链路，并搭建行为指标体系。',
+        links: [],
         secs: [
-          ['问题与用户', 'C 端 AI 应用的核心不确定性在于交互模式是否成立。用三个小原型分别验证三个假设：自然语言能否降低记录成本、AI 能否帮助创意重组、视觉自查是否有真实需求。'],
-          ['三个原型', '<ul><li>TimeLume：自然语言时间记录与回顾</li><li>Idea Editor：创意发散与重组编辑器</li><li>BackCurve：AI 体态自查工具</li></ul>'],
-          ['产出与复盘', '三个原型均可在线体验。快速原型的方法让我能以周为单位测试产品假设，而不是凭感觉做判断。']
+          ['问题与用户', '线下展览内容触达有限、无法沉淀观众行为。把展览内容搬到移动端 H5，让观众可以远程观展、互动并分享。'],
+          ['个人角色', '负责内容产品化与数据体系：设计「访问—浏览—互动—分享」行为指标，把一次性的展览变成可持续迭代的产品。'],
+          ['关键数据', '<ul><li>首轮上线：123 UV / 218 会话</li><li>1091 次浏览 / 1159 次互动</li><li>平均浏览深度 3.0</li></ul>'],
+          ['产出与复盘', '基于首轮数据提出数据驱动的迭代方案。验证了「小体量内容产品也能用数据说话」的方法。']
         ]
       }
     ];
